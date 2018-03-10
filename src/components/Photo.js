@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Tag from './Tag';
 //import image from './Image';
 
 import styled from 'styled-components';
@@ -18,13 +19,20 @@ const Img = styled.img`
 	max-width: none;
 `;
 
+const TagContainer = styled.div`margin-top: 20px;`;
+
 class Photo extends Component {
 	render() {
 		return (
 			<Figure>
 				<Img className="photo" src={this.props.src} />
 				<figcaption>
-					<p>test</p>
+					<TagContainer>
+						<Tag />
+						<Tag />
+						<Tag />
+					</TagContainer>
+					<p>{this.props.description}</p>
 				</figcaption>
 			</Figure>
 		);

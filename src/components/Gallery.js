@@ -12,7 +12,9 @@ const Styling = styled.div`
 
 class Gallery extends Component {
 	render() {
-		return <Styling>{dummyData.map((data) => <Photo src={data.imageLink} />)}</Styling>;
+		return (
+			<Styling>{dummyData.map((data) => <Photo description={data.description} src={data.imageLink} />)}</Styling>
+		);
 	}
 }
 
