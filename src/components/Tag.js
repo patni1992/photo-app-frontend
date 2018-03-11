@@ -9,15 +9,12 @@ const Styling = styled.span`
 	border-radius: 5px;
 	transition: all 300ms ease-in-out;
 	text-decoration: none;
-
-	&:not(:first-child) {
-		margin-left: 10px;
-	}
+	margin: 5px;
 `;
 
 class Tag extends Component {
 	render() {
-		return <Styling>Test</Styling>;
+		return <Styling>{this.props.tagText}</Styling>;
 	}
 }
 
