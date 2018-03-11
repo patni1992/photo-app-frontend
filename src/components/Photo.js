@@ -26,6 +26,7 @@ const TagContainer = styled.div`
 	flex-wrap: wrap;
 `;
 
+const P = styled.p`margin-left: 5px;`;
 class Photo extends Component {
 	render() {
 		return (
@@ -33,7 +34,7 @@ class Photo extends Component {
 				<Img className="photo" src={this.props.src} />
 				<figcaption>
 					<TagContainer>{this.props.tags.map((tagText) => <Tag tagText={tagText} />)}</TagContainer>
-					<p>{this.props.description}</p>
+					<P>{this.props.description}</P>
 				</figcaption>
 			</Figure>
 		);
