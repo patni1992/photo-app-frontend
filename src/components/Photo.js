@@ -7,7 +7,6 @@ import styled from 'styled-components';
 const Figure = styled.figure`
 	flex-basis: calc(33.333% - 4rem);
 	border: 1px solid #d3d3d3;
-	max-width: 25rem;
 	padding: 2rem;
 	flex-grow: 1;
 	margin: 0 2rem 2rem 2rem;

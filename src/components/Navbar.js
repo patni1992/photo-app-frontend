@@ -35,7 +35,7 @@ class Navbar extends Component {
 					Home
 				</Linknav>
 				<Linknav href="#">Add Photos</Linknav>
-				<Linknav href="#">About</Linknav>
+				<Linknav href="#">Albums</Linknav>
 			</Div>
 		);
 	}
