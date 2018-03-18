@@ -60,7 +60,14 @@ class Photo extends Component {
 	render() {
 		return (
 			<Figure>
-				<ImgContainer>
+				<ImgContainer
+					onClick={() => {
+						this.props.clickHandler({
+							src: this.props.src,
+							description: this.props.description
+						});
+					}}
+				>
 					<Img className="photo" src={this.props.src} />
 					<FaStyling>
 						<FontAwesome name="search-plus" />

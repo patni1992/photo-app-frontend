@@ -3,6 +3,7 @@ import dummyData from '../dummyData';
 import Photo from './Photo';
 import styled from 'styled-components';
 import Searchbar from './Searchbar';
+import Modal from './Modal';
 
 const Styling = styled.div`
 	display: flex;
@@ -15,6 +16,10 @@ class Gallery extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			modal: {
+				src: null,
+				description: null
+			},
 			images: [
 				{
 					id: '0',
@@ -48,16 +53,44 @@ class Gallery extends Component {
 		this.setState({ filterOn: value });
 	};
 
+	setModal = (value) => {
+		if (value) {
+			this.setState({ modal: value });
+		} else {
+			this.setState({
+				modal: {
+					src: false,
+					description: false
+				}
+			});
+		}
+	};
+
 	render() {
 		return (
 			<div>
 				<Searchbar onChangeHandler={this.setFilterValue} />
+
+				{this.state.modal.src ? (
+					<Modal
+						closeHandler={this.setModal}
+						description={this.state.modal.description}
+						src={this.state.modal.src}
+					/>
+				) : null}
 				<Styling>
 					{this.state.images
 						.filter((data) => {
 							return data.description.toLowerCase().indexOf(this.state.filterOn.toLowerCase()) !== -1;
 						})
-						.map((data) => <Photo description={data.description} tags={data.tags} src={data.imageLink} />)}
+						.map((data) => (
+							<Photo
+								clickHandler={this.setModal}
+								description={data.description}
+								tags={data.tags}
+								src={data.imageLink}
+							/>
+						))}
 				</Styling>
 			</div>
 		);
