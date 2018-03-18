@@ -10,8 +10,10 @@ import styled from 'styled-components';
 
 const FaStyling = styled.span`
 	position: absolute;
-	top: calc(50% - 75px);
-	left: calc(50% - 24px);
+	top: calc(50% - 50px);
+	left: 50%;
+	transform: translate(-50%, -50%);
+	display: block;
 	opacity: 0;
 	transition: 0.7s ease;
 	& span {
