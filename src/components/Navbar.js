@@ -31,11 +31,11 @@ class Navbar extends Component {
 	render() {
 		return (
 			<Div>
-				<Linknav class="active" href="#home">
+				<Linknav class="active" href="/">
 					Home
 				</Linknav>
-				<Linknav href="#">Add Photos</Linknav>
-				<Linknav href="#">Albums</Linknav>
+				<Linknav href="/addPhotos">Add Photos</Linknav>
+				<Linknav href="/albums">Albums</Linknav>
 			</Div>
 		);
 	}
