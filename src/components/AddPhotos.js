@@ -39,11 +39,22 @@ const Form = styled.form`
 	}
 `;
 
+const Img = styled.img`width: 100%;`;
+
 class AddPhotos extends Component {
-	onDrop(acceptedFiles, rejectedFiles) {
+	constructor(props) {
+		super(props);
+		this.state = {
+			img: {}
+		};
+	}
+	onDrop = (acceptedFiles, rejectedFiles) => {
 		console.log(acceptedFiles);
 		console.log(rejectedFiles);
-	}
+		this.setState({
+			img: acceptedFiles[0]
+		});
+	};
 
 	render() {
 		return (
@@ -51,15 +62,17 @@ class AddPhotos extends Component {
 				<h2>Add a photo</h2>
 				<Form action="">
 					<input placeholder="Description" type="text" />
-					<input Placeholder="Tags" type="text" />
+					<input placeholder="Tags (seperate with comma)" type="text" />
 					<Dropzone
 						style={{ background: 'white', border: '3px black dotted', padding: '80px', margin: '0 0 15px' }}
 						onDrop={this.onDrop}
 						accept="image/jpeg, image/png"
+						multiple={false}
 					>
-						<p>Try dropping some files here, or click to select files to upload.</p>
+						<p>Try dropping a file here, or click to select a file to upload.</p>
 						<p>Only *.jpeg and *.png images will be accepted</p>
 					</Dropzone>
+					<Img src={this.state.img.preview} alt="" />
 					<button> Post </button>
 				</Form>
 			</div>
