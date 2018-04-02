@@ -65,12 +65,8 @@ class AddPhotos extends Component {
 
 		axios
 			.post('/images', bodyFormData)
-			.then(function(response) {
-				console.log(response);
-			})
-			.catch(function(error) {
-				console.log(error);
-			});
+			.then((response) => this.props.history.push('/'))
+			.catch((error) => console.log(error));
 	};
 
 	render() {
