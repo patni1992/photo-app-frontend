@@ -59,9 +59,9 @@ class AddPhotos extends Component {
 		event.preventDefault();
 
 		const bodyFormData = new FormData();
-		bodyFormData.append('description', event.target.elements.description.value);
-		bodyFormData.append('tags', event.target.elements.tags.value);
-		bodyFormData.append('image', this.state.img);
+		bodyFormData.set('description', event.target.elements.description.value);
+		bodyFormData.set('tags', event.target.elements.tags.value);
+		bodyFormData.set('image', this.state.img);
 
 		axios
 			.post('http://localhost:1337/images', bodyFormData)
