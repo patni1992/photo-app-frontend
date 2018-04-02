@@ -64,7 +64,7 @@ class AddPhotos extends Component {
 		bodyFormData.set('image', this.state.img);
 
 		axios
-			.post('http://localhost:1337/images', bodyFormData)
+			.post('/images', bodyFormData)
 			.then(function(response) {
 				console.log(response);
 			})
