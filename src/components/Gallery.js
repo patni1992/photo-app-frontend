@@ -4,7 +4,10 @@ import dummyData from '../dummyData';
 import Photo from './Photo';
 import styled from 'styled-components';
 import Searchbar from './Searchbar';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import Modal from './Modal';
+import * as actions from '../redux/actions';
 
 const Styling = styled.div`
 	display: flex;
@@ -27,11 +30,7 @@ class Gallery extends Component {
 	}
 
 	componentDidMount() {
-		axios.get('/images').then((reponse) => {
-			this.setState({
-				images: reponse.data
-			});
-		});
+		this.props.initImages();
 	}
 
 	setFilterValue = (value) => {
@@ -64,7 +63,7 @@ class Gallery extends Component {
 					/>
 				) : null}
 				<Styling>
-					{this.state.images
+					{this.props.images
 						.filter((data) => {
 							return data.description.toLowerCase().indexOf(this.state.filterOn.toLowerCase()) !== -1;
 						})
@@ -82,4 +81,14 @@ class Gallery extends Component {
 	}
 }
 
-export default Gallery;
+function mapStateToProps(state) {
+	return {
+		images: state.images
+	};
+}
+
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators(actions, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Gallery);
