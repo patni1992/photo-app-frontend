@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import Searchbar from './Searchbar';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Link } from 'react-router-dom';
 import Modal from './Modal';
 import * as actions from '../redux/actions';
 
@@ -24,7 +25,6 @@ class Gallery extends Component {
 				src: null,
 				description: null
 			},
-			images: [],
 			filterOn: ''
 		};
 	}
@@ -69,6 +69,8 @@ class Gallery extends Component {
 						})
 						.map((data) => (
 							<Photo
+								id={data._id}
+								link={`/photo/${data._id}`}
 								clickHandler={this.setModal}
 								description={data.description}
 								tags={data.tags}

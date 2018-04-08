@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Tag from './Tag';
 import FontAwesome from 'react-fontawesome';
+import { Link } from 'react-router-dom';
 
 // ..rest of your code
 
@@ -47,12 +48,6 @@ const ImgContainer = styled.div`
 	&:hover {
 		cursor: pointer;
 	}
-	&:hover ${Img} {
-		opacity: 0.6;
-	}
-	&:hover ${FaStyling} {
-		opacity: 1;
-	}
 `;
 
 const FigCaption = styled.figcaption`margin-left: 10px;`;
@@ -62,15 +57,14 @@ class Photo extends Component {
 	render() {
 		return (
 			<Figure>
-				<ImgContainer
-					onClick={() => {
-						this.props.clickHandler({
-							src: this.props.src,
-							description: this.props.description
-						});
-					}}
-				>
-					<Img className="photo" src={this.props.src} />
+				<ImgContainer>
+					{this.props.link ? (
+						<Link to={this.props.link}>
+							<Img className="photo" src={this.props.src} />
+						</Link>
+					) : (
+						<Img className="photo" src={this.props.src} />
+					)}
 					<FaStyling>
 						<FontAwesome name="search-plus" />
 					</FaStyling>

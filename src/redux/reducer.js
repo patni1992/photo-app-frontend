@@ -4,7 +4,7 @@ const initialState = [];
 function images(state = initialState, action) {
 	switch (action.type) {
 		case 'SET_IMAGES':
-			return [ ...state, ...action.images ];
+			return action.images;
 		default:
 			return state;
 	}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Photo from './Photo';
 import styled from 'styled-components';
+import axios from 'axios';
 
 const Styling = styled.div`
 	display: flex;
@@ -12,13 +13,32 @@ const Styling = styled.div`
 class PhotoDetail extends Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			src: '',
+			description: '',
+			tags: []
+		};
+	}
+
+	componentDidMount() {
+		axios
+			.get(`/images/${this.props.match.params.id}`)
+			.then((response) => {
+				this.setState({
+					src: 'http://localhost:5000/' + response.data.path,
+					description: response.data.description,
+					tags: response.data.tags
+				});
+			})
+			.catch((error) => {
+				return false; // add error method
+			});
 	}
 
 	render() {
-		console.log(this.props.match.params.id);
 		return (
 			<Styling>
-				<h2>{this.props.match.params.id}</h2>
+				<Photo {...this.state} />
 			</Styling>
 		);
 	}
