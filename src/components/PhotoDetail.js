@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Photo from './Photo';
+import Comments from './Comments';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -24,10 +25,13 @@ class PhotoDetail extends Component {
 		axios
 			.get(`/images/${this.props.match.params.id}`)
 			.then((response) => {
+				console.log('this is the response');
+				console.log(response);
 				this.setState({
 					src: 'http://localhost:5000/' + response.data.path,
 					description: response.data.description,
-					tags: response.data.tags
+					tags: response.data.tags,
+					comments: response.data.comments
 				});
 			})
 			.catch((error) => {
@@ -35,10 +39,19 @@ class PhotoDetail extends Component {
 			});
 	}
 
+	addCommentHandler = (comment) => {
+		this.setState({
+			comments: [ comment, ...this.state.comments ]
+		});
+	};
+
 	render() {
 		return (
 			<Styling>
 				<Photo {...this.state} />
+				<div style={{ flexBasis: '100%' }}>
+					<Comments postComment={this.addCommentHandler} comments={this.state.comments || []} />
+				</div>
 			</Styling>
 		);
 	}

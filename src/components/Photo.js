@@ -24,7 +24,8 @@ const FaStyling = styled.span`
 `;
 
 const Figure = styled.figure`
-	flex-basis: calc(33.333% - 4rem);
+	margin-left: 0;
+	flex-basis: calc(36.333% - 4rem);
 	border: 1px solid #d3d3d3;
 	flex-grow: 1;
 	position: relative;
@@ -32,7 +33,7 @@ const Figure = styled.figure`
 
 const Img = styled.img`
 	width: 100%;
-	max-width: none;
+
 	margin-bottom: -5px;
 	transition: 0.7s ease;
 `;
