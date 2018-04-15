@@ -40,9 +40,19 @@ class PhotoDetail extends Component {
 	}
 
 	addCommentHandler = (comment) => {
-		this.setState({
-			comments: [ comment, ...this.state.comments ]
-		});
+		axios
+			.post(`/images/${this.props.match.params.id}/comments`, {
+				text: comment
+			})
+			.then((response) => {
+				this.setState({
+					comments: [ response.data, ...this.state.comments ]
+				});
+			})
+			.catch((error) => {
+				console.log(error);
+				return false; // add error method
+			});
 	};
 
 	render() {
