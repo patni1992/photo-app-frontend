@@ -9,20 +9,6 @@ import { Link } from 'react-router-dom';
 
 import styled from 'styled-components';
 
-const FaStyling = styled.span`
-	position: absolute;
-	top: calc(50% - 50px);
-	left: 50%;
-	transform: translate(-50%, -50%);
-	display: block;
-	opacity: 0;
-	transition: 0.7s ease;
-	& span {
-		color: white;
-		font-size: 50px;
-	}
-`;
-
 const Figure = styled.figure`
 	margin-left: 0;
 	flex-basis: calc(36.333% - 4rem);
@@ -51,6 +37,20 @@ const ImgContainer = styled.div`
 	}
 `;
 
+const EditContainer = styled.span`
+	position: absolute;
+	bottom: 57px;
+	right 25px;
+	cursor: pointer;
+`;
+
+const TrashContainer = styled.span`
+	position: absolute;
+	bottom: 57px;
+	right 60px;
+	cursor: pointer;
+`;
+
 const FigCaption = styled.figcaption`margin-left: 10px;`;
 
 const P = styled.p`margin-left: 5px;`;
@@ -66,11 +66,14 @@ class Photo extends Component {
 					) : (
 						<Img className="photo" src={this.props.src} />
 					)}
-					<FaStyling>
-						<FontAwesome name="search-plus" />
-					</FaStyling>
 				</ImgContainer>
 				<FigCaption>
+					<EditContainer>
+						<FontAwesome name="pencil" />
+					</EditContainer>
+					<TrashContainer onClick={() => this.props.deletePhoto(this.props._id)}>
+						<FontAwesome name="trash" />
+					</TrashContainer>
 					<TagContainer>{this.props.tags.map((tagText) => <Tag tagText={tagText} />)}</TagContainer>
 					<P>{this.props.description}</P>
 				</FigCaption>

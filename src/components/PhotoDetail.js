@@ -39,6 +39,17 @@ class PhotoDetail extends Component {
 			});
 	}
 
+	addDeletePhotoHandler = (id) => {
+		axios
+			.delete(`/images/${this.props.match.params.id}`)
+			.then((response) => {
+				this.props.history.push('/');
+			})
+			.catch((error) => {
+				return false; // add error method
+			});
+	};
+
 	addCommentHandler = (comment) => {
 		axios
 			.post(`/images/${this.props.match.params.id}/comments`, {
@@ -56,9 +67,10 @@ class PhotoDetail extends Component {
 	};
 
 	render() {
+		let newProps = Object.assign({}, this.state, { deletePhoto: this.addDeletePhotoHandler });
 		return (
 			<Styling>
-				<Photo {...this.state} />
+				<Photo {...newProps} />
 				<div style={{ flexBasis: '100%' }}>
 					<Comments postComment={this.addCommentHandler} comments={this.state.comments || []} />
 				</div>
