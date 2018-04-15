@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled, { keyframes } from 'styled-components';
 import axios from 'axios';
+import moment from 'moment';
 
 const Container = styled.div`padding-top 20px; max-width: 96%;
 `;
@@ -25,6 +26,11 @@ const TextArea = styled.input`
 	margin-bottom: 20px;
 `;
 
+const DateText = styled.small`
+	display: block;
+	margin-bottom: 10px;
+`;
+
 class Comments extends Component {
 	constructor(props) {
 		super(props);
@@ -43,7 +49,14 @@ class Comments extends Component {
 	render() {
 		return (
 			<Container>
-				<CommentsBox>{this.props.comments.map((comment) => <Comment>{comment.text}</Comment>)}</CommentsBox>
+				<CommentsBox>
+					{this.props.comments.map((comment) => (
+						<Comment>
+							<DateText> {moment(comment.createdAt).fromNow()}</DateText>
+							{comment.text}
+						</Comment>
+					))}
+				</CommentsBox>
 				<form onSubmit={this.onSubmitHandler} action="">
 					<TextArea name="comment" type="text" placeholder="Enter a comment" />
 				</form>
