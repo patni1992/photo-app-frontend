@@ -52,6 +52,11 @@ class AddPhotos extends Component {
 			img: {}
 		};
 	}
+
+	componentWillUnmount() {
+		this.props.setActiveEditImage({});
+	}
+
 	onDrop = (acceptedFiles, rejectedFiles) => {
 		this.setState({
 			img: acceptedFiles[0]
@@ -66,8 +71,14 @@ class AddPhotos extends Component {
 		bodyFormData.set('tags', event.target.elements.tags.value);
 		bodyFormData.set('image', this.state.img);
 
+		let subitMethod = 'post';
+
+		if (Object.keys(this.props.activeEditImage).length !== 0) {
+			subitMethod = 'put';
+		}
+
 		axios
-			.post('/images', bodyFormData)
+			[subitMethod]('/images', bodyFormData)
 			.then((response) => this.props.history.push('/'))
 			.catch((error) => console.log(error));
 	};
@@ -98,7 +109,7 @@ class AddPhotos extends Component {
 						<p>Try dropping a file here, or click to select a file to upload.</p>
 						<p>Only *.jpeg and *.png images will be accepted</p>
 					</Dropzone>
-					<Img src={this.props.activeEditImage.src} alt="" />
+					<Img src={this.state.img.preview || this.props.activeEditImage.src} alt="" />
 					<button> Post </button>
 				</Form>
 			</div>
