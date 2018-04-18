@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import styled from 'styled-components';
 
-const Linknav = styled.a`
+const Linknav = styled.span`
 	float: left;
 	color: #f2f2f2;
 	text-align: center;
@@ -31,11 +32,15 @@ class Navbar extends Component {
 	render() {
 		return (
 			<Div>
-				<Linknav class="active" href="/">
-					Home
-				</Linknav>
-				<Linknav href="/addPhotos">Add Photos</Linknav>
-				<Linknav href="/albums">Albums</Linknav>
+				<Link to="/">
+					<Linknav href="/">Home</Linknav>
+				</Link>
+				<Link to="/addphotos">
+					<Linknav>Add Photos</Linknav>
+				</Link>
+				<Link to="/albums">
+					<Linknav>Albums</Linknav>
+				</Link>
 			</Div>
 		);
 	}
