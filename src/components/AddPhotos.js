@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import styled, { keyframes } from 'styled-components';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as actions from '../redux/actions';
 
 const Form = styled.form`
 	position: relative;
@@ -74,8 +77,18 @@ class AddPhotos extends Component {
 			<div>
 				<h2>Add a photo</h2>
 				<Form onSubmit={this.handleSubmit}>
-					<input name="description" placeholder="Description" type="text" />
-					<input name="tags" placeholder="Tags (seperate with comma)" type="text" />
+					<input
+						name="description"
+						value={this.props.activeEditImage.description}
+						placeholder="Description"
+						type="text"
+					/>
+					<input
+						name="tags"
+						value={this.props.activeEditImage.tags}
+						placeholder="Tags (seperate with comma)"
+						type="text"
+					/>
 					<Dropzone
 						style={{ background: 'white', border: '3px black dotted', padding: '80px', margin: '0 0 15px' }}
 						onDrop={this.onDrop}
@@ -85,7 +98,7 @@ class AddPhotos extends Component {
 						<p>Try dropping a file here, or click to select a file to upload.</p>
 						<p>Only *.jpeg and *.png images will be accepted</p>
 					</Dropzone>
-					<Img src={this.state.img.preview} alt="" />
+					<Img src={this.props.activeEditImage.src} alt="" />
 					<button> Post </button>
 				</Form>
 			</div>
@@ -93,4 +106,14 @@ class AddPhotos extends Component {
 	}
 }
 
-export default AddPhotos;
+function mapStateToProps(state) {
+	return {
+		activeEditImage: state.activeEditImage
+	};
+}
+
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators(actions, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddPhotos);

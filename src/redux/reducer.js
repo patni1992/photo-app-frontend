@@ -10,6 +10,15 @@ function images(state = initialState, action) {
 	}
 }
 
-const rootReducer = combineReducers({ images });
+function activeEditImage(state = {}, action) {
+	switch (action.type) {
+		case 'SET_ACTIVE_EDIT_IMAGE':
+			return action.activeEditImage;
+		default:
+			return state;
+	}
+}
+
+const rootReducer = combineReducers({ images, activeEditImage });
 
 export default rootReducer;

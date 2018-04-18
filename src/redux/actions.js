@@ -32,3 +32,10 @@ export const fetchImage = (state, action) => {
 			});
 	};
 };
+
+export const setActiveEditImage = (image) => {
+	return {
+		type: 'SET_ACTIVE_EDIT_IMAGE',
+		activeEditImage: image
+	};
+};

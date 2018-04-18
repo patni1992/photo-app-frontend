@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as actions from '../redux/actions';
 import Photo from './Photo';
 import Comments from './Comments';
 import styled from 'styled-components';
 import axios from 'axios';
+import { setTimeout } from 'timers';
 
 const Styling = styled.div`
 	display: flex;
@@ -12,15 +16,6 @@ const Styling = styled.div`
 `;
 
 class PhotoDetail extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			src: '',
-			description: '',
-			tags: []
-		};
-	}
-
 	componentDidMount() {
 		axios
 			.get(`/images/${this.props.match.params.id}`)
@@ -67,16 +62,26 @@ class PhotoDetail extends Component {
 	};
 
 	render() {
-		let newProps = Object.assign({}, this.state, { deletePhoto: this.addDeletePhotoHandler });
-		return (
+		let newProps = Object.assign({}, this.state, {
+			deletePhoto: this.addDeletePhotoHandler,
+			editPhoto: (data) => {
+				this.props.setActiveEditImage(data);
+				this.props.history.push('/addPhotos');
+			}
+		});
+		return this.state ? (
 			<Styling>
 				<Photo {...newProps} />
 				<div style={{ flexBasis: '100%' }}>
 					<Comments postComment={this.addCommentHandler} comments={this.state.comments || []} />
 				</div>
 			</Styling>
-		);
+		) : null;
 	}
 }
 
-export default PhotoDetail;
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators(actions, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(PhotoDetail);

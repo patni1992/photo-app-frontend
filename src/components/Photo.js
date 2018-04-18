@@ -68,7 +68,14 @@ class Photo extends Component {
 					)}
 				</ImgContainer>
 				<FigCaption>
-					<EditContainer>
+					<EditContainer
+						onClick={() =>
+							this.props.editPhoto({
+								src: this.props.src,
+								tags: this.props.tags.join(','),
+								description: this.props.description
+							})}
+					>
 						<FontAwesome name="pencil" />
 					</EditContainer>
 					<TrashContainer onClick={() => this.props.deletePhoto(this.props._id)}>
