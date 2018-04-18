@@ -55,6 +55,33 @@ const FigCaption = styled.figcaption`margin-left: 10px;`;
 
 const P = styled.p`margin-left: 5px;`;
 class Photo extends Component {
+	renderIcons() {
+		let actionIcons = [];
+		if (this.props.editPhoto) {
+			actionIcons.push(
+				<EditContainer
+					onClick={() =>
+						this.props.editPhoto({
+							src: this.props.src,
+							tags: this.props.tags.join(','),
+							description: this.props.description
+						})}
+				>
+					<FontAwesome name="pencil" />
+				</EditContainer>
+			);
+		}
+
+		if (this.props.deletePhoto) {
+			actionIcons.push(
+				<TrashContainer onClick={() => this.props.deletePhoto(this.props._id)}>
+					<FontAwesome name="trash" />
+				</TrashContainer>
+			);
+		}
+
+		return actionIcons;
+	}
 	render() {
 		return (
 			<Figure>
@@ -68,19 +95,7 @@ class Photo extends Component {
 					)}
 				</ImgContainer>
 				<FigCaption>
-					<EditContainer
-						onClick={() =>
-							this.props.editPhoto({
-								src: this.props.src,
-								tags: this.props.tags.join(','),
-								description: this.props.description
-							})}
-					>
-						<FontAwesome name="pencil" />
-					</EditContainer>
-					<TrashContainer onClick={() => this.props.deletePhoto(this.props._id)}>
-						<FontAwesome name="trash" />
-					</TrashContainer>
+					{this.renderIcons()}
 					<TagContainer>{this.props.tags.map((tagText) => <Tag tagText={tagText} />)}</TagContainer>
 					<P>{this.props.description}</P>
 				</FigCaption>
