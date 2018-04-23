@@ -26,7 +26,8 @@ class PhotoDetail extends Component {
 					src: 'http://localhost:5000/' + response.data.path,
 					description: response.data.description,
 					tags: response.data.tags,
-					comments: response.data.comments
+					comments: response.data.comments,
+					id: response.data._id
 				});
 			})
 			.catch((error) => {

@@ -49,12 +49,25 @@ class AddPhotos extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			img: {}
+			img: {},
+			tags: '',
+			description: ''
 		};
 	}
 
 	componentWillUnmount() {
 		this.props.setActiveEditImage({});
+	}
+
+	componentDidMount() {
+		this.setState({
+			tags: this.props.activeEditImage.tags,
+			description: this.props.activeEditImage.description,
+			id: this.props.activeEditImage.id,
+			img: {
+				preview: this.props.activeEditImage.src
+			}
+		});
 	}
 
 	onDrop = (acceptedFiles, rejectedFiles) => {
@@ -65,22 +78,36 @@ class AddPhotos extends Component {
 
 	handleSubmit = (event) => {
 		event.preventDefault();
-
+		let appendUrl = '';
 		const bodyFormData = new FormData();
-		bodyFormData.set('description', event.target.elements.description.value);
-		bodyFormData.set('tags', event.target.elements.tags.value);
+		bodyFormData.set('description', this.state.description);
+		bodyFormData.set('tags', this.state.tags);
 		bodyFormData.set('image', this.state.img);
+		bodyFormData.set('id', this.state.id);
 
 		let subitMethod = 'post';
 
 		if (Object.keys(this.props.activeEditImage).length !== 0) {
-			subitMethod = 'put';
+			subitMethod = 'patch';
+			appendUrl = '/' + this.props.activeEditImage.id;
 		}
 
 		axios
-			[subitMethod]('/images', bodyFormData)
+			[subitMethod]('/images' + appendUrl, bodyFormData)
 			.then((response) => this.props.history.push('/'))
 			.catch((error) => console.log(error));
+	};
+
+	handleTagsChange = (event) => {
+		this.setState({
+			tags: event.target.value
+		});
+	};
+
+	handleDescChange = (event) => {
+		this.setState({
+			description: event.target.value
+		});
 	};
 
 	render() {
@@ -89,14 +116,16 @@ class AddPhotos extends Component {
 				<h2>Add a photo</h2>
 				<Form onSubmit={this.handleSubmit}>
 					<input
+						onChange={this.handleDescChange}
 						name="description"
-						value={this.props.activeEditImage.description}
+						value={this.state.description}
 						placeholder="Description"
 						type="text"
 					/>
 					<input
 						name="tags"
-						value={this.props.activeEditImage.tags}
+						onChange={this.handleTagsChange}
+						value={this.state.tags}
 						placeholder="Tags (seperate with comma)"
 						type="text"
 					/>
@@ -109,7 +138,7 @@ class AddPhotos extends Component {
 						<p>Try dropping a file here, or click to select a file to upload.</p>
 						<p>Only *.jpeg and *.png images will be accepted</p>
 					</Dropzone>
-					<Img src={this.state.img.preview || this.props.activeEditImage.src} alt="" />
+					<Img src={this.state.img.preview} alt="" />
 					<button> Post </button>
 				</Form>
 			</div>

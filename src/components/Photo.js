@@ -58,13 +58,16 @@ class Photo extends Component {
 	renderIcons() {
 		let actionIcons = [];
 		if (this.props.editPhoto) {
+			console.log('hej');
+			console.log(this.props);
 			actionIcons.push(
 				<EditContainer
 					onClick={() =>
 						this.props.editPhoto({
 							src: this.props.src,
 							tags: this.props.tags.join(','),
-							description: this.props.description
+							description: this.props.description,
+							id: this.props.id
 						})}
 				>
 					<FontAwesome name="pencil" />
