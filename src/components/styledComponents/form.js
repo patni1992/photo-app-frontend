@@ -10,7 +10,6 @@ export const Form = styled.form`
   text-align: center;
   animation-name: ${zoom};
   animation-duration: 1.1s;
-  display: ${props => (props.hide ? "none" : "block")};
 `;
 
 export const FormGroup = styled.div`

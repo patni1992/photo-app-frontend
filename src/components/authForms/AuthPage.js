@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { signupRequest } from "../redux/actions/authActions";
+import { signupRequest } from "../../redux/actions/authActions";
+import Login from "./Login";
+import Signup from "./Signup";
 import styled, { keyframes } from "styled-components";
 import {
   FormGroup,
   FormContainer,
   FormHeader,
   Form
-} from "./styledComponents/form";
-import { zoom } from "./styledComponents/animation";
+} from "../styledComponents/form";
 
 const Atag = styled.a`
   margin: 0 25px;
@@ -29,7 +30,7 @@ const ForgotPassword = styled.a`
   font-size: 0.75rem;
 `;
 
-class Login extends Component {
+class AuthPage extends Component {
   constructor() {
     super();
     this.state = {
@@ -44,7 +45,7 @@ class Login extends Component {
 
   l;
 
-  submitHandler = e => {
+  submitSignupHandler = e => {
     e.preventDefault();
 
     this.props
@@ -94,59 +95,11 @@ class Login extends Component {
             Sign Up
           </Atag>
         </FormHeader>
-        <Form hide={this.state.signUp}>
-          <FormGroup>
-            <input type="email" placeholder="Email" />
-          </FormGroup>
-          <FormGroup>
-            <input type="password" placeholder="Password" />
-          </FormGroup>
-          <FormGroup>
-            <button>Log in</button>
-          </FormGroup>
-          <FormGroup>
-            <ForgotPassword href="#">Forgot password?</ForgotPassword>
-          </FormGroup>
-        </Form>
-        <Form onSubmit={this.submitHandler} hide={this.state.login}>
-          <FormGroup>
-            <input
-              type="email"
-              name="email"
-              value={this.state.email}
-              onChange={this.changeHandler}
-              placeholder="Email"
-            />
-          </FormGroup>
-          <FormGroup>
-            <input
-              type="text"
-              name="username"
-              value={this.state.username}
-              onChange={this.changeHandler}
-              placeholder="Username"
-            />
-          </FormGroup>
-          <FormGroup>
-            <input
-              onChange={this.changeHandler}
-              name="password"
-              type="password"
-              placeholder="Password"
-            />
-          </FormGroup>
-          <FormGroup>
-            <input
-              type="password"
-              onChange={this.changeHandler}
-              name="confirmPassword"
-              placeholder="Confirm Password"
-            />
-          </FormGroup>
-          <FormGroup>
-            <button>Sign Up</button>
-          </FormGroup>
-        </Form>
+        {this.state.login ? (
+          <Login />
+        ) : (
+          <Signup submit={this.submitSignupHandler} />
+        )}
       </FormContainer>
     );
   }
@@ -154,4 +107,4 @@ class Login extends Component {
 
 export default connect(null, {
   signupRequest
-})(Login);
+})(AuthPage);
