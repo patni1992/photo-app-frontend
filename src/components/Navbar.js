@@ -23,7 +23,7 @@ const Linknav = styled.span`
 const Div = styled.div`
 	background-color: #333;
 	overflow: hidden;
-	margin-bottom: 20px;
+	margin-bottom: 60px;
 `;
 
 const Input = styled.input`float: right;`;
@@ -40,6 +40,9 @@ class Navbar extends Component {
 				</Link>
 				<Link to="/albums">
 					<Linknav>Albums</Linknav>
+				</Link>
+				<Link to="/auth">
+					<Linknav>Login</Linknav>
 				</Link>
 			</Div>
 		);
