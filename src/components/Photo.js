@@ -19,7 +19,7 @@ const Figure = styled.figure`
 
 const Img = styled.img`
 	width: 100%;
-
+	height: auto;
 	margin-bottom: -5px;
 	transition: 0.7s ease;
 `;
@@ -35,6 +35,8 @@ const ImgContainer = styled.div`
 	&:hover {
 		cursor: pointer;
 	}
+	overflow: hidden;
+	max-height: 500px;
 `;
 
 const EditContainer = styled.span`
@@ -55,6 +57,10 @@ const FigCaption = styled.figcaption`margin-left: 10px;`;
 
 const P = styled.p`margin-left: 5px;`;
 class Photo extends Component {
+	componentDidMount() {
+		window.scrollTo(0, 0);
+	}
+
 	renderIcons() {
 		let actionIcons = [];
 		if (this.props.editPhoto) {
@@ -77,7 +83,9 @@ class Photo extends Component {
 
 		if (this.props.deletePhoto) {
 			actionIcons.push(
-				<TrashContainer onClick={() => this.props.deletePhoto(this.props._id)}>
+				<TrashContainer
+					onClick={() => this.props.deletePhoto(this.props._id)}
+				>
 					<FontAwesome name="trash" />
 				</TrashContainer>
 			);
@@ -99,7 +107,11 @@ class Photo extends Component {
 				</ImgContainer>
 				<FigCaption>
 					{this.renderIcons()}
-					<TagContainer>{this.props.tags.map((tagText) => <Tag tagText={tagText} />)}</TagContainer>
+					<TagContainer>
+						{this.props.tags.map(tagText => (
+							<Tag tagText={tagText} />
+						))}
+					</TagContainer>
 					<P>{this.props.description}</P>
 				</FigCaption>
 			</Figure>

@@ -8,10 +8,10 @@ import * as actions from '../redux/actions';
 
 const Form = styled.form`
 	position: relative;
+	max-width: 800px;
 	z-index: 1;
 	background: #ffffff;
-	max-width: 720px;
-	margin: 0 auto 100px;
+	margin: 0 auto;
 	padding: 45px;
 	text-align: center;
 	box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
@@ -76,7 +76,7 @@ class AddPhotos extends Component {
 		});
 	};
 
-	handleSubmit = (event) => {
+	handleSubmit = event => {
 		event.preventDefault();
 		let appendUrl = '';
 		const bodyFormData = new FormData();
@@ -94,17 +94,17 @@ class AddPhotos extends Component {
 
 		axios
 			[subitMethod]('/images' + appendUrl, bodyFormData)
-			.then((response) => this.props.history.push('/'))
-			.catch((error) => console.log(error));
+			.then(response => this.props.history.push('/'))
+			.catch(error => console.log(error));
 	};
 
-	handleTagsChange = (event) => {
+	handleTagsChange = event => {
 		this.setState({
 			tags: event.target.value
 		});
 	};
 
-	handleDescChange = (event) => {
+	handleDescChange = event => {
 		this.setState({
 			description: event.target.value
 		});
@@ -112,36 +112,41 @@ class AddPhotos extends Component {
 
 	render() {
 		return (
-			<div>
-				<h2>Add a photo</h2>
-				<Form onSubmit={this.handleSubmit}>
-					<input
-						onChange={this.handleDescChange}
-						name="description"
-						value={this.state.description}
-						placeholder="Description"
-						type="text"
-					/>
-					<input
-						name="tags"
-						onChange={this.handleTagsChange}
-						value={this.state.tags}
-						placeholder="Tags (seperate with comma)"
-						type="text"
-					/>
-					<Dropzone
-						style={{ background: 'white', border: '3px black dotted', padding: '80px', margin: '0 0 15px' }}
-						onDrop={this.onDrop}
-						accept="image/jpeg, image/png"
-						multiple={false}
-					>
-						<p>Try dropping a file here, or click to select a file to upload.</p>
-						<p>Only *.jpeg and *.png images will be accepted</p>
-					</Dropzone>
-					<Img src={this.state.img.preview} alt="" />
-					<button> Post </button>
-				</Form>
-			</div>
+			<Form onSubmit={this.handleSubmit}>
+				<input
+					onChange={this.handleDescChange}
+					name="description"
+					value={this.state.description}
+					placeholder="Description"
+					type="text"
+				/>
+				<input
+					name="tags"
+					onChange={this.handleTagsChange}
+					value={this.state.tags}
+					placeholder="Tags (seperate with comma)"
+					type="text"
+				/>
+				<Dropzone
+					style={{
+						background: 'white',
+						border: '3px black dotted',
+						padding: '80px',
+						margin: '0 0 15px'
+					}}
+					onDrop={this.onDrop}
+					accept="image/jpeg, image/png"
+					multiple={false}
+				>
+					<p>
+						Try dropping a file here, or click to select a file to
+						upload.
+					</p>
+					<p>Only *.jpeg and *.png images will be accepted</p>
+				</Dropzone>
+				<Img src={this.state.img.preview} alt="" />
+				<button> Post </button>
+			</Form>
 		);
 	}
 }
