@@ -51,11 +51,9 @@ class AuthPage extends Component {
 
 	l;
 
-	submitSignupHandler = e => {
-		e.preventDefault();
-
+	signup = data => {
 		this.props
-			.signupRequest(this.state)
+			.signupRequest(data)
 			.then(response => console.log(response))
 			.catch(err => console.log(err.response.data));
 	};
@@ -106,7 +104,7 @@ class AuthPage extends Component {
 					{this.state.login ? (
 						<Login />
 					) : (
-						<Signup submit={this.submitSignupHandler} />
+						<Signup signup={this.signup} />
 					)}
 				</VerticalAlign>
 			</FormContainer>
