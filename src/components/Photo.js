@@ -10,8 +10,9 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Figure = styled.figure`
-	margin-left: 0;
-	flex-basis: calc(36.333% - 4rem);
+	margin-left: 8px;
+	margin-right: 8px
+	flex-basis: calc(40.333% - 4rem);
 	border: 1px solid #d3d3d3;
 	flex-grow: 1;
 	position: relative;
@@ -37,6 +38,7 @@ const ImgContainer = styled.div`
 	}
 	overflow: hidden;
 	max-height: 500px;
+	min-width: 270px;
 `;
 
 const EditContainer = styled.span`
