@@ -3,7 +3,7 @@ import styled, { keyframes } from 'styled-components';
 import axios from 'axios';
 import moment from 'moment';
 
-const Container = styled.div`padding-top 20px; max-width: 96%;
+const Container = styled.div`padding-top 20px; margin: 0 8px;
 `;
 
 const Comment = styled.div`
@@ -36,7 +36,7 @@ class Comments extends Component {
 		super(props);
 	}
 
-	onSubmitHandler = (event) => {
+	onSubmitHandler = event => {
 		event.preventDefault();
 		const comment = event.target.elements.comment;
 
@@ -50,15 +50,22 @@ class Comments extends Component {
 		return (
 			<Container>
 				<CommentsBox>
-					{this.props.comments.map((comment) => (
+					{this.props.comments.map(comment => (
 						<Comment>
-							<DateText> {moment(comment.createdAt).fromNow()}</DateText>
+							<DateText>
+								{' '}
+								{moment(comment.createdAt).fromNow()}
+							</DateText>
 							{comment.text}
 						</Comment>
 					))}
 				</CommentsBox>
 				<form onSubmit={this.onSubmitHandler} action="">
-					<TextArea name="comment" type="text" placeholder="Enter a comment" />
+					<TextArea
+						name="comment"
+						type="text"
+						placeholder="Enter a comment"
+					/>
 				</form>
 			</Container>
 		);
