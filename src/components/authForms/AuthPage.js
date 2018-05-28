@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { signupRequest } from '../../redux/actions/authActions';
+import axios from 'axios';
+import { registerUser, loginUser } from '../../redux/actions/authActions';
 import Login from './Login';
 import Signup from './Signup';
 import styled, { keyframes } from 'styled-components';
@@ -10,6 +11,8 @@ import {
 	FormHeader,
 	Form
 } from '../styledComponents/form';
+
+import { FullPageImg } from '../styledComponents/ui';
 
 const Atag = styled.a`
 	margin: 0 25px;
@@ -47,7 +50,13 @@ class AuthPage extends Component {
 
 	signup = data => {
 		console.log('signup');
-		this.props.signupRequest(data);
+		this.props.registerUser(data);
+	};
+
+	login = data => {
+		console.log('signup');
+
+		this.props.loginUser(data);
 	};
 
 	setLoginActive = () => {
@@ -72,37 +81,39 @@ class AuthPage extends Component {
 
 	render() {
 		return (
-			<FormContainer class="login-box">
-				<FormHeader>
-					<Atag
-						active={this.state.login}
-						href="#"
-						onClick={this.setLoginActive}
-					>
-						Login
-					</Atag>
-					<Atag
-						active={this.state.signUp}
-						href="#"
-						onClick={this.setSignupActive}
-						href="#"
-						id="signup-box-link"
-					>
-						Sign Up
-					</Atag>
-				</FormHeader>
-				{this.state.login ? <h1>Login</h1> : <h1>Signup</h1>}
-				<VerticalAlign>
-					{this.state.login ? (
-						<Login />
-					) : (
-						<Signup
-							errors={this.props.errors}
-							signup={this.signup}
-						/>
-					)}
-				</VerticalAlign>
-			</FormContainer>
+			<FullPageImg>
+				<FormContainer>
+					<FormHeader>
+						<Atag
+							active={this.state.login}
+							href="#"
+							onClick={this.setLoginActive}
+						>
+							Login
+						</Atag>
+						<Atag
+							active={this.state.signUp}
+							href="#"
+							onClick={this.setSignupActive}
+							href="#"
+							id="signup-box-link"
+						>
+							Sign Up
+						</Atag>
+					</FormHeader>
+					{this.state.login ? <h1>Login</h1> : <h1>Signup</h1>}
+					<VerticalAlign>
+						{this.state.login ? (
+							<Login login={this.login} />
+						) : (
+							<Signup
+								errors={this.props.errors}
+								signup={this.signup}
+							/>
+						)}
+					</VerticalAlign>
+				</FormContainer>
+			</FullPageImg>
 		);
 	}
 }
@@ -114,5 +125,6 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-	signupRequest
+	registerUser,
+	loginUser
 })(AuthPage);

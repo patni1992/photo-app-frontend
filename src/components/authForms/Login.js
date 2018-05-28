@@ -16,20 +16,15 @@ class Login extends Component {
 	constructor() {
 		super();
 		this.state = {
-			email: '',
+			username: '',
 			password: ''
 		};
 	}
 
-	l;
-
-	submitHandler = e => {
+	onSubmitHandler = e => {
 		e.preventDefault();
-
-		this.props
-			.signupRequest(this.state)
-			.then(response => console.log(response))
-			.catch(err => console.log(err.response.data));
+		console.log('bajs');
+		this.props.login(this.state);
 	};
 
 	setLoginActive = () => {
@@ -53,12 +48,24 @@ class Login extends Component {
 
 	render() {
 		return (
-			<Form>
+			<Form noValidate onSubmit={this.onSubmitHandler}>
 				<FormGroup>
-					<input type="email" placeholder="Email" />
+					<input
+						onChange={this.changeHandler}
+						value={this.state.username}
+						type="text"
+						name="username"
+						placeholder="Username or email"
+					/>
 				</FormGroup>
 				<FormGroup>
-					<input type="password" placeholder="Password" />
+					<input
+						onChange={this.changeHandler}
+						value={this.state.password}
+						type="password"
+						name="password"
+						placeholder="Password"
+					/>
 				</FormGroup>
 				<FormGroup>
 					<button>Log in</button>

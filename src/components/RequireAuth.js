@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Connect } from 'react-redux';
+import { connect } from 'react-redux';
 
 export default function(ComposedComponent) {
 	class Authenticate extends Component {
 		componentWillMount() {
 			if (!this.props.isAuthenticated) {
-				this.context.router.push('/login');
+				this.props.history.push('/auth');
 			}
 		}
 		render() {
@@ -18,5 +18,5 @@ export default function(ComposedComponent) {
 			isAuthenticated: state.auth.isAuthenticated
 		};
 	}
-	return Connect(mapStateToProps)(Authenticate);
+	return connect(mapStateToProps)(Authenticate);
 }

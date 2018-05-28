@@ -15,11 +15,14 @@ import Footer from './Footer';
 import AddPhotos from './AddPhotos';
 import AuthPage from './authForms/AuthPage';
 import Albums from './Albums';
+import RequireAuth from './RequireAuth';
 
 const history = createHistory();
 
 const store = createStore(
 	rootReducer,
+	window.__REDUX_DEVTOOLS_EXTENSION__ &&
+		window.__REDUX_DEVTOOLS_EXTENSION__(),
 	applyMiddleware(routerMiddleware(history), thunk)
 );
 
@@ -32,18 +35,21 @@ class App extends Component {
 						<Content>
 							<Navbar />
 							<Container>
-								<Route exact path="/" component={Gallery} />
+								<Route
+									exact
+									path="/"
+									component={RequireAuth(Gallery)}
+								/>
 								<Route
 									path="/addPhotos"
-									component={AddPhotos}
+									component={RequireAuth(AddPhotos)}
 								/>
-								<Route path="/albums" component={Albums} />
 								<Route
 									path="/photo/:id"
-									component={PhotoDetail}
+									component={RequireAuth(PhotoDetail)}
 								/>
-								<Route path="/auth" component={AuthPage} />
 							</Container>
+							<Route path="/auth" component={AuthPage} />
 						</Content>
 						<Footer />
 					</div>

@@ -14,7 +14,7 @@ export const Form = styled.form`
 
 export const FormGroup = styled.div`
 	max-width: 400px;
-	margin: 10px auto;
+	margin: 15px auto;
 	& input {
 		height: 45px;
 		outline: none;
@@ -45,9 +45,11 @@ export const FormGroup = styled.div`
 
 export const FormContainer = styled.div`
 	position: relative;
-	margin: 10px auto;
+	top: 100px;
+	margin: 0 auto;
 	text-align: center;
-	background-color: #fff;
+	background:rgba(255,255,255, 0.9);
+	width: 40%
 	padding: 20px 10px 60px 10px;
 	border-radius: 3px;
 `;
@@ -56,8 +58,8 @@ export const FormHeader = styled.div`
 	position: relative;
 	color: #00415d;
 	margin: 5px 5px 10px 5px;
-	padding-bottom: 10px;
-	border-bottom: 1px solid #eee;
+	padding-bottom: 40px;
+	border-bottom: 2px solid #c1bfbf;
 	text-align: center;
 	height: 28px;
 `;

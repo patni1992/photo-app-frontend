@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 const Linknav = styled.span`
@@ -29,24 +29,35 @@ const Div = styled.div`
 const Input = styled.input`float: right;`;
 
 class Navbar extends Component {
+	renderNavbar() {
+		if (this.props.auth.isAuthenticated) {
+			return (
+				<Div>
+					<Link to="/">
+						<Linknav href="/">Home</Linknav>
+					</Link>
+					<Link to="/addphotos">
+						<Linknav>Add Photos</Linknav>
+					</Link>
+					<Link style={{ float: 'right' }} to="/auth">
+						<Linknav>Log out</Linknav>
+					</Link>
+					<Link style={{ float: 'right' }} to="/auth">
+						<Linknav>{this.props.auth.user.username}</Linknav>
+					</Link>
+				</Div>
+			);
+		} else {
+			return null;
+		}
+	}
 	render() {
-		return (
-			<Div>
-				<Link to="/">
-					<Linknav href="/">Home</Linknav>
-				</Link>
-				<Link to="/addphotos">
-					<Linknav>Add Photos</Linknav>
-				</Link>
-				<Link to="/albums">
-					<Linknav>Albums</Linknav>
-				</Link>
-				<Link to="/auth">
-					<Linknav>Login</Linknav>
-				</Link>
-			</Div>
-		);
+		return this.renderNavbar();
 	}
 }
 
-export default Navbar;
+const mapStateToProps = state => ({
+	auth: state.auth
+});
+
+export default connect(mapStateToProps)(Navbar);
