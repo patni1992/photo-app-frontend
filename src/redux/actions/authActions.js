@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { push } from 'react-router-redux';
 
 import { SET_ERRORS } from './types';
 
@@ -7,7 +8,7 @@ export function signupRequest(userData) {
 		return axios
 			.post('/users', userData)
 			.then(res => {
-				console.log(res);
+				dispatch(push('/'));
 			})
 			.catch(err => {
 				console.log(err.response.data);
