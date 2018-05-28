@@ -4,7 +4,7 @@ import Dropzone from 'react-dropzone';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as actions from '../redux/actions';
+import * as actions from '../redux/actions/activeEditImageActions';
 
 const Form = styled.form`
 	position: relative;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as actions from '../redux/actions';
+import * as actions from '../redux/actions/activeEditImageActions';
 import Photo from './Photo';
 import Comments from './Comments';
 import styled from 'styled-components';
@@ -19,7 +19,7 @@ class PhotoDetail extends Component {
 	componentDidMount() {
 		axios
 			.get(`/images/${this.props.match.params.id}`)
-			.then((response) => {
+			.then(response => {
 				console.log('this is the response');
 				console.log(response);
 				this.setState({
@@ -30,33 +30,33 @@ class PhotoDetail extends Component {
 					id: response.data._id
 				});
 			})
-			.catch((error) => {
+			.catch(error => {
 				return false; // add error method
 			});
 	}
 
-	addDeletePhotoHandler = (id) => {
+	addDeletePhotoHandler = id => {
 		axios
 			.delete(`/images/${this.props.match.params.id}`)
-			.then((response) => {
+			.then(response => {
 				this.props.history.push('/');
 			})
-			.catch((error) => {
+			.catch(error => {
 				return false; // add error method
 			});
 	};
 
-	addCommentHandler = (comment) => {
+	addCommentHandler = comment => {
 		axios
 			.post(`/images/${this.props.match.params.id}/comments`, {
 				text: comment
 			})
-			.then((response) => {
+			.then(response => {
 				this.setState({
 					comments: [ response.data, ...this.state.comments ]
 				});
 			})
-			.catch((error) => {
+			.catch(error => {
 				console.log(error);
 				return false; // add error method
 			});
@@ -65,7 +65,7 @@ class PhotoDetail extends Component {
 	render() {
 		let newProps = Object.assign({}, this.state, {
 			deletePhoto: this.addDeletePhotoHandler,
-			editPhoto: (data) => {
+			editPhoto: data => {
 				this.props.setActiveEditImage(data);
 				this.props.history.push('/addPhotos');
 			}
@@ -74,7 +74,10 @@ class PhotoDetail extends Component {
 			<Styling>
 				<Photo {...newProps} />
 				<div style={{ flexBasis: '100%' }}>
-					<Comments postComment={this.addCommentHandler} comments={this.state.comments || []} />
+					<Comments
+						postComment={this.addCommentHandler}
+						comments={this.state.comments || []}
+					/>
 				</div>
 			</Styling>
 		) : null;

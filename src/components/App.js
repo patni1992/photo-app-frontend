@@ -10,7 +10,7 @@ import Albums from './Albums';
 import { Container, Content } from './styledComponents/ui';
 import { Provider } from 'react-redux';
 import PhotoDetail from './PhotoDetail';
-import rootReducer from '../redux/reducer';
+import rootReducer from '../redux/reducers';
 import thunk from 'redux-thunk';
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
