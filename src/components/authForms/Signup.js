@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import styled, { keyframes } from 'styled-components';
-import { FormGroup, Form } from '../styledComponents/form';
+import { FormGroup, Form, InputError } from '../styledComponents/form';
 import { zoom } from '../styledComponents/animation';
+
+const SpanError = styled.a`
+	margin: 0;
+	padding: 0;
+	text-align: left;
+`;
 
 class Signup extends Component {
 	constructor() {
@@ -30,6 +36,7 @@ class Signup extends Component {
 	};
 
 	render() {
+		const { errors } = this.props;
 		return (
 			<Form noValidate onSubmit={this.onSubmitHandler}>
 				<FormGroup>
@@ -40,6 +47,11 @@ class Signup extends Component {
 						onChange={this.onChangeHandler}
 						placeholder="Email"
 					/>
+					{errors.email && (
+						<SpanError>
+							<InputError>{errors.email}</InputError>
+						</SpanError>
+					)}
 				</FormGroup>
 				<FormGroup>
 					<input
@@ -49,6 +61,11 @@ class Signup extends Component {
 						onChange={this.onChangeHandler}
 						placeholder="Username"
 					/>
+					{errors.username && (
+						<SpanError>
+							<InputError>{errors.username}</InputError>
+						</SpanError>
+					)}
 				</FormGroup>
 				<FormGroup>
 					<input
@@ -57,6 +74,11 @@ class Signup extends Component {
 						type="password"
 						placeholder="Password"
 					/>
+					{errors.password && (
+						<SpanError>
+							<InputError>{errors.password}</InputError>
+						</SpanError>
+					)}
 				</FormGroup>
 				<FormGroup>
 					<input
@@ -65,6 +87,11 @@ class Signup extends Component {
 						name="confirmPassword"
 						placeholder="Confirm Password"
 					/>
+					{errors.confirmPassword && (
+						<SpanError>
+							<InputError>{errors.confirmPassword}</InputError>
+						</SpanError>
+					)}
 				</FormGroup>
 				<FormGroup>
 					<button>Sign Up</button>

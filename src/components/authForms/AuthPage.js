@@ -40,22 +40,14 @@ class AuthPage extends Component {
 	constructor() {
 		super();
 		this.state = {
-			email: '',
-			password: '',
-			confirmPassword: '',
-			username: '',
 			login: true,
 			signUp: false
 		};
 	}
 
-	l;
-
 	signup = data => {
-		this.props
-			.signupRequest(data)
-			.then(response => console.log(response))
-			.catch(err => console.log(err.response.data));
+		console.log('signup');
+		this.props.signupRequest(data);
 	};
 
 	setLoginActive = () => {
@@ -104,7 +96,10 @@ class AuthPage extends Component {
 					{this.state.login ? (
 						<Login />
 					) : (
-						<Signup signup={this.signup} />
+						<Signup
+							errors={this.props.errors}
+							signup={this.signup}
+						/>
 					)}
 				</VerticalAlign>
 			</FormContainer>
@@ -112,6 +107,12 @@ class AuthPage extends Component {
 	}
 }
 
-export default connect(null, {
+function mapStateToProps(state) {
+	return {
+		errors: state.errors
+	};
+}
+
+export default connect(mapStateToProps, {
 	signupRequest
 })(AuthPage);

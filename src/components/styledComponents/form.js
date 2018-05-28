@@ -6,18 +6,16 @@ export const Form = styled.form`
 	float: left;
 	width: 100%;
 	height: auto;
-	margin-top: 20px;
+	margin: 0 auto;
 	text-align: center;
 	animation-name: ${zoom};
 	animation-duration: 1.1s;
 `;
 
 export const FormGroup = styled.div`
-	width: 100%;
-	margin-bottom: 20px;
-
+	max-width: 400px;
+	margin: 10px auto;
 	& input {
-		width: calc(60% - 22px);
 		height: 45px;
 		outline: none;
 		border: 1px solid #ddd;
@@ -25,10 +23,8 @@ export const FormGroup = styled.div`
 		border-radius: 2px;
 		color: #333;
 		font-size: 0.8rem;
-		-webkit-transition: all 0.1s linear;
-		-moz-transition: all 0.1s linear;
 		transition: all 0.1s linear;
-
+		width: 100%
 		&:focus {
 			border-color: #358efb;
 		}
@@ -50,15 +46,10 @@ export const FormGroup = styled.div`
 export const FormContainer = styled.div`
 	position: relative;
 	margin: 10px auto;
-	max-width: 800px;
 	text-align: center;
-	height: 500px;
 	background-color: #fff;
-	padding: 10px;
+	padding: 20px 10px 60px 10px;
 	border-radius: 3px;
-	-webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.33);
-	-moz-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.33);
-	box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.33);
 `;
 
 export const FormHeader = styled.div`
@@ -70,3 +61,5 @@ export const FormHeader = styled.div`
 	text-align: center;
 	height: 28px;
 `;
+
+export const InputError = styled.p`color: #d9534f;`;
