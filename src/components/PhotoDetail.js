@@ -23,7 +23,7 @@ class PhotoDetail extends Component {
 				console.log('this is the response');
 				console.log(response);
 				this.setState({
-					src: 'http://localhost:5000/' + response.data.path,
+					src: window.location.origin + '/' + response.data.path,
 					description: response.data.description,
 					tags: response.data.tags,
 					comments: response.data.comments,

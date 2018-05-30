@@ -12,6 +12,8 @@ const ForgotPassword = styled.a`
 	font-size: 0.75rem;
 `;
 
+const Header = styled.h2`margin: 0;`;
+
 class Login extends Component {
 	constructor() {
 		super();
@@ -49,6 +51,7 @@ class Login extends Component {
 	render() {
 		return (
 			<Form noValidate onSubmit={this.onSubmitHandler}>
+				<Header>Login</Header>
 				<FormGroup>
 					<input
 						onChange={this.changeHandler}

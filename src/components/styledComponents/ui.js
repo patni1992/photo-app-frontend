@@ -19,10 +19,8 @@ export const Container = styled.div`
 
 export const FullPageImg = styled.div`
 	background-image: url(${img});
-	height: 95vh;
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
+	height: 100%;
 `;
-
-export const Content = styled.div`min-height: calc(100vh - 45px);`;

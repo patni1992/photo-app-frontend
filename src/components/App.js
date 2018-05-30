@@ -16,6 +16,7 @@ import AddPhotos from './AddPhotos';
 import AuthPage from './authForms/AuthPage';
 import Albums from './Albums';
 import RequireAuth from './RequireAuth';
+import { FullPageImg } from './styledComponents/ui';
 
 const history = createHistory();
 
@@ -31,26 +32,35 @@ class App extends Component {
 		return (
 			<Provider store={store}>
 				<ConnectedRouter history={history}>
-					<div>
-						<Content>
-							<Navbar />
-							<Container>
-								<Route
-									exact
-									path="/"
-									component={RequireAuth(Gallery)}
-								/>
-								<Route
-									path="/addPhotos"
-									component={RequireAuth(AddPhotos)}
-								/>
-								<Route
-									path="/photo/:id"
-									component={RequireAuth(PhotoDetail)}
-								/>
-							</Container>
-							<Route path="/auth" component={AuthPage} />
-						</Content>
+					<div class="app">
+						<Navbar />
+						<Route
+							path="/auth"
+							render={() => {
+								return (
+									<FullPageImg>
+										<Container>
+											<AuthPage />
+										</Container>
+									</FullPageImg>
+								);
+							}}
+						/>
+						<Container>
+							<Route
+								exact
+								path="/"
+								component={RequireAuth(Gallery)}
+							/>
+							<Route
+								path="/addPhotos"
+								component={RequireAuth(AddPhotos)}
+							/>
+							<Route
+								path="/photo/:id"
+								component={RequireAuth(PhotoDetail)}
+							/>
+						</Container>
 						<Footer />
 					</div>
 				</ConnectedRouter>

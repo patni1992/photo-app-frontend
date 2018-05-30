@@ -79,7 +79,7 @@ class Gallery extends Component {
 								clickHandler={this.setModal}
 								description={data.description}
 								tags={data.tags}
-								src={'http://localhost:5000/' + data.path}
+								src={window.location.origin + '/' + data.path}
 							/>
 						))}
 				</Styling>

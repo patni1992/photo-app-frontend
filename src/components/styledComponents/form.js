@@ -3,9 +3,7 @@ import { zoom } from './animation';
 
 export const Form = styled.form`
 	position: relative;
-	float: left;
 	width: 100%;
-	height: auto;
 	margin: 0 auto;
 	text-align: center;
 	animation-name: ${zoom};
@@ -16,7 +14,7 @@ export const FormGroup = styled.div`
 	max-width: 400px;
 	margin: 15px auto;
 	& input {
-		height: 45px;
+		height: 40px;
 		outline: none;
 		border: 1px solid #ddd;
 		padding: 0 10px;
@@ -37,7 +35,7 @@ export const FormGroup = styled.div`
 		color: #fff;
 		font-size: 14px;
 		font-weight: normal;
-		padding: 14px 0;
+		padding: 12px 0;
 		border-radius: 2px;
 		text-transform: uppercase;
 	}
@@ -45,13 +43,17 @@ export const FormGroup = styled.div`
 
 export const FormContainer = styled.div`
 	position: relative;
-	top: 100px;
+	overflow: hidden;
+	top: 30px;
 	margin: 0 auto;
 	text-align: center;
-	background:rgba(255,255,255, 0.9);
-	width: 40%
-	padding: 20px 10px 60px 10px;
+	background: rgba(255, 255, 255, 0.8);
+	max-width: 700px;
+	padding: 15px 10px 15px 10px;
 	border-radius: 3px;
+	min-height: 406px;
+	max-height: 500px;
+	overflow: scroll;
 `;
 
 export const FormHeader = styled.div`
@@ -64,4 +66,7 @@ export const FormHeader = styled.div`
 	height: 28px;
 `;
 
-export const InputError = styled.p`color: #d9534f;`;
+export const InputError = styled.p`
+	color: #d9534f;
+	margin: 2px;
+`;

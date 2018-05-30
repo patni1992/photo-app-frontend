@@ -9,6 +9,8 @@ const SpanError = styled.a`
 	text-align: left;
 `;
 
+const Header = styled.h2`margin: 0;`;
+
 class Signup extends Component {
 	constructor() {
 		super();
@@ -39,6 +41,7 @@ class Signup extends Component {
 		const { errors } = this.props;
 		return (
 			<Form noValidate onSubmit={this.onSubmitHandler}>
+				<Header>Signup</Header>
 				<FormGroup>
 					<input
 						type="email"

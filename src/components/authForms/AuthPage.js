@@ -12,8 +12,6 @@ import {
 	Form
 } from '../styledComponents/form';
 
-import { FullPageImg } from '../styledComponents/ui';
-
 const Atag = styled.a`
 	margin: 0 25px;
 	padding: 0 20px;
@@ -81,39 +79,37 @@ class AuthPage extends Component {
 
 	render() {
 		return (
-			<FullPageImg>
-				<FormContainer>
-					<FormHeader>
-						<Atag
-							active={this.state.login}
-							href="#"
-							onClick={this.setLoginActive}
-						>
-							Login
-						</Atag>
-						<Atag
-							active={this.state.signUp}
-							href="#"
-							onClick={this.setSignupActive}
-							href="#"
-							id="signup-box-link"
-						>
-							Sign Up
-						</Atag>
-					</FormHeader>
-					{this.state.login ? <h1>Login</h1> : <h1>Signup</h1>}
-					<VerticalAlign>
-						{this.state.login ? (
-							<Login login={this.login} />
-						) : (
-							<Signup
-								errors={this.props.errors}
-								signup={this.signup}
-							/>
-						)}
-					</VerticalAlign>
-				</FormContainer>
-			</FullPageImg>
+			<FormContainer>
+				<FormHeader>
+					<Atag
+						active={this.state.login}
+						href="#"
+						onClick={this.setLoginActive}
+					>
+						Login
+					</Atag>
+					<Atag
+						active={this.state.signUp}
+						href="#"
+						onClick={this.setSignupActive}
+						href="#"
+						id="signup-box-link"
+					>
+						Sign Up
+					</Atag>
+				</FormHeader>
+
+				<VerticalAlign>
+					{this.state.login ? (
+						<Login login={this.login} />
+					) : (
+						<Signup
+							errors={this.props.errors}
+							signup={this.signup}
+						/>
+					)}
+				</VerticalAlign>
+			</FormContainer>
 		);
 	}
 }

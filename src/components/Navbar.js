@@ -24,6 +24,11 @@ const Div = styled.div`
 	background-color: #333;
 	overflow: hidden;
 	margin-bottom: 60px;
+	left: 0;
+	right: 0;
+	top: 0;
+	z-index: 10;
+	position: fixed;
 `;
 
 const Input = styled.input`float: right;`;

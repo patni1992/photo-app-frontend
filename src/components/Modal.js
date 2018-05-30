@@ -62,7 +62,9 @@ class Modal extends Component {
 	render() {
 		return (
 			<ModalContainer id="myModal" class="modal">
-				<Close onClick={() => this.props.closeHandler(false)}>&times;</Close>
+				<Close onClick={() => this.props.closeHandler(false)}>
+					&times;
+				</Close>
 				<Img src={this.props.src} />
 				<Caption>{this.props.description}</Caption>
 			</ModalContainer>
