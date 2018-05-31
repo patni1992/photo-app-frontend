@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { createStore, applyMiddleware } from 'redux';
-import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
-import createHistory from 'history/createBrowserHistory';
-import { Provider } from 'react-redux';
-import PhotoDetail from './PhotoDetail';
-import rootReducer from '../redux/reducers';
-import thunk from 'redux-thunk';
 
+import PhotoDetail from './PhotoDetail';
+import store from '../store';
 import Gallery from './Gallery';
 import Navbar from './Navbar';
 import Footer from './Footer';
@@ -17,55 +12,42 @@ import Albums from './Albums';
 import RequireAuth from './RequireAuth';
 import { Container, Content, FullPageImg } from './styledComponents/ui';
 
-const history = createHistory();
-
-const store = createStore(
-	rootReducer,
-	window.__REDUX_DEVTOOLS_EXTENSION__ &&
-		window.__REDUX_DEVTOOLS_EXTENSION__(),
-	applyMiddleware(routerMiddleware(history), thunk)
-);
-
 class App extends Component {
 	render() {
 		return (
-			<Provider store={store}>
-				<ConnectedRouter history={history}>
-					<div class="app">
-						<Navbar />
+			<div className="app">
+				<Navbar />
+				<Route
+					path="/auth"
+					render={() => {
+						return (
+							<FullPageImg>
+								<Container>
+									<AuthPage />
+								</Container>
+							</FullPageImg>
+						);
+					}}
+				/>
+				<Content>
+					<Container>
 						<Route
-							path="/auth"
-							render={() => {
-								return (
-									<FullPageImg>
-										<Container>
-											<AuthPage />
-										</Container>
-									</FullPageImg>
-								);
-							}}
+							exact
+							path="/"
+							component={RequireAuth(Gallery)}
 						/>
-						<Content>
-							<Container>
-								<Route
-									exact
-									path="/"
-									component={RequireAuth(Gallery)}
-								/>
-								<Route
-									path="/addPhotos"
-									component={RequireAuth(AddPhotos)}
-								/>
-								<Route
-									path="/photo/:id"
-									component={RequireAuth(PhotoDetail)}
-								/>
-							</Container>
-						</Content>
-						<Footer />
-					</div>
-				</ConnectedRouter>
-			</Provider>
+						<Route
+							path="/addPhotos"
+							component={RequireAuth(AddPhotos)}
+						/>
+						<Route
+							path="/photo/:id"
+							component={RequireAuth(PhotoDetail)}
+						/>
+					</Container>
+				</Content>
+				<Footer />
+			</div>
 		);
 	}
 }

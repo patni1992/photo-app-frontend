@@ -1,9 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'react-router-redux';
+import configureStore, { history } from './store';
 import 'font-awesome/css/font-awesome.css';
 import './index.css';
 import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const store = configureStore();
+
 registerServiceWorker();
+
+const render = Component => {
+	return ReactDOM.render(
+		<Provider store={store}>
+			<ConnectedRouter history={history}>
+				<App />
+			</ConnectedRouter>
+		</Provider>,
+		document.getElementById('root')
+	);
+};
+
+render(App);
+
+if (module.hot) {
+	module.hot.accept('./components/App', () => {
+		const NextApp = require('./components/App').default;
+		render(NextApp);
+	});
+}
