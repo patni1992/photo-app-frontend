@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import { logoutUser } from '../redux/actions/authActions';
 
 const Linknav = styled.span`
 	float: left;
@@ -10,6 +11,7 @@ const Linknav = styled.span`
 	padding: 14px 16px;
 	text-decoration: none;
 	font-size: 17px;
+	cursor: pointer;
 	&:hover {
 		background-color: #ddd;
 		color: black;
@@ -34,6 +36,10 @@ const Div = styled.div`
 const Input = styled.input`float: right;`;
 
 class Navbar extends Component {
+	logout = data => {
+		this.props.logoutUser();
+	};
+
 	renderNavbar() {
 		if (this.props.auth.isAuthenticated) {
 			return (
@@ -44,9 +50,11 @@ class Navbar extends Component {
 					<Link to="/addphotos">
 						<Linknav>Add Photos</Linknav>
 					</Link>
-					<Link style={{ float: 'right' }} to="/auth">
-						<Linknav>Log out</Linknav>
-					</Link>
+
+					<Linknav onClick={this.logout} style={{ float: 'right' }}>
+						Log out
+					</Linknav>
+
 					<Link style={{ float: 'right' }} to="/auth">
 						<Linknav>{this.props.auth.user.username}</Linknav>
 					</Link>
@@ -65,4 +73,4 @@ const mapStateToProps = state => ({
 	auth: state.auth
 });
 
-export default connect(mapStateToProps)(Navbar);
+export default connect(mapStateToProps, { logoutUser })(Navbar);
