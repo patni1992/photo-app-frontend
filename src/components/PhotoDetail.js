@@ -7,6 +7,7 @@ import Comments from './Comments';
 import styled from 'styled-components';
 import axios from 'axios';
 import { setTimeout } from 'timers';
+import { Wrapper } from './styledComponents/ui';
 
 const Styling = styled.div`
 	display: flex;
@@ -71,15 +72,17 @@ class PhotoDetail extends Component {
 			}
 		});
 		return this.state ? (
-			<Styling>
-				<Photo {...newProps} />
-				<div style={{ flexBasis: '100%' }}>
-					<Comments
-						postComment={this.addCommentHandler}
-						comments={this.state.comments || []}
-					/>
-				</div>
-			</Styling>
+			<Wrapper>
+				<Styling>
+					<Photo {...newProps} />
+					<div style={{ flexBasis: '100%' }}>
+						<Comments
+							postComment={this.addCommentHandler}
+							comments={this.state.comments || []}
+						/>
+					</div>
+				</Styling>
+			</Wrapper>
 		) : null;
 	}
 }

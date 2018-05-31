@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { createStore, applyMiddleware } from 'redux';
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
-import { Container, Content } from './styledComponents/ui';
 import { Provider } from 'react-redux';
 import PhotoDetail from './PhotoDetail';
 import rootReducer from '../redux/reducers';
@@ -16,7 +15,7 @@ import AddPhotos from './AddPhotos';
 import AuthPage from './authForms/AuthPage';
 import Albums from './Albums';
 import RequireAuth from './RequireAuth';
-import { FullPageImg } from './styledComponents/ui';
+import { Container, Content, FullPageImg } from './styledComponents/ui';
 
 const history = createHistory();
 
@@ -46,21 +45,23 @@ class App extends Component {
 								);
 							}}
 						/>
-						<Container>
-							<Route
-								exact
-								path="/"
-								component={RequireAuth(Gallery)}
-							/>
-							<Route
-								path="/addPhotos"
-								component={RequireAuth(AddPhotos)}
-							/>
-							<Route
-								path="/photo/:id"
-								component={RequireAuth(PhotoDetail)}
-							/>
-						</Container>
+						<Content>
+							<Container>
+								<Route
+									exact
+									path="/"
+									component={RequireAuth(Gallery)}
+								/>
+								<Route
+									path="/addPhotos"
+									component={RequireAuth(AddPhotos)}
+								/>
+								<Route
+									path="/photo/:id"
+									component={RequireAuth(PhotoDetail)}
+								/>
+							</Container>
+						</Content>
 						<Footer />
 					</div>
 				</ConnectedRouter>

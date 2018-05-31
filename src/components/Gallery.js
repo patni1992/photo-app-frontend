@@ -8,6 +8,7 @@ import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 import Modal from './Modal';
 import * as actions from '../redux/actions/imageActions';
+import { Wrapper } from './styledComponents/ui';
 
 const Styling = styled.div`
 	display: flex;
@@ -51,7 +52,7 @@ class Gallery extends Component {
 
 	render() {
 		return (
-			<div>
+			<Wrapper>
 				<Searchbar onChangeHandler={this.setFilterValue} />
 
 				{this.state.modal.src ? (
@@ -83,7 +84,7 @@ class Gallery extends Component {
 							/>
 						))}
 				</Styling>
-			</div>
+			</Wrapper>
 		);
 	}
 }

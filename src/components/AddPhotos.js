@@ -131,7 +131,7 @@ class AddPhotos extends Component {
 					style={{
 						background: 'white',
 						border: '3px black dotted',
-						padding: '80px',
+						padding: '40px',
 						margin: '0 0 15px'
 					}}
 					onDrop={this.onDrop}
