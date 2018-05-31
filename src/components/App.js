@@ -7,6 +7,7 @@ import Gallery from './Gallery';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import AddPhotos from './AddPhotos';
+import profilePage from './ProfilePage';
 import AuthPage from './authForms/AuthPage';
 import Albums from './Albums';
 import RequireAuth from './RequireAuth';
@@ -43,6 +44,10 @@ class App extends Component {
 						<Route
 							path="/photo/:id"
 							component={RequireAuth(PhotoDetail)}
+						/>
+						<Route
+							path="/profile"
+							component={RequireAuth(profilePage)}
 						/>
 					</Container>
 				</Content>
