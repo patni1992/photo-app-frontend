@@ -3,14 +3,13 @@ import styled from 'styled-components';
 
 const Div = styled.div`
 	background-color: #333;
-	max-height: 45px;
 	color: #f2f2f2;
 	text-align: center;
-	line-height: 45px;
-	position: fixed;
-	left: 0;
-	right: 0;
+	position: absolute;
 	bottom: 0;
+	width: 100%;
+	height: 45px;
+	line-height: 45px;
 `;
 
 export default () => {

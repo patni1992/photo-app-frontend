@@ -9,7 +9,6 @@ import * as actions from '../redux/actions/activeEditImageActions';
 const Form = styled.form`
 	position: relative;
 	max-width: 800px;
-	z-index: 1;
 	background: #ffffff;
 	margin: 0 auto;
 	padding: 45px;
