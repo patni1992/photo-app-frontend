@@ -26,6 +26,10 @@ const Form = styled.form`
 		font-size: 14px;
 	}
 
+	@media (max-width: 599px) {
+		padding: 20px;
+	}
+
 	& button {
 		font-family: "Roboto", sans-serif;
 		text-transform: uppercase;
@@ -130,7 +134,7 @@ class AddPhotos extends Component {
 					style={{
 						background: 'white',
 						border: '3px black dotted',
-						padding: '40px',
+						padding: '15px',
 						margin: '0 0 15px'
 					}}
 					onDrop={this.onDrop}
