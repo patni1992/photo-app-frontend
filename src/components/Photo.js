@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Tag from './Tag';
 import FontAwesome from 'react-fontawesome';
-import { Link } from 'react-router-dom';
+import Link from './common/Link';
 
 // ..rest of your code
 
@@ -55,6 +55,19 @@ const TrashContainer = styled.span`
 	cursor: pointer;
 `;
 
+const Header = styled.div`padding: 0 7px;`;
+
+const Thumbnail = styled.img`
+	border-radius: 20px;
+	width: 30px;
+	margin: 10px;
+`;
+
+const ThumbnailContainer = styled.div`
+	display: inline-flex;
+	align-items: center;
+`;
+
 const FigCaption = styled.figcaption`margin-left: 10px;`;
 
 const P = styled.p`margin-left: 5px;`;
@@ -66,8 +79,6 @@ class Photo extends Component {
 	renderIcons() {
 		let actionIcons = [];
 		if (this.props.editPhoto) {
-			console.log('hej');
-			console.log(this.props);
 			actionIcons.push(
 				<EditContainer
 					onClick={() =>
@@ -98,9 +109,17 @@ class Photo extends Component {
 	render() {
 		return (
 			<Figure>
+				<Header>
+					<Link to={this.props.profileLink}>
+						<ThumbnailContainer>
+							<Thumbnail src="http://placekitten.com/100/100" />
+							<strong>{this.props.author.username}</strong>
+						</ThumbnailContainer>
+					</Link>
+				</Header>
 				<ImgContainer>
-					{this.props.link ? (
-						<Link to={this.props.link}>
+					{this.props.imgLink ? (
+						<Link to={this.props.imgLink}>
 							<Img className="photo" src={this.props.src} />
 						</Link>
 					) : (

@@ -21,14 +21,15 @@ class PhotoDetail extends Component {
 		axios
 			.get(`/images/${this.props.match.params.id}`)
 			.then(response => {
-				console.log('this is the response');
+				console.log('response');
 				console.log(response);
 				this.setState({
 					src: window.location.origin + '/' + response.data.path,
 					description: response.data.description,
 					tags: response.data.tags,
 					comments: response.data.comments,
-					id: response.data._id
+					id: response.data._id,
+					author: response.data.author
 				});
 			})
 			.catch(error => {
@@ -64,26 +65,32 @@ class PhotoDetail extends Component {
 	};
 
 	render() {
-		let newProps = Object.assign({}, this.state, {
-			deletePhoto: this.addDeletePhotoHandler,
-			editPhoto: data => {
-				this.props.setActiveEditImage(data);
-				this.props.history.push('/addPhotos');
-			}
-		});
-		return this.state ? (
-			<Wrapper>
-				<Styling>
-					<Photo {...newProps} />
-					<div style={{ flexBasis: '100%' }}>
-						<Comments
-							postComment={this.addCommentHandler}
-							comments={this.state.comments || []}
-						/>
-					</div>
-				</Styling>
-			</Wrapper>
-		) : null;
+		if (this.state) {
+			let newProps = Object.assign({}, this.state, {
+				profileLink: `/profile/${this.state.author._id}`,
+				deletePhoto: this.addDeletePhotoHandler,
+				editPhoto: data => {
+					this.props.setActiveEditImage(data);
+					this.props.history.push('/addPhotos');
+				}
+			});
+
+			return (
+				<Wrapper>
+					<Styling>
+						<Photo {...newProps} />
+						<div style={{ flexBasis: '100%' }}>
+							<Comments
+								postComment={this.addCommentHandler}
+								comments={this.state.comments || []}
+							/>
+						</div>
+					</Styling>
+				</Wrapper>
+			);
+		} else {
+			return null;
+		}
 	}
 }
 

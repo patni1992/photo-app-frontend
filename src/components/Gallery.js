@@ -13,8 +13,6 @@ import { Wrapper } from './styledComponents/ui';
 const Styling = styled.div`
 	display: flex;
 	flex-wrap: wrap;
-	max-width: 1000px;
-	margin: 0 auto;
 `;
 
 class Gallery extends Component {
@@ -73,16 +71,23 @@ class Gallery extends Component {
 									) !== -1
 							);
 						})
-						.map(data => (
-							<Photo
-								id={data._id}
-								link={`/photo/${data._id}`}
-								clickHandler={this.setModal}
-								description={data.description}
-								tags={data.tags}
-								src={window.location.origin + '/' + data.path}
-							/>
-						))}
+						.map(data => {
+							console.log(data.author);
+							return (
+								<Photo
+									id={data._id}
+									imgLink={`/photo/${data._id}`}
+									profileLink={`/profile/${data.author._id}`}
+									clickHandler={this.setModal}
+									description={data.description}
+									tags={data.tags}
+									author={data.author}
+									src={
+										window.location.origin + '/' + data.path
+									}
+								/>
+							);
+						})}
 				</Styling>
 			</Wrapper>
 		);
