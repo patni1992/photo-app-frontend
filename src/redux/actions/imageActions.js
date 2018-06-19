@@ -9,10 +9,10 @@ export const setImages = images => {
 	};
 };
 
-export const fetchImages = (urlParamter = '') => {
+export const fetchImages = (url = '') => {
 	return dispatch => {
 		axios
-			.get('/images' + urlParamter)
+			.get('/images' + url)
 			.then(response => {
 				return dispatch(setImages(response.data));
 			})
