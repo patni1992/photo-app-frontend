@@ -23,33 +23,25 @@ class App extends Component {
 					render={() => {
 						return (
 							<FullPageImg>
-								<Container>
-									<AuthPage />
-								</Container>
+								<AuthPage />
 							</FullPageImg>
 						);
 					}}
 				/>
 				<Content>
-					<Container>
-						<Route
-							exact
-							path="/"
-							component={RequireAuth(Gallery)}
-						/>
-						<Route
-							path="/addPhotos"
-							component={RequireAuth(AddPhotos)}
-						/>
-						<Route
-							path="/photo/:id"
-							component={RequireAuth(PhotoDetail)}
-						/>
-						<Route
-							path="/profile"
-							component={RequireAuth(profilePage)}
-						/>
-					</Container>
+					<Route exact path="/" component={RequireAuth(Gallery)} />
+					<Route
+						path="/addPhotos"
+						component={RequireAuth(AddPhotos)}
+					/>
+					<Route
+						path="/photo/:id"
+						component={RequireAuth(PhotoDetail)}
+					/>
+					<Route
+						path="/profile"
+						component={RequireAuth(profilePage)}
+					/>
 				</Content>
 				<Footer />
 			</div>

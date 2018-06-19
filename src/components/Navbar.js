@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import FontAwesome from 'react-fontawesome';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
@@ -12,6 +13,7 @@ const Linknav = styled.span`
 	text-decoration: none;
 	font-size: 17px;
 	cursor: pointer;
+	display: block;
 	&:hover {
 		background-color: #ddd;
 		color: black;
@@ -26,11 +28,23 @@ const Div = styled.div`
 	background-color: #333;
 	overflow: hidden;
 	margin-bottom: 60px;
-	left: 0;
-	right: 0;
-	top: 0;
-	z-index: 10;
-	position: absolute;
+`;
+
+const Toggle = styled.div`
+	width: 100%;
+	padding: 10px 20px;
+	background-color: gray;
+	text-align: right;
+	display: none;
+
+	@media (max-width: 768px) {
+		display: block;
+
+		div {
+			background-color: green;
+			padding: 2000px;
+		}
+	}
 `;
 
 const Input = styled.input`float: right;`;
@@ -43,22 +57,37 @@ class Navbar extends Component {
 	renderNavbar() {
 		if (this.props.auth.isAuthenticated) {
 			return (
-				<Div>
-					<Link to="/">
-						<Linknav href="/">Home</Linknav>
-					</Link>
-					<Link to="/addphotos">
-						<Linknav>Add Photos</Linknav>
-					</Link>
+				<navbar>
+					<Div>
+						<Toggle>
+							<FontAwesome
+								style={{
+									color: 'white',
+									fontSize: '20px',
+									zIndex: '200'
+								}}
+								name="trash"
+							/>
+						</Toggle>
+						<Link to="/">
+							<Linknav href="/">Home</Linknav>
+						</Link>
+						<Link to="/addphotos">
+							<Linknav>Add Photos</Linknav>
+						</Link>
 
-					<Linknav onClick={this.logout} style={{ float: 'right' }}>
-						Log out
-					</Linknav>
+						<Linknav
+							onClick={this.logout}
+							style={{ float: 'right' }}
+						>
+							Log out
+						</Linknav>
 
-					<Link style={{ float: 'right' }} to="/profile">
-						<Linknav>{this.props.auth.user.username}</Linknav>
-					</Link>
-				</Div>
+						<Link style={{ float: 'right' }} to="/profile">
+							<Linknav>{this.props.auth.user.username}</Linknav>
+						</Link>
+					</Div>
+				</navbar>
 			);
 		} else {
 			return null;

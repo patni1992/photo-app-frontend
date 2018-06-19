@@ -50,15 +50,18 @@ class Comments extends Component {
 		return (
 			<Container>
 				<CommentsBox>
-					{this.props.comments.map(comment => (
-						<Comment>
-							<DateText>
-								{' '}
-								{moment(comment.createdAt).fromNow()}
-							</DateText>
-							{comment.text}
-						</Comment>
-					))}
+					{this.props.comments.map(comment => {
+						console.log(comment);
+						return (
+							<Comment>
+								<DateText>
+									{' '}
+									{moment(comment.createdAt).fromNow()}
+								</DateText>
+								{comment.text}
+							</Comment>
+						);
+					})}
 				</CommentsBox>
 				<form onSubmit={this.onSubmitHandler} action="">
 					<TextArea

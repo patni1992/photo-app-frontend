@@ -6,6 +6,7 @@ import Searchbar from './Searchbar';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
+import { Container, Row, Col } from 'react-grid-system';
 import Modal from './Modal';
 import * as actions from '../redux/actions/imageActions';
 import { Wrapper } from './styledComponents/ui';
@@ -50,46 +51,51 @@ class Gallery extends Component {
 
 	render() {
 		return (
-			<Wrapper>
-				<Searchbar onChangeHandler={this.setFilterValue} />
+			<Container>
+				<Wrapper>
+					<Searchbar onChangeHandler={this.setFilterValue} />
 
-				{this.state.modal.src ? (
-					<Modal
-						closeHandler={this.setModal}
-						description={this.state.modal.description}
-						src={this.state.modal.src}
-					/>
-				) : null}
-				<Styling>
-					{this.props.images
-						.filter(data => {
-							return (
-								data.description
-									.toLowerCase()
-									.indexOf(
-										this.state.filterOn.toLowerCase()
-									) !== -1
-							);
-						})
-						.map(data => {
-							console.log(data.author);
-							return (
-								<Photo
-									id={data._id}
-									imgLink={`/photo/${data._id}`}
-									profileLink={`/profile/${data.author._id}`}
-									clickHandler={this.setModal}
-									description={data.description}
-									tags={data.tags}
-									author={data.author}
-									src={
-										window.location.origin + '/' + data.path
-									}
-								/>
-							);
-						})}
-				</Styling>
-			</Wrapper>
+					{this.state.modal.src ? (
+						<Modal
+							closeHandler={this.setModal}
+							description={this.state.modal.description}
+							src={this.state.modal.src}
+						/>
+					) : null}
+					<Styling>
+						{this.props.images
+							.filter(data => {
+								return (
+									data.description
+										.toLowerCase()
+										.indexOf(
+											this.state.filterOn.toLowerCase()
+										) !== -1
+								);
+							})
+							.map(data => {
+								console.log(data);
+								return (
+									<Photo
+										id={data._id}
+										imgLink={`/photo/${data._id}`}
+										profileLink={`/profile/${data.author
+											._id}`}
+										clickHandler={this.setModal}
+										description={data.description}
+										tags={data.tags}
+										author={data.author}
+										src={
+											window.location.origin +
+											'/' +
+											data.path
+										}
+									/>
+								);
+							})}
+					</Styling>
+				</Wrapper>
+			</Container>
 		);
 	}
 }
