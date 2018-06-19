@@ -83,7 +83,10 @@ class Navbar extends Component {
 							Log out
 						</Linknav>
 
-						<Link style={{ float: 'right' }} to="/profile">
+						<Link
+							style={{ float: 'right' }}
+							to={`/profile/${this.props.auth.user.id}`}
+						>
 							<Linknav>{this.props.auth.user.username}</Linknav>
 						</Link>
 					</Div>

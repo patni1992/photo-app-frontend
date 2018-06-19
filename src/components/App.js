@@ -39,7 +39,7 @@ class App extends Component {
 						component={RequireAuth(PhotoDetail)}
 					/>
 					<Route
-						path="/profile"
+						path="/profile/:userId"
 						component={RequireAuth(profilePage)}
 					/>
 				</Content>
