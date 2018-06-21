@@ -25,6 +25,6 @@ export const FullPageImg = styled.div`
 	height: 100%;
 `;
 
-export const Content = styled.div`margin-top: 100px;`;
+export const Content = styled.div`padding-bottom: 100px;`;
 
-export const Wrapper = styled.div`margin-bottom: 100px;`;
+export const Wrapper = styled.div``;

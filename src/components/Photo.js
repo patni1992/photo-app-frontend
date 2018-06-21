@@ -13,7 +13,7 @@ const Figure = styled.figure`
 	margin-left: 8px;
 	margin-right: 8px
 	flex-basis: calc(40.333% - 4rem);
-	border: 1px solid #d3d3d3;
+	border: 2px solid #d3d3d3;
 	flex-grow: 1;
 	position: relative;
 `;

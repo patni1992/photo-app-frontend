@@ -27,7 +27,6 @@ const Linknav = styled.span`
 const Div = styled.div`
 	background-color: #333;
 	overflow: hidden;
-	margin-bottom: 60px;
 `;
 
 const Toggle = styled.div`

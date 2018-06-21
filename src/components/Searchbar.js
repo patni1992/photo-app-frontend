@@ -5,6 +5,7 @@ import styled from 'styled-components';
 const Input = styled.input`
 	padding: 20px;
 	width: 100%;
+	border: 2px #d3d3d3 solid;
 `;
 
 const InputContainer = styled.div`
@@ -19,7 +20,7 @@ class Searchbar extends Component {
 				<Input
 					placeholder="Search for images"
 					type="text"
-					onChange={(e) => {
+					onChange={e => {
 						this.props.onChangeHandler(e.target.value);
 					}}
 				/>
