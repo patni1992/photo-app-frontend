@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as actions from '../redux/actions/activeEditImageActions';
+import { setActiveEditImage } from '../redux/actions/activeEditImageActions';
+import { postComment } from '../redux/actions/commentActions';
 import Photo from './Photo';
 import Comments from './Comments';
 import styled from 'styled-components';
@@ -14,6 +15,12 @@ const Styling = styled.div`
 	flex-wrap: wrap;
 	max-width: 1000px;
 	margin: 0 auto;
+`;
+
+const TextArea = styled.input`
+	padding: 25px;
+	width: 100%;
+	margin-bottom: 20px;
 `;
 
 class PhotoDetail extends Component {
@@ -48,20 +55,14 @@ class PhotoDetail extends Component {
 			});
 	};
 
-	addCommentHandler = comment => {
-		axios
-			.post(`/images/${this.props.match.params.id}/comments`, {
-				text: comment
-			})
-			.then(response => {
-				this.setState({
-					comments: [ response.data, ...this.state.comments ]
-				});
-			})
-			.catch(error => {
-				console.log(error);
-				return false; // add error method
-			});
+	addCommentHandler = event => {
+		event.preventDefault();
+		const comment = event.target.elements.comment;
+
+		if (comment.value.trim()) {
+			this.props.postComment(this.props.match.params.id, comment.value);
+			comment.value = '';
+		}
 	};
 
 	render() {
@@ -80,10 +81,14 @@ class PhotoDetail extends Component {
 					<Styling>
 						<Photo {...newProps} />
 						<div style={{ flexBasis: '100%' }}>
-							<Comments
-								postComment={this.addCommentHandler}
-								comments={this.state.comments || []}
-							/>
+							<Comments comments={this.state.comments || []} />
+							<form onSubmit={this.addCommentHandler} action="">
+								<TextArea
+									name="comment"
+									type="text"
+									placeholder="Enter a comment"
+								/>
+							</form>
 						</div>
 					</Styling>
 				</Wrapper>
@@ -94,8 +99,4 @@ class PhotoDetail extends Component {
 	}
 }
 
-function mapDispatchToProps(dispatch) {
-	return bindActionCreators(actions, dispatch);
-}
-
-export default connect(null, mapDispatchToProps)(PhotoDetail);
+export default connect(null, { setActiveEditImage, postComment })(PhotoDetail);

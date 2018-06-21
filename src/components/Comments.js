@@ -7,23 +7,16 @@ const Container = styled.div`padding-top 20px; margin: 0 8px;
 `;
 
 const Comment = styled.div`
-	padding: 20px;
+	padding: 30px;
 	margin-bottom: 15px;
 	border-radius: 5px;
-	border: 1px solid #d3d3d3;
+	border-bottom: 1.5px solid #d3d3d3;
+	background-color: #ffffff;
 `;
 
 const CommentsBox = styled.div`
-	max-height: 250px;
-	overflow: auto;
 	margin-bottom: 20px;
 	width: 100%;
-`;
-
-const TextArea = styled.input`
-	padding: 25px;
-	width: 100%;
-	margin-bottom: 20px;
 `;
 
 const DateText = styled.small`
@@ -35,16 +28,6 @@ class Comments extends Component {
 	constructor(props) {
 		super(props);
 	}
-
-	onSubmitHandler = event => {
-		event.preventDefault();
-		const comment = event.target.elements.comment;
-
-		if (comment.value.trim()) {
-			this.props.postComment(comment.value);
-			comment.value = '';
-		}
-	};
 
 	render() {
 		return (
@@ -63,13 +46,6 @@ class Comments extends Component {
 						);
 					})}
 				</CommentsBox>
-				<form onSubmit={this.onSubmitHandler} action="">
-					<TextArea
-						name="comment"
-						type="text"
-						placeholder="Enter a comment"
-					/>
-				</form>
 			</Container>
 		);
 	}

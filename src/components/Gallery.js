@@ -52,49 +52,44 @@ class Gallery extends Component {
 	render() {
 		return (
 			<Container>
-				<Wrapper>
-					<Searchbar onChangeHandler={this.setFilterValue} />
+				<Searchbar onChangeHandler={this.setFilterValue} />
 
-					{this.state.modal.src ? (
-						<Modal
-							closeHandler={this.setModal}
-							description={this.state.modal.description}
-							src={this.state.modal.src}
-						/>
-					) : null}
-					<Styling>
-						{this.props.images
-							.filter(data => {
-								return (
-									data.description
-										.toLowerCase()
-										.indexOf(
-											this.state.filterOn.toLowerCase()
-										) !== -1
-								);
-							})
-							.map(data => {
-								console.log(data);
-								return (
-									<Photo
-										id={data._id}
-										imgLink={`/photo/${data._id}`}
-										profileLink={`/profile/${data.author
-											._id}`}
-										clickHandler={this.setModal}
-										description={data.description}
-										tags={data.tags}
-										author={data.author}
-										src={
-											window.location.origin +
-											'/' +
-											data.path
-										}
-									/>
-								);
-							})}
-					</Styling>
-				</Wrapper>
+				{this.state.modal.src ? (
+					<Modal
+						closeHandler={this.setModal}
+						description={this.state.modal.description}
+						src={this.state.modal.src}
+					/>
+				) : null}
+				<Styling>
+					{this.props.images
+						.filter(data => {
+							return (
+								data.description
+									.toLowerCase()
+									.indexOf(
+										this.state.filterOn.toLowerCase()
+									) !== -1
+							);
+						})
+						.map(data => {
+							console.log(data);
+							return (
+								<Photo
+									id={data._id}
+									imgLink={`/photo/${data._id}`}
+									profileLink={`/profile/${data.author._id}`}
+									clickHandler={this.setModal}
+									description={data.description}
+									tags={data.tags}
+									author={data.author}
+									src={
+										window.location.origin + '/' + data.path
+									}
+								/>
+							);
+						})}
+				</Styling>
 			</Container>
 		);
 	}

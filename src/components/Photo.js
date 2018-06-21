@@ -10,12 +10,17 @@ import Link from './common/Link';
 import styled from 'styled-components';
 
 const Figure = styled.figure`
-	margin-left: 8px;
-	margin-right: 8px
+	margin-left: 0px;
+	margin-right: 0px;
+	@media (min-width: 768px) {
+		margin-left: 8px;
+		margin-right: 8px;
+	}
 	flex-basis: calc(40.333% - 4rem);
-	border: 2px solid #d3d3d3;
+	box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 	flex-grow: 1;
 	position: relative;
+	background-color: #ffffff;
 `;
 
 const Img = styled.img`

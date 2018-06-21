@@ -11,7 +11,7 @@ import profilePage from './ProfilePage';
 import AuthPage from './authForms/AuthPage';
 import Albums from './Albums';
 import RequireAuth from './RequireAuth';
-import { Container, Content, FullPageImg } from './styledComponents/ui';
+import { Content, FullPageImg } from './styledComponents/ui';
 
 class App extends Component {
 	render() {
