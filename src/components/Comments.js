@@ -3,7 +3,7 @@ import styled, { keyframes } from 'styled-components';
 import axios from 'axios';
 import moment from 'moment';
 
-const Container = styled.div`padding-top 20px; margin: 0 8px;
+const Container = styled.div`padding-top 20px; margin: 0 ;
 `;
 
 const Comment = styled.div`

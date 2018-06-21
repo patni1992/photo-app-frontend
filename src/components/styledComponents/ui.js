@@ -9,6 +9,6 @@ export const FullPageImg = styled.div`
 	height: 100%;
 `;
 
-export const Content = styled.div`padding-bottom: 100px;`;
+export const Content = styled.div`padding-bottom: 70px;`;
 
 export const Wrapper = styled.div``;

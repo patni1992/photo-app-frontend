@@ -4,6 +4,7 @@ import Dropzone from 'react-dropzone';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Container } from 'react-grid-system';
 import * as actions from '../redux/actions/activeEditImageActions';
 
 const Form = styled.form`
@@ -115,41 +116,43 @@ class AddPhotos extends Component {
 
 	render() {
 		return (
-			<Form onSubmit={this.handleSubmit}>
-				<input
-					onChange={this.handleDescChange}
-					name="description"
-					value={this.state.description}
-					placeholder="Description"
-					type="text"
-				/>
-				<input
-					name="tags"
-					onChange={this.handleTagsChange}
-					value={this.state.tags}
-					placeholder="Tags (seperate with comma)"
-					type="text"
-				/>
-				<Dropzone
-					style={{
-						background: 'white',
-						border: '3px black dotted',
-						padding: '15px',
-						margin: '0 0 15px'
-					}}
-					onDrop={this.onDrop}
-					accept="image/jpeg, image/png"
-					multiple={false}
-				>
-					<p>
-						Try dropping a file here, or click to select a file to
-						upload.
-					</p>
-					<p>Only *.jpeg and *.png images will be accepted</p>
-				</Dropzone>
-				<Img src={this.state.img.preview} alt="" />
-				<button> Post </button>
-			</Form>
+			<Container>
+				<Form onSubmit={this.handleSubmit}>
+					<input
+						onChange={this.handleDescChange}
+						name="description"
+						value={this.state.description}
+						placeholder="Description"
+						type="text"
+					/>
+					<input
+						name="tags"
+						onChange={this.handleTagsChange}
+						value={this.state.tags}
+						placeholder="Tags (seperate with comma)"
+						type="text"
+					/>
+					<Dropzone
+						style={{
+							background: 'white',
+							border: '3px black dotted',
+							padding: '15px',
+							margin: '0 0 15px'
+						}}
+						onDrop={this.onDrop}
+						accept="image/jpeg, image/png"
+						multiple={false}
+					>
+						<p>
+							Try dropping a file here, or click to select a file
+							to upload.
+						</p>
+						<p>Only *.jpeg and *.png images will be accepted</p>
+					</Dropzone>
+					<Img src={this.state.img.preview} alt="" />
+					<button> Post </button>
+				</Form>
+			</Container>
 		);
 	}
 }

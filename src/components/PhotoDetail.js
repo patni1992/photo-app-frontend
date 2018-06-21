@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { setTimeout } from 'timers';
 import { Wrapper } from './styledComponents/ui';
+import { Container } from 'react-grid-system';
 
 const Styling = styled.div`
 	display: flex;
@@ -18,9 +19,12 @@ const Styling = styled.div`
 `;
 
 const TextArea = styled.input`
-	padding: 25px;
+	padding: 35px;
 	width: 100%;
 	margin-bottom: 20px;
+	margin-left: 0px;
+	margin-right: 0px;
+	border: 2px #d3d3d3 solid;
 `;
 
 class PhotoDetail extends Component {
@@ -77,21 +81,28 @@ class PhotoDetail extends Component {
 			});
 
 			return (
-				<Wrapper>
-					<Styling>
-						<Photo {...newProps} />
-						<div style={{ flexBasis: '100%' }}>
-							<Comments comments={this.state.comments || []} />
-							<form onSubmit={this.addCommentHandler} action="">
-								<TextArea
-									name="comment"
-									type="text"
-									placeholder="Enter a comment"
+				<Container>
+					<Wrapper>
+						<Styling>
+							<Photo {...newProps} />
+							<div style={{ flexBasis: '100%' }}>
+								<Comments
+									comments={this.state.comments || []}
 								/>
-							</form>
-						</div>
-					</Styling>
-				</Wrapper>
+								<form
+									onSubmit={this.addCommentHandler}
+									action=""
+								>
+									<TextArea
+										name="comment"
+										type="text"
+										placeholder="Enter a comment"
+									/>
+								</form>
+							</div>
+						</Styling>
+					</Wrapper>
+				</Container>
 			);
 		} else {
 			return null;
