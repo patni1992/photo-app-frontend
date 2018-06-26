@@ -4,12 +4,11 @@ import styled from 'styled-components';
 const Styling = styled.span`
 	background-color: #fbfbfb;
 	border: 1px solid #a9b1b5;
-	padding: 3px 6px;
+	padding: 3px 8px;
 	color: #a9b1b5;
 	border-radius: 5px;
 	transition: all 300ms ease-in-out;
-	text-decoration: none;
-	margin: 5px;
+	margin: 3px;
 `;
 
 class Tag extends Component {

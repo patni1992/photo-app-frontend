@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { setActiveEditImage } from '../redux/actions/activeEditImageActions';
 import { postComment } from '../redux/actions/commentActions';
+import { fetchImage, deleteImage } from '../redux/actions/imageActions';
 import Photo from './Photo';
 import Comments from './Comments';
 import styled from 'styled-components';
@@ -29,34 +30,11 @@ const TextArea = styled.input`
 
 class PhotoDetail extends Component {
 	componentDidMount() {
-		axios
-			.get(`/images/${this.props.match.params.id}`)
-			.then(response => {
-				console.log('response');
-				console.log(response);
-				this.setState({
-					src: window.location.origin + '/' + response.data.path,
-					description: response.data.description,
-					tags: response.data.tags,
-					comments: response.data.comments,
-					id: response.data._id,
-					author: response.data.author
-				});
-			})
-			.catch(error => {
-				return false; // add error method
-			});
+		this.props.fetchImage(this.props.match.params.id, '');
 	}
 
 	addDeletePhotoHandler = id => {
-		axios
-			.delete(`/images/${this.props.match.params.id}`)
-			.then(response => {
-				this.props.history.push('/');
-			})
-			.catch(error => {
-				return false; // add error method
-			});
+		this.props.deleteImage(this.props.match.params.id);
 	};
 
 	addCommentHandler = event => {
@@ -70,10 +48,12 @@ class PhotoDetail extends Component {
 	};
 
 	render() {
-		if (this.state) {
-			let newProps = Object.assign({}, this.state, {
-				profileLink: `/profile/${this.state.author._id}`,
+		if (this.props.image) {
+			const { image } = this.props;
+			let newProps = Object.assign({}, image, {
+				profileLink: `/profile/${image.author._id}`,
 				deletePhoto: this.addDeletePhotoHandler,
+				src: window.location.origin + '/' + image.path,
 				editPhoto: data => {
 					this.props.setActiveEditImage(data);
 					this.props.history.push('/addPhotos');
@@ -86,9 +66,7 @@ class PhotoDetail extends Component {
 						<Styling>
 							<Photo {...newProps} />
 							<div style={{ flexBasis: '100%' }}>
-								<Comments
-									comments={this.state.comments || []}
-								/>
+								<Comments comments={[]} />
 								<form
 									onSubmit={this.addCommentHandler}
 									action=""
@@ -110,4 +88,15 @@ class PhotoDetail extends Component {
 	}
 }
 
-export default connect(null, { setActiveEditImage, postComment })(PhotoDetail);
+function mapStateToProps(state, ownProps) {
+	return {
+		image: state.images.items[ownProps.match.params.id]
+	};
+}
+
+export default connect(mapStateToProps, {
+	setActiveEditImage,
+	postComment,
+	fetchImage,
+	deleteImage
+})(PhotoDetail);

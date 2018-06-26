@@ -49,6 +49,38 @@ class Gallery extends Component {
 		}
 	};
 
+	renderImages() {
+		const { images } = this.props;
+
+		if (!images) {
+			return null;
+		}
+
+		return Object.keys(images)
+			.filter(data => {
+				return (
+					images[data].description
+						.toLowerCase()
+						.indexOf(this.state.filterOn.toLowerCase()) !== -1
+				);
+			})
+			.map(data => {
+				data = images[data];
+				return (
+					<Photo
+						id={data._id}
+						imgLink={`/photo/${data._id}`}
+						profileLink={`/profile/${data.author._id}`}
+						clickHandler={this.setModal}
+						description={data.description}
+						tags={data.tags}
+						author={data.author}
+						src={window.location.origin + '/' + data.path}
+					/>
+				);
+			});
+	}
+
 	render() {
 		return (
 			<Container>
@@ -61,35 +93,7 @@ class Gallery extends Component {
 						src={this.state.modal.src}
 					/>
 				) : null}
-				<Styling>
-					{this.props.images
-						.filter(data => {
-							return (
-								data.description
-									.toLowerCase()
-									.indexOf(
-										this.state.filterOn.toLowerCase()
-									) !== -1
-							);
-						})
-						.map(data => {
-							console.log(data);
-							return (
-								<Photo
-									id={data._id}
-									imgLink={`/photo/${data._id}`}
-									profileLink={`/profile/${data.author._id}`}
-									clickHandler={this.setModal}
-									description={data.description}
-									tags={data.tags}
-									author={data.author}
-									src={
-										window.location.origin + '/' + data.path
-									}
-								/>
-							);
-						})}
-				</Styling>
+				<Styling>{this.renderImages()}</Styling>
 			</Container>
 		);
 	}
@@ -97,7 +101,7 @@ class Gallery extends Component {
 
 function mapStateToProps(state) {
 	return {
-		images: state.images
+		images: state.images.items
 	};
 }
 

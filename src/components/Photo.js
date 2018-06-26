@@ -31,7 +31,11 @@ const Img = styled.img`
 `;
 
 const TagContainer = styled.div`
+	font-size: 15px;
+	color: #777;
+	line-height: 23px;
 	margin-top: 20px;
+	margin-bottom: 10px;
 	display: flex;
 	flex-wrap: wrap;
 `;
@@ -48,15 +52,15 @@ const ImgContainer = styled.div`
 
 const EditContainer = styled.span`
 	position: absolute;
-	bottom: 57px;
-	right 25px;
+	top: 12px;
+	right 15px;
 	cursor: pointer;
 `;
 
 const TrashContainer = styled.span`
 	position: absolute;
-	bottom: 57px;
-	right 60px;
+	top: 12px;
+	right 50px;
 	cursor: pointer;
 `;
 
@@ -75,7 +79,10 @@ const ThumbnailContainer = styled.div`
 
 const FigCaption = styled.figcaption`margin-left: 10px;`;
 
-const P = styled.p`margin-left: 5px;`;
+const P = styled.p`
+	margin-left: 5px;
+	color: #777;
+`;
 class Photo extends Component {
 	componentDidMount() {
 		window.scrollTo(0, 0);
@@ -91,7 +98,7 @@ class Photo extends Component {
 							src: this.props.src,
 							tags: this.props.tags.join(','),
 							description: this.props.description,
-							id: this.props.id
+							id: this.props._id
 						})}
 				>
 					<FontAwesome name="pencil" />
@@ -118,7 +125,9 @@ class Photo extends Component {
 					<Link to={this.props.profileLink}>
 						<ThumbnailContainer>
 							<Thumbnail src="http://placekitten.com/100/100" />
-							<strong>{this.props.author.username}</strong>
+							<strong>
+								<h3>{this.props.author.username}</h3>
+							</strong>
 						</ThumbnailContainer>
 					</Link>
 				</Header>

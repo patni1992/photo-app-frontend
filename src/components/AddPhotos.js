@@ -3,15 +3,16 @@ import styled, { keyframes } from 'styled-components';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { Container } from 'react-grid-system';
-import * as actions from '../redux/actions/activeEditImageActions';
+import { setActiveEditImage } from '../redux/actions/activeEditImageActions';
+import { editImage } from '../redux/actions/imageActions';
 
 const Form = styled.form`
 	position: relative;
 	max-width: 800px;
 	background: #ffffff;
-	margin: 0 auto;
+	margin: 50px auto;
+
 	padding: 45px;
 	text-align: center;
 	box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
@@ -82,7 +83,7 @@ class AddPhotos extends Component {
 
 	handleSubmit = event => {
 		event.preventDefault();
-		let appendUrl = '';
+		let urlId = '';
 		const bodyFormData = new FormData();
 		bodyFormData.set('description', this.state.description);
 		bodyFormData.set('tags', this.state.tags);
@@ -92,14 +93,13 @@ class AddPhotos extends Component {
 		let subitMethod = 'post';
 
 		if (Object.keys(this.props.activeEditImage).length !== 0) {
+			console.log('sdfsdf');
+			console.log(this.props);
 			subitMethod = 'patch';
-			appendUrl = '/' + this.props.activeEditImage.id;
+			urlId = '' + this.props.activeEditImage.id;
 		}
 
-		axios
-			[subitMethod]('/images' + appendUrl, bodyFormData)
-			.then(response => this.props.history.push('/'))
-			.catch(error => console.log(error));
+		this.props.editImage(urlId, subitMethod, bodyFormData);
 	};
 
 	handleTagsChange = event => {
@@ -163,8 +163,6 @@ function mapStateToProps(state) {
 	};
 }
 
-function mapDispatchToProps(dispatch) {
-	return bindActionCreators(actions, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddPhotos);
+export default connect(mapStateToProps, { setActiveEditImage, editImage })(
+	AddPhotos
+);
