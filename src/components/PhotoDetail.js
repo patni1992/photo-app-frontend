@@ -31,6 +31,7 @@ const TextArea = styled.input`
 class PhotoDetail extends Component {
 	componentDidMount() {
 		this.props.fetchImage(this.props.match.params.id, '');
+		window.scrollTo(0, 0);
 	}
 
 	addDeletePhotoHandler = id => {
@@ -53,7 +54,7 @@ class PhotoDetail extends Component {
 			let newProps = Object.assign({}, image, {
 				profileLink: `/profile/${image.author._id}`,
 				deletePhoto: this.addDeletePhotoHandler,
-				src: window.location.origin + '/' + image.path,
+				src: image.path,
 				editPhoto: data => {
 					this.props.setActiveEditImage(data);
 					this.props.history.push('/addPhotos');
