@@ -1,107 +1,142 @@
-import React, { Component } from 'react';
-import FontAwesome from 'react-fontawesome';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import styled from 'styled-components';
-import { logoutUser } from '../redux/actions/authActions';
+import React, { Component } from "react";
+import FontAwesome from "react-fontawesome";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import styled from "styled-components";
+import { logoutUser } from "../redux/actions/authActions";
 
-const Linknav = styled.span`
-	float: left;
-	color: #f2f2f2;
-	text-align: center;
-	padding: 14px 16px;
-	text-decoration: none;
-	font-size: 17px;
-	cursor: pointer;
-	display: block;
-	&:hover {
-		background-color: #ddd;
-		color: black;
-	}
-	&:active {
-		background-color: #4caf50;
-		color: white;
-	}
+const Menu = styled.nav`
+  display: block;
+  width: 100%;
+  background-color: #333;
+  line-height: 1.6em;
+  font-weight: 400;
+  text-align: center;
+  position: relative;
+  margin: 0 auto;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+
+  & li {
+    display: inline-block;
+    transition: opacity 0.8s;
+
+    & a {
+      user-select: none;
+      display: block;
+          min-width: 140px;
+          text-align: center;
+         color: #fff;
+          text-transform: uppercase;
+          text-decoration: none;
+          padding: 10px 0;
+    }
+  }
+
+  & ul {
+    list-style-type: none;
+    margin: 0 auto;
+    padding-left: 0;
+    text-align: center;
+    width: 100%;
+    background-color: #333;
+    transition: max-height 0.8s;
+  }
+
+  @media (max-width: 800px) {
+    padding: 20px;
+    & ul {
+      height: 180px;
+      max-height: ${props => (props.show ? "300px" : "0")};
+    }
+    & li {
+      display: block;
+      opacity: ${props => (props.show ? "1" : "0")};
+    }
+  }
 `;
 
-const Div = styled.div`
-	background-color: #333;
-	overflow: hidden;
+const Hamburger = styled.div`
+  position: absolute;
+  display: none;
+  z-index: 200;
+  width: 40px;
+  height: 40px;
+  top: 8px;
+  right: 0px;
+
+  @media (max-width: 800px) {
+    display: block;
+  }
+
+  & span {
+    cursor: pointer;
+    color: white;
+    font-size: 25px;
+  }
 `;
-
-const Toggle = styled.div`
-	width: 100%;
-	padding: 10px 20px;
-	background-color: gray;
-	text-align: right;
-	display: none;
-
-	@media (max-width: 768px) {
-		display: block;
-
-		div {
-			background-color: green;
-			padding: 2000px;
-		}
-	}
-`;
-
-const Input = styled.input`float: right;`;
 
 class Navbar extends Component {
-	logout = data => {
-		this.props.logoutUser();
-	};
+  state = {
+    showMenu: false
+  };
 
-	renderNavbar() {
-		if (this.props.auth.isAuthenticated) {
-			return (
-				<navbar>
-					<Div>
-						<Toggle>
-							<FontAwesome
-								style={{
-									color: 'white',
-									fontSize: '20px',
-									zIndex: '200'
-								}}
-								name="trash"
-							/>
-						</Toggle>
-						<Link to="/">
-							<Linknav href="/">Home</Linknav>
-						</Link>
-						<Link to="/addphotos">
-							<Linknav>Add Photos</Linknav>
-						</Link>
+  logout = data => {
+    this.props.logoutUser();
+  };
 
-						<Linknav
-							onClick={this.logout}
-							style={{ float: 'right' }}
-						>
-							Log out
-						</Linknav>
+  toggleClickHandler = () => {
+    this.setState(prevState => {
+      return { sidebar: !prevState.sidebar };
+    });
+  };
 
-						<Link
-							style={{ float: 'right' }}
-							to={`/profile/${this.props.auth.user.id}`}
-						>
-							<Linknav>{this.props.auth.user.username}</Linknav>
-						</Link>
-					</Div>
-				</navbar>
-			);
-		} else {
-			return null;
-		}
-	}
-	render() {
-		return this.renderNavbar();
-	}
+  toggleMenu = () => {
+    this.setState(function(prevState) {
+      return { showMenu: !prevState.showMenu };
+    });
+  };
+  renderNavbar() {
+    if (this.props.auth.isAuthenticated) {
+      return (
+        <Menu show={this.state.showMenu}>
+          <Hamburger onClick={this.toggleMenu}>
+            <FontAwesome name="bars" style={{}} />
+          </Hamburger>
+
+          <ul id="menu">
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/addphotos">Add photos</Link>
+            </li>
+            <li>
+              <Link to={`/profile/${this.props.auth.user.id}`}>
+                {this.props.auth.user.username}
+              </Link>
+            </li>
+            <li>
+              <Link to="#" onClick={this.logout}>
+                Logout
+              </Link>
+            </li>
+          </ul>
+        </Menu>
+      );
+    } else {
+      return null;
+    }
+  }
+  render() {
+    return this.renderNavbar();
+  }
 }
 
 const mapStateToProps = state => ({
-	auth: state.auth
+  auth: state.auth
 });
 
-export default connect(mapStateToProps, { logoutUser })(Navbar);
+export default connect(
+  mapStateToProps,
+  { logoutUser }
+)(Navbar);
