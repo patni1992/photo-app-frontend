@@ -23,12 +23,11 @@ const Menu = styled.nav`
     & a {
       user-select: none;
       display: block;
-          min-width: 140px;
-          text-align: center;
-         color: #fff;
-          text-transform: uppercase;
-          text-decoration: none;
-          padding: 10px 0;
+      text-align: center;
+      color: #fff;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 10px 20px;
     }
   }
 

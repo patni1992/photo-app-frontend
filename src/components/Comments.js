@@ -33,7 +33,6 @@ class Comments extends Component {
       <Container>
         <CommentsBox>
           {this.props.comments.map(comment => {
-            console.log(comment);
             return (
               <Comment>
                 <DateText> {moment(comment.createdAt).fromNow()} </DateText>{" "}

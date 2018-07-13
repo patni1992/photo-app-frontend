@@ -12,7 +12,7 @@ class InfiniteScroll extends Component {
     window.removeEventListener("scroll", this.onScroll, false);
   }
 
-  unfreeze = () => setTimeout(() => this.setState({ freeze: false }), 100);
+  unfreeze = () => setTimeout(() => this.setState({ freeze: false }), 200);
 
   onScroll = () => {
     if (

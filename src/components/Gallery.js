@@ -3,15 +3,19 @@ import Photo from "./Photo";
 import styled from "styled-components";
 import Searchbar from "./Searchbar";
 import InfiniteScroll from "./InfiniteScroll";
+import { getEntitiesFromResourcsIds } from "../redux/reducers/pageReducer";
+import { searchFetchImages } from "../redux/actions/searchActions";
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { Container, Row, Col } from "react-grid-system";
+import { Container } from "react-grid-system";
 import Modal from "./Modal";
-import * as actions from "../redux/actions/imageActions";
+import { fetchImages } from "../redux/actions/imageActions";
 
 const Styling = styled.div`
   display: flex;
   flex-wrap: wrap;
+  & figure:nth-child(7n + 7) {
+    flex: 1 100%;
+  }
 `;
 
 class Gallery extends Component {
@@ -31,7 +35,7 @@ class Gallery extends Component {
     this.setState({
       filterOn: value
     });
-    this.props.fetchImages("?page=1&search=" + value, true);
+    this.props.searchFetchImages("?page=1&search=" + value, "feed");
   };
 
   setModal = value => {
@@ -50,48 +54,44 @@ class Gallery extends Component {
   };
 
   componentDidMount() {
-    this.props.fetchImages("?page=" + 1);
+    if (!this.props.images.length) {
+      this.props.fetchImages("", "feed");
+    }
   }
 
   paginate = () => {
-    const { page, pages } = this.props.pagination;
-    if (page < pages) {
-      this.props.fetchImages(
-        "?page=" + (page + 1) + "&search=" + this.state.filterOn
-      );
+    if (this.props.pagination) {
+      const { page, pages } = this.props.pagination.feedimages;
+      if (page < pages) {
+        this.props.fetchImages(
+          "?page=" + (page + 1) + "&search=" + this.state.filterOn,
+          "feed"
+        );
+      }
     }
   };
 
   renderImages() {
     const { images } = this.props;
 
-    if (!images) {
+    if (!images.length) {
       return null;
     }
 
-    return Object.keys(images)
-      .filter(data => {
-        return (
-          images[data].description
-            .toLowerCase()
-            .indexOf(this.state.filterOn.toLowerCase()) !== -1
-        );
-      })
-      .map(data => {
-        data = images[data];
-        return (
-          <Photo
-            id={data._id}
-            imgLink={`/photo/${data._id}`}
-            profileLink={`/profile/${data.author._id}`}
-            clickHandler={this.setModal}
-            description={data.description}
-            tags={data.tags}
-            author={data.author}
-            src={data.path}
-          />
-        );
-      });
+    return images.map(image => {
+      return (
+        <Photo
+          id={image._id}
+          imgLink={`/photo/${image._id}`}
+          profileLink={`/profile/${image.author._id}`}
+          clickHandler={this.setModal}
+          description={image.description}
+          tags={image.tags}
+          author={image.author}
+          src={image.path}
+        />
+      );
+    });
   }
 
   render() {
@@ -115,16 +115,12 @@ class Gallery extends Component {
 
 function mapStateToProps(state) {
   return {
-    ...state.images,
-    images: state.images.items
+    images: getEntitiesFromResourcsIds(state, "feed"),
+    pagination: state.pagination
   };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(actions, dispatch);
 }
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  { fetchImages, searchFetchImages }
 )(Gallery);

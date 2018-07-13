@@ -2,11 +2,6 @@ import React, { Component } from "react";
 import Tag from "./Tag";
 import FontAwesome from "react-fontawesome";
 import Link from "./common/Link";
-
-// ..rest of your code
-
-//import image from './Image';
-
 import styled from "styled-components";
 
 const Figure = styled.figure`

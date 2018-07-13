@@ -1,107 +1,108 @@
-import React, { Component } from 'react';
-import styled, { keyframes } from 'styled-components';
-import { FormGroup, Form, InputError } from '../styledComponents/form';
-import { zoom } from '../styledComponents/animation';
+import React, { Component } from "react";
+import styled from "styled-components";
+import { FormGroup, Form, InputError } from "../styledComponents/form";
 
 const SpanError = styled.a`
-	margin: 0;
-	padding: 0;
-	text-align: left;
+  margin: 0;
+  padding: 0;
+  text-align: left;
 `;
 
-const Header = styled.h2`margin: 0;`;
+const Header = styled.h2`
+  margin: 0;
+`;
 
 class Signup extends Component {
-	constructor() {
-		super();
-		this.state = {
-			email: '',
-			username: '',
-			password: '',
-			confirmPassword: ''
-		};
-	}
+  constructor() {
+    super();
+    this.state = {
+      email: "",
+      username: "",
+      password: "",
+      confirmPassword: ""
+    };
+  }
 
-	l;
+  l;
 
-	onChangeHandler = e => {
-		console.log(e.target.name);
-		this.setState({
-			[e.target.name]: e.target.value
-		});
-	};
+  onChangeHandler = e => {
+    console.log(e.target.name);
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  };
 
-	onSubmitHandler = e => {
-		console.log(this.props);
-		e.preventDefault();
-		this.props.signup(this.state);
-	};
+  onSubmitHandler = e => {
+    console.log(this.props);
+    e.preventDefault();
+    this.props.signup(this.state);
+  };
 
-	render() {
-		const { errors } = this.props;
-		return (
-			<Form noValidate onSubmit={this.onSubmitHandler}>
-				<Header>Signup</Header>
-				<FormGroup>
-					<input
-						type="email"
-						name="email"
-						value={this.state.email}
-						onChange={this.onChangeHandler}
-						placeholder="Email"
-					/>
-					{errors.email && (
-						<SpanError>
-							<InputError>{errors.email}</InputError>
-						</SpanError>
-					)}
-				</FormGroup>
-				<FormGroup>
-					<input
-						type="text"
-						name="username"
-						value={this.state.username}
-						onChange={this.onChangeHandler}
-						placeholder="Username"
-					/>
-					{errors.username && (
-						<SpanError>
-							<InputError>{errors.username}</InputError>
-						</SpanError>
-					)}
-				</FormGroup>
-				<FormGroup>
-					<input
-						onChange={this.onChangeHandler}
-						name="password"
-						type="password"
-						placeholder="Password"
-					/>
-					{errors.password && (
-						<SpanError>
-							<InputError>{errors.password}</InputError>
-						</SpanError>
-					)}
-				</FormGroup>
-				<FormGroup>
-					<input
-						type="password"
-						onChange={this.onChangeHandler}
-						name="confirmPassword"
-						placeholder="Confirm Password"
-					/>
-					{errors.confirmPassword && (
-						<SpanError>
-							<InputError>{errors.confirmPassword}</InputError>
-						</SpanError>
-					)}
-				</FormGroup>
-				<FormGroup>
-					<button>Sign Up</button>
-				</FormGroup>
-			</Form>
-		);
-	}
+  render() {
+    const { errors } = this.props;
+    return (
+      <Form noValidate onSubmit={this.onSubmitHandler}>
+        <Header>Signup</Header>
+        <FormGroup>
+          <input
+            type="email"
+            name="email"
+            value={this.state.email}
+            onChange={this.onChangeHandler}
+            placeholder="Email"
+          />
+          {errors.email && (
+            <SpanError>
+              <InputError>{errors.email}</InputError>
+            </SpanError>
+          )}
+        </FormGroup>
+        <FormGroup>
+          <input
+            type="text"
+            name="username"
+            value={this.state.username}
+            onChange={this.onChangeHandler}
+            placeholder="Username"
+          />
+          {errors.username && (
+            <SpanError>
+              <InputError>{errors.username}</InputError>
+            </SpanError>
+          )}
+        </FormGroup>
+        <FormGroup>
+          <input
+            onChange={this.onChangeHandler}
+            name="password"
+            type="password"
+            placeholder="Password"
+          />
+          {errors.password && (
+            <SpanError>
+              <InputError>{errors.password}</InputError>
+            </SpanError>
+          )}
+        </FormGroup>
+        <FormGroup>
+          <input
+            type="password"
+            onChange={this.onChangeHandler}
+            name="confirmPassword"
+            placeholder="Confirm Password"
+          />
+          {errors.confirmPassword && (
+            <SpanError>
+              <InputError>{errors.confirmPassword}</InputError>
+            </SpanError>
+          )}
+        </FormGroup>
+        <FormGroup>
+          <button>Sign Up</button>
+        </FormGroup>
+      </Form>
+    );
+  }
 }
 
 export default Signup;
