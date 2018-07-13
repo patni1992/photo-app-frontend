@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../../api";
 import { normalize, schema } from "normalizr";
 import { SET_COMMENTS, PREPEND_COMMENT } from "./types";
 const commentSchema = new schema.Entity("comments", {}, { idAttribute: "_id" });
@@ -19,7 +19,7 @@ export const addComment = comment => {
 
 export const fetchComments = (url = "") => {
   return dispatch => {
-    axios
+    api
       .get("/comments" + url)
       .then(response => {
         const { docs, total, limit, page, pages } = response.data;
@@ -43,7 +43,7 @@ export const fetchComments = (url = "") => {
 
 export const postComment = (id, comment) => {
   return dispatch => {
-    axios
+    api
       .post(`/images/${id}/comments`, {
         text: comment
       })

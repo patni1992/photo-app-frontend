@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../../api";
 import { push } from "react-router-redux";
 import jwtDecode from "jwt-decode";
 
@@ -8,7 +8,7 @@ import { SET_ERRORS, SET_CURRENT_USER } from "./types";
 
 export function registerUser(userData) {
   return dispatch => {
-    return axios
+    return api
       .post("/users", userData)
       .then(res => {
         dispatch(push("/"));
@@ -24,7 +24,7 @@ export function registerUser(userData) {
 }
 
 export const loginUser = userData => dispatch => {
-  axios
+  api
     .post("/users/login", userData)
     .then(res => {
       const token = res.data;

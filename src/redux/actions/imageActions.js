@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../../api";
 import { normalize, schema } from "normalizr";
 import { push } from "react-router-redux";
 
@@ -57,7 +57,7 @@ export function setCurrentImagetId(id) {
 }
 
 export const fetchNormalizeData = url => {
-  return axios
+  return api
     .get("/images" + url)
     .then(response => {
       const { docs, total, limit, page, pages } = response.data;
@@ -121,7 +121,7 @@ export const fetchImages = (
 
 export const fetchImage = (id, url = "") => {
   return (dispatch, getState) => {
-    axios
+    api
       .get("/images/" + id + "/" + url)
       .then(response => {
         const normalizeData = normalize([response.data], [imageSchema]);
@@ -134,7 +134,7 @@ export const fetchImage = (id, url = "") => {
 };
 
 export const deleteImage = id => dispatch => {
-  axios
+  api
     .delete(`/images/` + id)
     .then(res => {
       dispatch({
@@ -147,7 +147,7 @@ export const deleteImage = id => dispatch => {
 };
 
 export const editImage = (id, subitMethod = "post", bodyData) => dispatch => {
-  axios[subitMethod]("/images/" + id, bodyData)
+  api[subitMethod]("/images/" + id, bodyData)
     .then(response => {
       const normalizeData = normalize([response.data], [imageSchema]);
       const images = normalizeData.entities.hasOwnProperty("images")
