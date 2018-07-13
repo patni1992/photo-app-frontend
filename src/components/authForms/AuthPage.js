@@ -40,16 +40,9 @@ class AuthPage extends Component {
     };
   }
 
-  signup = data => {
-    console.log("signup");
-    this.props.registerUser(data);
-  };
+  signup = data => this.props.registerUser(data);
 
-  login = data => {
-    console.log("signup");
-
-    this.props.loginUser(data);
-  };
+  login = data => this.props.loginUser(data);
 
   setLoginActive = () => {
     this.setState({
@@ -95,7 +88,7 @@ class AuthPage extends Component {
 
         <VerticalAlign>
           {this.state.login ? (
-            <Login login={this.login} />
+            <Login errors={this.props.errors} login={this.login} />
           ) : (
             <Signup errors={this.props.errors} signup={this.signup} />
           )}

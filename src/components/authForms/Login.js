@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { FormGroup, Form } from "../styledComponents/form";
+import { FormGroup, Form, InputError } from "../styledComponents/form";
 
 const ForgotPassword = styled.a`
   width: 50%;
@@ -14,6 +14,12 @@ const Header = styled.h2`
   margin: 0;
 `;
 
+const SpanError = styled.a`
+  margin: 0;
+  padding: 0;
+  text-align: left;
+`;
+
 class Login extends Component {
   constructor() {
     super();
@@ -25,7 +31,6 @@ class Login extends Component {
 
   onSubmitHandler = e => {
     e.preventDefault();
-    console.log("bajs");
     this.props.login(this.state);
   };
 
@@ -49,6 +54,7 @@ class Login extends Component {
   };
 
   render() {
+    const { errors } = this.props;
     return (
       <Form noValidate onSubmit={this.onSubmitHandler}>
         <Header>Login</Header>
@@ -60,6 +66,11 @@ class Login extends Component {
             name="username"
             placeholder="Username or email"
           />
+          {errors.username && (
+            <SpanError>
+              <InputError>{errors.username}</InputError>
+            </SpanError>
+          )}
         </FormGroup>
         <FormGroup>
           <input
@@ -69,6 +80,11 @@ class Login extends Component {
             name="password"
             placeholder="Password"
           />
+          {errors.password && (
+            <SpanError>
+              <InputError>{errors.password}</InputError>
+            </SpanError>
+          )}
         </FormGroup>
         <FormGroup>
           <button>Log in</button>
