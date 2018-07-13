@@ -1,10 +1,10 @@
 import {
-  SET_IMAGES,
+  SET_ENTITIES,
   RECEIVE_ENTITIES,
   DELETE_IMAGE,
-  RECEIVE_ENTITIE,
+  RESET_IMAGES,
   IMAGE_LOADING,
-  APPEND_ENTITIES
+  APPEND_IMAGES
 } from "../actions/types";
 
 const initialState = {
@@ -15,19 +15,27 @@ const initialState = {
 
 export default function(state = initialState, action) {
   switch (action.type) {
+    case APPEND_IMAGES:
+      return {
+        ...state,
+        isLoading: false,
+        items: Object.assign({}, state.items, action.payload.images)
+      };
+
     case RECEIVE_ENTITIES:
-      const { entities, pagination } = action.payload;
-      if (entities && entities.images) {
+      if (action.payload.entities && action.payload.entities.images) {
         return {
           ...state,
           isLoading: false,
-          items: Object.assign({}, state.items, entities.images),
-          pagination
+
+          items: action.payload.entities.images,
+          pagination: action.payload.pagination
         };
       }
 
       return state;
-    case APPEND_ENTITIES:
+
+    case SET_ENTITIES:
       if (action.payload.entities && action.payload.entities.images) {
         return {
           ...state,
@@ -36,8 +44,8 @@ export default function(state = initialState, action) {
           pagination: action.payload.pagination
         };
       }
-
       return state;
+
     case DELETE_IMAGE:
       let copy = Object.assign({}, state.items);
       delete copy[action.payload.id];
@@ -46,6 +54,9 @@ export default function(state = initialState, action) {
         isLoading: false,
         items: copy
       };
+
+    case RESET_IMAGES:
+      return initialState;
 
     case IMAGE_LOADING:
       return {

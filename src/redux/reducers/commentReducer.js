@@ -1,15 +1,50 @@
-import { SET_COMMENTS, ADD_COMMENT, RECEIVE_ENTITIES } from '../actions/types';
+import {
+  SET_COMMENTS,
+  PREPEND_COMMENT,
+  RECEIVE_ENTITIES,
+  APPEND_ENTITIES
+} from "../actions/types";
 
-export default function(state = [], action) {
-	switch (action.type) {
-		case RECEIVE_ENTITIES:
-			const { entities } = action.payload;
-			return { ...state, items: entities.comments };
-		case ADD_COMMENT:
-			console.log('dsfsdf');
-			console.log(action);
-			return [ ...state, action.comment ];
-		default:
-			return state;
-	}
+const initialState = {
+  items: {},
+  isLoading: false,
+  error: null
+};
+
+export default function(state = initialState, action) {
+  switch (action.type) {
+    case RECEIVE_ENTITIES:
+      const { entities } = action.payload;
+      return {
+        ...state,
+        items: Object.assign({}, state.items, entities.comments)
+      };
+    case APPEND_ENTITIES:
+      if (action.payload.entities && action.payload.entities.comments) {
+        return {
+          ...state,
+          isLoading: false,
+          items: action.payload.entities.comments,
+          pagination: action.payload.pagination
+        };
+      }
+
+      return state;
+    case SET_COMMENTS:
+      let comments = {};
+      if (action.comments.entities.hasOwnProperty("comments")) {
+        comments = action.comments.entities.comments;
+      }
+      return {
+        ...state,
+        items: comments
+      };
+    case PREPEND_COMMENT:
+      return {
+        ...state,
+        items: { [action.comment._id]: action.comment, ...state.items }
+      };
+    default:
+      return state;
+  }
 }
