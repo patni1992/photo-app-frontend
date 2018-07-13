@@ -13,6 +13,7 @@ body {
 }
 body {
   font-family: "Work Sans", sans-serif;
+  position: relative;
 }
 
 h1,
@@ -24,7 +25,8 @@ h6 {
   color: #333;
   font-family: "Crimson Text", serif;
 }
-/* Trick: */
-body {
-  position: relative;
+
+.app,
+#root {
+  height: 100%;
 }
