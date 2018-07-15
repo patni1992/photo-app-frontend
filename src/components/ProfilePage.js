@@ -1,20 +1,46 @@
 import React, { Component } from "react";
+import styled from "styled-components";
 import { connect } from "react-redux";
-import { Container, Row, Col } from "react-grid-system";
+import { Row, Col } from "react-grid-system";
 import { fetchComments } from "../redux/actions/commentActions";
 import { getEntitiesFromResourcsIds } from "../redux/reducers/pageReducer";
 import { fetchImages, resetImages } from "../redux/actions/imageActions";
 import { emptyPage } from "../redux/actions/pageActions";
 import Comments from "./Comments";
+import PaginationBar from "./PaginationBar";
+
+const ImageContainer = styled.div`
+  height: 185px;
+  padding: 10px 10px 0 0;
+
+  @media (min-width: 1400px) {
+    height: 235px;
+  }
+
+  @media (min-width: 1900px) {
+    height: 340px;
+  }
+`;
 
 class ProfilePage extends Component {
+  state = {
+    limit: 8
+  };
   componentDidMount() {
-    this.props.fetchComments("?userId=" + this.props.match.params.userId);
-    this.props.fetchImages(
-      "?limit=6&userId=" + this.props.match.params.userId,
-      "profilePage",
-      true
-    );
+    let limit = 8;
+    if (window.innerWidth > 1199) {
+      limit = 9;
+    }
+    window.addEventListener("resize", this.updateLimit);
+
+    this.setState({ limit }, prevState => {
+      this.props.fetchComments("?userId=" + this.props.match.params.userId);
+      this.props.fetchImages(
+        `?limit=${this.state.limit}&userId=${this.props.match.params.userId}`,
+        "profilePage",
+        true
+      );
+    });
     window.scrollTo(0, 0);
   }
 
@@ -22,7 +48,23 @@ class ProfilePage extends Component {
     this.props.emptyPage({
       dataBelongToPage: "profilePage"
     });
+    window.removeEventListener("resize", this.updateLimit);
   }
+
+  updateLimit = () => {
+    let limit = 8;
+    if (window.innerWidth > 1199) {
+      limit = 9;
+    }
+    if (limit !== this.state.limit) {
+      this.setState({ limit });
+      this.props.fetchImages(
+        `?limit=${limit}&userId=${this.props.match.params.userId}`,
+        "profilePage",
+        true
+      );
+    }
+  };
 
   renderComments() {
     const comments = Object.keys(this.props.comments);
@@ -36,75 +78,103 @@ class ProfilePage extends Component {
     );
   }
 
+  renderPagination() {
+    let element = null;
+    if (
+      this.props.pagination &&
+      this.props.images.length &&
+      this.props.pagination.hasOwnProperty("profilePageimages") &&
+      this.props.pagination.profilePageimages.pages > 1
+    ) {
+      element = (
+        <PaginationBar
+          pages={this.props.pagination.profilePageimages.pages}
+          onClick={this.paginationClick}
+          activePage={1}
+        />
+      );
+    }
+    return element;
+  }
+
+  paginationClick = value => {
+    this.props.fetchImages(
+      `?page= ${value}&limit=${this.state.limit}&userId=${
+        this.props.match.params.userId
+      }`,
+      "profilePage",
+      true
+    );
+  };
+
   render() {
     return (
-      <Container>
-        <Row>
-          <Col sm={8}>
-            <div style={{ margin: "0px" }}>
-              <h2>Latest Images</h2>
-              <Row align="top">
-                {this.props.images.map(image => (
-                  <Col sm={12} lg={6}>
-                    <img
-                      style={{
-                        width: "100%",
-                        padding: "10px 0"
-                      }}
-                      src={image.path}
-                    />
-                  </Col>
-                ))}
-              </Row>
-            </div>
-          </Col>
-          <Col sm={4}>
-            <h2>Latest comments</h2>
-            {this.renderComments()}
-            <h2>Something else </h2>
-            <img
-              style={{ width: "50px" }}
-              src="https://thumbsplus.tutsplus.com/uploads/users/144/profiles/2366/profileImage/profile_thumbnail%20low.jpg?height=76&width=76"
-            />{" "}
-            <img
-              style={{ width: "50px" }}
-              src="https://thumbsplus.tutsplus.com/uploads/users/144/profiles/2366/profileImage/profile_thumbnail%20low.jpg?height=76&width=76"
-            />{" "}
-            <img
-              style={{ width: "50px" }}
-              src="https://thumbsplus.tutsplus.com/uploads/users/144/profiles/2366/profileImage/profile_thumbnail%20low.jpg?height=76&width=76"
-            />{" "}
-            <img
-              style={{ width: "50px" }}
-              src="https://thumbsplus.tutsplus.com/uploads/users/144/profiles/2366/profileImage/profile_thumbnail%20low.jpg?height=76&width=76"
-            />{" "}
-            <img
-              style={{ width: "50px" }}
-              src="https://thumbsplus.tutsplus.com/uploads/users/144/profiles/2366/profileImage/profile_thumbnail%20low.jpg?height=76&width=76"
-            />{" "}
-            <img
-              style={{ width: "50px" }}
-              src="https://thumbsplus.tutsplus.com/uploads/users/144/profiles/2366/profileImage/profile_thumbnail%20low.jpg?height=76&width=76"
-            />{" "}
-            <img
-              style={{ width: "50px" }}
-              src="https://thumbsplus.tutsplus.com/uploads/users/144/profiles/2366/profileImage/profile_thumbnail%20low.jpg?height=76&width=76"
-            />{" "}
-            <img
-              style={{ width: "50px" }}
-              src="https://thumbsplus.tutsplus.com/uploads/users/144/profiles/2366/profileImage/profile_thumbnail%20low.jpg?height=76&width=76"
-            />{" "}
-            <img
-              style={{ width: "50px" }}
-              src="https://thumbsplus.tutsplus.com/uploads/users/144/profiles/2366/profileImage/profile_thumbnail%20low.jpg?height=76&width=76"
-            />{" "}
-            <img
-              style={{ width: "50px" }}
-              src="https://thumbsplus.tutsplus.com/uploads/users/144/profiles/2366/profileImage/profile_thumbnail%20low.jpg?height=76&width=76"
-            />{" "}
-          </Col>
-        </Row>
-      </Container>
+      <Row style={{ margin: "0 15px 0 15px" }}>
+        <Col style={{ padding: "0" }} sm={8}>
+          <h2>Latest Images</h2>
+          <Row style={{ marginBottom: "10px" }}>
+            {this.props.images.map(image => (
+              <Col style={{ padding: 0 }} sm={12} md={6} xl={4}>
+                <ImageContainer>
+                  <img
+                    style={{
+                      width: "100%",
+                      height: "auto"
+                    }}
+                    src={image.path}
+                  />
+                </ImageContainer>
+              </Col>
+            ))}
+          </Row>
+          {this.renderPagination()}
+        </Col>
+        <Col sm={4}>
+          <h2>Latest comments</h2>
+          {this.renderComments()}
+          <h2>Something else </h2>
+          <img
+            style={{ width: "50px" }}
+            src="https://thumbsplus.tutsplus.com/uploads/users/144/profiles/2366/profileImage/profile_thumbnail%20low.jpg?height=76&width=76"
+          />{" "}
+          <img
+            style={{ width: "50px" }}
+            src="https://thumbsplus.tutsplus.com/uploads/users/144/profiles/2366/profileImage/profile_thumbnail%20low.jpg?height=76&width=76"
+          />{" "}
+          <img
+            style={{ width: "50px" }}
+            src="https://thumbsplus.tutsplus.com/uploads/users/144/profiles/2366/profileImage/profile_thumbnail%20low.jpg?height=76&width=76"
+          />{" "}
+          <img
+            style={{ width: "50px" }}
+            src="https://thumbsplus.tutsplus.com/uploads/users/144/profiles/2366/profileImage/profile_thumbnail%20low.jpg?height=76&width=76"
+          />{" "}
+          <img
+            style={{ width: "50px" }}
+            src="https://thumbsplus.tutsplus.com/uploads/users/144/profiles/2366/profileImage/profile_thumbnail%20low.jpg?height=76&width=76"
+          />{" "}
+          <img
+            style={{ width: "50px" }}
+            src="https://thumbsplus.tutsplus.com/uploads/users/144/profiles/2366/profileImage/profile_thumbnail%20low.jpg?height=76&width=76"
+          />{" "}
+          <img
+            style={{ width: "50px" }}
+            src="https://thumbsplus.tutsplus.com/uploads/users/144/profiles/2366/profileImage/profile_thumbnail%20low.jpg?height=76&width=76"
+          />{" "}
+          <img
+            style={{ width: "50px" }}
+            src="https://thumbsplus.tutsplus.com/uploads/users/144/profiles/2366/profileImage/profile_thumbnail%20low.jpg?height=76&width=76"
+          />{" "}
+          <img
+            style={{ width: "50px" }}
+            src="https://thumbsplus.tutsplus.com/uploads/users/144/profiles/2366/profileImage/profile_thumbnail%20low.jpg?height=76&width=76"
+          />{" "}
+          <img
+            style={{ width: "50px" }}
+            src="https://thumbsplus.tutsplus.com/uploads/users/144/profiles/2366/profileImage/profile_thumbnail%20low.jpg?height=76&width=76"
+          />{" "}
+        </Col>
+      </Row>
     );
   }
 }
@@ -113,7 +183,8 @@ function mapStateToProps(state) {
   return {
     images: getEntitiesFromResourcsIds(state, "profilePage"),
     comments: state.comments.items,
-    auth: state.auth
+    auth: state.auth,
+    pagination: state.pagination
   };
 }
 
