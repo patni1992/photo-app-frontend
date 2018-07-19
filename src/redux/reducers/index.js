@@ -5,6 +5,7 @@ import authReducer from "./authReducer";
 import errorReducer from "./errorReducer";
 import commentReducer from "./commentReducer";
 import pageReducer from "./pageReducer";
+import alertReducer from "./alertReducer";
 import paginationReducer from "./paginationReducer";
 
 export default combineReducers({
@@ -14,5 +15,6 @@ export default combineReducers({
   auth: authReducer,
   comments: commentReducer,
   page: pageReducer,
+  alert: alertReducer,
   pagination: paginationReducer
 });

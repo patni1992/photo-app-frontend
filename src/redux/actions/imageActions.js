@@ -14,6 +14,8 @@ import {
   setPageResources,
   prependPageResources
 } from "./pageActions";
+
+import { addAlert } from "./alertActions";
 import { setPagination } from "./paginationActions";
 
 const commentSchema = new schema.Entity("comments", {}, { idAttribute: "_id" });
@@ -149,6 +151,24 @@ export const deleteImage = id => dispatch => {
 export const editImage = (id, subitMethod = "post", bodyData) => dispatch => {
   api[subitMethod]("/images/" + id, bodyData)
     .then(response => {
+      if (subitMethod == "post") {
+        dispatch(
+          addAlert({
+            title: "Success",
+            message: "Image Added",
+            level: "success"
+          })
+        );
+      } else if (subitMethod == "patch") {
+        dispatch(
+          addAlert({
+            title: "Success",
+            message: "Image edited",
+            level: "success"
+          })
+        );
+      }
+
       const normalizeData = normalize([response.data], [imageSchema]);
       const images = normalizeData.entities.hasOwnProperty("images")
         ? normalizeData.entities.images
@@ -162,8 +182,15 @@ export const editImage = (id, subitMethod = "post", bodyData) => dispatch => {
           }
         })
       );
-      dispatch(push("/"));
     })
 
-    .catch(error => console.log(error));
+    .catch(error =>
+      dispatch(
+        addAlert({
+          title: "Error",
+          message: error.message,
+          level: "error"
+        })
+      )
+    );
 };
