@@ -19,6 +19,7 @@ const Styling = styled.div`
 const TextArea = styled.input`
   padding: 35px;
   width: 100%;
+  white-space: pre-line;
   margin-bottom: 20px;
   margin-left: 0px;
   margin-right: 0px;
@@ -51,12 +52,18 @@ class PhotoDetail extends Component {
       const { image } = this.props;
       let newProps = Object.assign({}, image, {
         profileLink: `/profile/${image.author._id}`,
-        deletePhoto: this.addDeletePhotoHandler,
+        deletePhoto:
+          image.author._id == this.props.auth.user.id
+            ? this.addDeletePhotoHandler
+            : null,
         src: image.path,
-        editPhoto: data => {
-          this.props.setActiveEditImage(data);
-          this.props.history.push("/addPhotos");
-        }
+        editPhoto:
+          image.author._id == this.props.auth.user.id
+            ? data => {
+                this.props.setActiveEditImage(data);
+                this.props.history.push("/addPhotos");
+              }
+            : null
       });
 
       return (
@@ -91,7 +98,8 @@ class PhotoDetail extends Component {
 function mapStateToProps(state, ownProps) {
   return {
     image: state.images.items[ownProps.match.params.id],
-    comments: state.comments.items
+    comments: state.comments.items,
+    auth: state.auth
   };
 }
 

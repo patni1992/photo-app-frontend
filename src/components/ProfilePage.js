@@ -8,17 +8,24 @@ import { fetchImages, resetImages } from "../redux/actions/imageActions";
 import { emptyPage } from "../redux/actions/pageActions";
 import Comments from "./Comments";
 import PaginationBar from "./PaginationBar";
+import Link from "./common/Link";
 
 const ImageContainer = styled.div`
   height: 185px;
-  padding: 10px 10px 0 0;
+  cursor: pointer;
+  transition: transform 500ms ease, filter 500ms ease;
+  &:hover {
+    z-index: 10;
+    transform: scale(1.05);
+    filter: brightness(125%);
+  }
 
   @media (min-width: 1400px) {
-    height: 235px;
+    height: 205px;
   }
 
   @media (min-width: 1900px) {
-    height: 340px;
+    height: 280px;
   }
 `;
 
@@ -116,18 +123,35 @@ class ProfilePage extends Component {
             {this.props.images.map(image => (
               <Col style={{ padding: 0 }} sm={12} md={6} xl={4}>
                 <ImageContainer>
-                  <img
-                    style={{
-                      width: "100%",
-                      height: "auto"
-                    }}
-                    src={image.path}
-                  />
+                  <a href={`/photo/${image._id}`}>
+                    <img
+                      style={{
+                        width: "100%",
+                        height: "auto"
+                      }}
+                      src={image.path}
+                    />
+                  </a>
                 </ImageContainer>
               </Col>
             ))}
           </Row>
           {this.renderPagination()}
+          {this.props.match.params.userId == this.props.auth.user.id ? (
+            <Link to={"/profileSettings/" + this.props.match.params.userId}>
+              <button
+                style={{
+                  display: "block ",
+                  padding: "10px",
+                  color: "white",
+                  cursor: "pointer",
+                  backgroundColor: "#4caf50"
+                }}
+              >
+                Profile Settings
+              </button>
+            </Link>
+          ) : null}
         </Col>
         <Col sm={4}>
           <h2>Latest comments</h2>

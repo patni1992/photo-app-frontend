@@ -64,8 +64,9 @@ const Header = styled.div`
 `;
 
 const Thumbnail = styled.img`
-  border-radius: 20px;
-  width: 30px;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
   margin: 10px;
 `;
 
@@ -118,7 +119,7 @@ class Photo extends Component {
         <Header>
           <Link to={this.props.profileLink}>
             <ThumbnailContainer>
-              <Thumbnail src="http://placekitten.com/100/100" />
+              <Thumbnail src={this.props.author.profileImage} />
               <strong>
                 <h3>{this.props.author.username}</h3>
               </strong>
