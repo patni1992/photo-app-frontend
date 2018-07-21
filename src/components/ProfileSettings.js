@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import { Container, Row, Col } from "react-grid-system";
 import Dropzone from "react-dropzone";
-import { editUser } from "../redux/actions/profileActions";
+import { editUser, deleteUser } from "../redux/actions/profileActions";
 import InputGroup from "./common/InputGroup";
 
 const Spacing = styled.div`
@@ -32,7 +32,7 @@ const BtnContainer = styled.div`
 
 class ProfileSettings extends Component {
   state = {
-    img: null,
+    img: { preview: null },
     firstName: "",
     lastName: "",
     email: "",
@@ -60,25 +60,12 @@ class ProfileSettings extends Component {
     bodyFormData.set("biography", this.state.biography);
     this.props.editUser(this.props.match.params.userId, bodyFormData);
   };
-  renderProfileImgData = () => {
-    if (this.state.img) {
-      return (
-        <img
-          style={{
-            width: "100%"
-          }}
-          src={this.state.img.preview}
-          alt=""
-        />
-      );
-    }
-    return (
-      <div style={{ textAlign: "center" }}>
-        <p>Try dropping a file here, or click to select a file to upload.</p>
-        <p>Only *.jpeg and *.png images will be accepted</p>
-      </div>
-    );
+
+  onDelete = e => {
+    e.preventDefault();
+    this.props.deleteUser(this.props.match.params.userId);
   };
+
   render() {
     return (
       <Container style={{ textAlign: "center" }}>
@@ -90,17 +77,51 @@ class ProfileSettings extends Component {
               background: "white",
               border: "3px black dotted",
               padding: "5px",
-              width: "140px",
+              width: "280px",
               fontSize: "10px",
-              margin: "0 0 15px",
               cursor: "pointer"
             }}
             onDrop={this.onDrop}
             accept="image/jpeg, image/png"
             multiple={false}
           >
-            {this.renderProfileImgData}
+            <div
+              style={{
+                verticalAlign: "middle",
+                textAlign: "center",
+                width: "140px",
+                display: "inline-block"
+              }}
+            >
+              <p style={{ margin: 0 }}>
+                Try dropping a file here, or click to select a file to upload.
+              </p>
+              <p>Only *.jpeg and *.png images will be accepted</p>
+            </div>
+            <img
+              style={{
+                width: "110px",
+                height: "80px",
+                verticalAlign: "middle",
+                marginLeft: "10px",
+
+                display: "inline-block"
+              }}
+              src={this.state.img.preview || this.props.auth.user.profileImage}
+              alt=""
+            />
           </Dropzone>
+          <small
+            style={{
+              color: "#6c757d",
+              marginTop: "8px",
+              fontSize: "12px",
+              display: "block"
+            }}
+          >
+            Select a profile image
+          </small>
+
           <form onSubmit={this.onSubmit}>
             <InputGroup
               value={this.state.firstName}
@@ -149,6 +170,7 @@ class ProfileSettings extends Component {
                 Save
               </button>
               <button
+                onClick={this.onDelete}
                 style={{
                   padding: "10px",
                   width: "110px",
@@ -167,8 +189,13 @@ class ProfileSettings extends Component {
     );
   }
 }
+function mapStateToProps(state) {
+  return {
+    auth: state.auth
+  };
+}
 
 export default connect(
-  null,
-  { editUser }
+  mapStateToProps,
+  { editUser, deleteUser }
 )(ProfileSettings);

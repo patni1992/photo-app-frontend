@@ -18,7 +18,7 @@ const Input = styled.input`
 
 const Inputdescription = styled.small`
   color: #6c757d;
-  margin-top: 10px;
+  margin-top: 8px;
   font-size: 12px;
   display: block;
 `;

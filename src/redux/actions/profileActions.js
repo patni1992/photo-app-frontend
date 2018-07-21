@@ -1,29 +1,45 @@
 import api from "../../api";
-import { push } from "react-router-redux";
 
-import { SET_ERRORS, SET_CURRENT_USER } from "./types";
+import { addAlert } from "./alertActions";
+import { logoutUser } from "./authActions";
 
 export const editUser = (id, bodyData) => dispatch => {
   api
     .patch("/users/" + id, bodyData)
     .then(res => {
-      console.log(res);
+      dispatch(
+        addAlert({
+          title: "Success",
+          message: "Profile Edited",
+          level: "success"
+        })
+      );
     })
     .catch(err => {
-      console.log(err);
+      dispatch(
+        addAlert({
+          title: "Error",
+          message: err.message,
+          level: "error"
+        })
+      );
     });
 };
 
-// export const logoutUser = userData => dispatch => {
-//   localStorage.removeItem("jwtToken");
-//   setAuthToken(false);
-//   dispatch(setCurrentUser({}));
-//   dispatch(push("/"));
-// };
-
-// export const setCurrentUser = decoded => {
-//   return {
-//     type: SET_CURRENT_USER,
-//     payload: decoded
-//   };
-// };
+export const deleteUser = id => dispatch => {
+  api
+    .delete("/users/" + id)
+    .then(res => {
+      console.log("bjsdjflsdklfsdlkf");
+      dispatch(logoutUser());
+    })
+    .catch(err => {
+      dispatch(
+        addAlert({
+          title: "Error",
+          message: err.message,
+          level: "error"
+        })
+      );
+    });
+};
