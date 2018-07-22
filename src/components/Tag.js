@@ -2,13 +2,16 @@ import React, { Component } from "react";
 import styled from "styled-components";
 
 const Styling = styled.span`
-  background-color: #fbfbfb;
-  border: 1px solid #a9b1b5;
-  padding: 2px 5px;
-  color: #a9b1b5;
+  border: 1px solid #dee2e5;
+  background-color: #dee2e5;
   border-radius: 5px;
-  transition: all 300ms ease-in-out;
-  margin: 3px;
+  padding: 2px 4px;
+  line-height: 13px;
+  font-family: sans-serif;
+  text-transform: uppercase;
+  font-size: 13px;
+  margin: 4px;
+  color: #909191;
 `;
 
 class Tag extends Component {
