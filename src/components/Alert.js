@@ -1,9 +1,11 @@
-import NotificationSystem from "react-notification-system";
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import NotificationSystem from "react-notification-system";
+import { clearAlert } from "../redux/actions/alertActions";
 
 class Alert extends Component {
   componentWillReceiveProps(newProps) {
-    const { message, level, title } = newProps.notification;
+    const { message, level, title } = newProps.alert;
     if (message) {
       this.notificationSystem.addNotification({
         message,
@@ -11,7 +13,7 @@ class Alert extends Component {
         autoDismiss: 6,
         title
       });
-      this.props.onRemove();
+      this.props.clearAlert();
     }
   }
 
@@ -24,4 +26,13 @@ class Alert extends Component {
   }
 }
 
-export default Alert;
+function mapStateToProps(state) {
+  return {
+    alert: state.alert
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  { clearAlert }
+)(Alert);

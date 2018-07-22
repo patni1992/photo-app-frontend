@@ -96,6 +96,12 @@ class AddPhotos extends Component {
     if (Object.keys(this.props.activeEditImage).length !== 0) {
       subitMethod = "patch";
       urlId = "" + this.props.activeEditImage.id;
+    } else {
+      this.setState({
+        img: {},
+        tags: "",
+        description: ""
+      });
     }
 
     this.props.editImage(urlId, subitMethod, bodyFormData);

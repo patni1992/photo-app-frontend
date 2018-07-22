@@ -29,7 +29,7 @@ const TagContainer = styled.div`
   font-size: 15px;
   color: #777;
   line-height: 23px;
-  margin-top: 20px;
+  margin-top: 10px;
   margin-bottom: 10px;
   display: flex;
   flex-wrap: wrap;
@@ -47,14 +47,14 @@ const ImgContainer = styled.div`
 
 const EditContainer = styled.span`
 	position: absolute;
-	top: 12px;
+	top: 16px;
 	right 15px;
 	cursor: pointer;
 `;
 
 const TrashContainer = styled.span`
 	position: absolute;
-	top: 12px;
+	top: 16px;
 	right 50px;
 	cursor: pointer;
 `;
