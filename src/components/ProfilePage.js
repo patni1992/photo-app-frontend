@@ -3,12 +3,12 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import { Row, Col } from "react-grid-system";
 import { fetchComments } from "../redux/actions/commentActions";
-import { getEntitiesFromResourcsIds } from "../redux/reducers/pageReducer";
+import Link from "./common/Link";
+import { getImagesFromResourceIdsState } from "../redux/selectors/imageSelector";
 import { fetchImages, resetImages } from "../redux/actions/imageActions";
 import { emptyPage } from "../redux/actions/pageActions";
 import Comments from "./Comments";
 import PaginationBar from "./PaginationBar";
-import Link from "./common/Link";
 
 const ImageContainer = styled.div`
   height: 185px;
@@ -52,9 +52,6 @@ class ProfilePage extends Component {
   }
 
   componentWillUnmount() {
-    this.props.emptyPage({
-      dataBelongToPage: "profilePage"
-    });
     window.removeEventListener("resize", this.updateLimit);
   }
 
@@ -116,14 +113,14 @@ class ProfilePage extends Component {
 
   render() {
     return (
-      <Row style={{ margin: "0 15px 0 15px" }}>
+      <Row style={{ margin: "0 25px 0 25px" }}>
         <Col style={{ padding: "0" }} sm={8}>
           <h2>Latest Images</h2>
           <Row style={{ marginBottom: "10px" }}>
             {this.props.images.map(image => (
               <Col style={{ padding: 0 }} sm={12} md={6} xl={4}>
                 <ImageContainer>
-                  <a href={`/photo/${image._id}`}>
+                  <Link to={`/photo/${image._id}`}>
                     <img
                       style={{
                         width: "100%",
@@ -131,7 +128,7 @@ class ProfilePage extends Component {
                       }}
                       src={image.path}
                     />
-                  </a>
+                  </Link>
                 </ImageContainer>
               </Col>
             ))}
@@ -205,7 +202,7 @@ class ProfilePage extends Component {
 
 function mapStateToProps(state) {
   return {
-    images: getEntitiesFromResourcsIds(state, "profilePage"),
+    images: getImagesFromResourceIdsState(state),
     comments: state.comments.items,
     auth: state.auth,
     pagination: state.pagination
