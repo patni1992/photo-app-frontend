@@ -7,6 +7,7 @@ import commentReducer from "./commentReducer";
 import pageReducer from "./pageReducer";
 import alertReducer from "./alertReducer";
 import paginationReducer from "./paginationReducer";
+import userReducer from "./userReducer";
 
 export default combineReducers({
   images: imageReducer,
@@ -16,5 +17,6 @@ export default combineReducers({
   comments: commentReducer,
   page: pageReducer,
   alert: alertReducer,
+  users: userReducer,
   pagination: paginationReducer
 });

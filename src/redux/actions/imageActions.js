@@ -14,15 +14,17 @@ import {
   setPageResources,
   prependPageResources
 } from "./pageActions";
-
+import { appendUsers } from "./userActions";
 import { addAlert } from "./alertActions";
 import { setPagination } from "./paginationActions";
 
 const commentSchema = new schema.Entity("comments", {}, { idAttribute: "_id" });
+const userSchema = new schema.Entity("authors", {}, { idAttribute: "_id" });
 const imageSchema = new schema.Entity(
   "images",
   {
-    comments: [commentSchema]
+    comments: [commentSchema],
+    author: userSchema
   },
   { idAttribute: "_id" }
 );
@@ -93,7 +95,13 @@ export const fetchImages = (
       const images = dataToPass.entities.hasOwnProperty("images")
         ? dataToPass.entities.images
         : [];
+
+      const authors = dataToPass.entities.hasOwnProperty("authors")
+        ? dataToPass.entities.authors
+        : [];
+
       dispatch(appendImages({ images }));
+      dispatch(appendUsers({ authors }));
 
       dispatch(
         setPagination({ [dataBelongToPage + "images"]: dataToPass.pagination })
@@ -127,6 +135,7 @@ export const fetchImage = (id, url = "") => {
       .get("/images/" + id + "/" + url)
       .then(response => {
         const normalizeData = normalize([response.data], [imageSchema]);
+        dispatch(appendUsers({ authors: normalizeData.entities.authors }));
         dispatch(appendImages({ images: normalizeData.entities.images }));
       })
       .catch(err => {

@@ -87,7 +87,7 @@ class Gallery extends Component {
           clickHandler={this.setModal}
           description={image.description}
           tags={image.tags}
-          author={image.author}
+          author={this.props.users[image.author]}
           src={image.path}
         />
       );
@@ -105,8 +105,8 @@ class Gallery extends Component {
               description={this.state.modal.description}
               src={this.state.modal.src}
             />
-          ) : null}{" "}
-          <Styling> {this.renderImages()} </Styling>{" "}
+          ) : null}
+          <Styling> {this.renderImages()} </Styling>
         </Container>
       </InfiniteScroll>
     );
@@ -116,7 +116,8 @@ class Gallery extends Component {
 function mapStateToProps(state) {
   return {
     images: getEntitiesFromResourcsIds(state, "feed"),
-    pagination: state.pagination
+    pagination: state.pagination,
+    users: state.users.items
   };
 }
 

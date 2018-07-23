@@ -22,7 +22,6 @@ const Img = styled.img`
   width: 100%;
   height: auto;
   margin-bottom: -5px;
-  transition: 0.7s ease;
 `;
 
 const TagContainer = styled.div`
@@ -40,9 +39,8 @@ const ImgContainer = styled.div`
   &:hover {
     cursor: pointer;
   }
-  overflow: hidden;
-  max-height: 500px;
   min-width: 270px;
+  max-width: 1100px;
 `;
 
 const EditContainer = styled.span`
@@ -117,7 +115,7 @@ class Photo extends Component {
     return (
       <Figure>
         <Header>
-          <Link to={this.props.profileLink}>
+          <Link to={`/profile/${this.props.author._id}`}>
             <ThumbnailContainer>
               <Thumbnail src={this.props.author.profileImage} />
               <strong>
