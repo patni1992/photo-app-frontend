@@ -4,6 +4,8 @@ import { setActiveEditImage } from "../redux/actions/activeEditImageActions";
 import { postComment, fetchComments } from "../redux/actions/commentActions";
 import { fetchImage, deleteImage } from "../redux/actions/imageActions";
 import { getUserByImageIdState } from "../redux/selectors/userSelector";
+import { getCommentsFromResourceIdsState } from "../redux/selectors/commentSelector";
+import { getAuthorsFromComments } from "../redux/selectors/userSelector";
 import Photo from "./Photo";
 import Comments from "./Comments";
 import styled from "styled-components";
@@ -30,7 +32,6 @@ const TextArea = styled.input`
 class PhotoDetail extends Component {
   componentDidMount() {
     this.props.fetchImage(this.props.match.params.id, "", "photoDetail");
-    this.props.fetchComments("?imageId=" + this.props.match.params.id);
     window.scrollTo(0, 0);
   }
 
@@ -49,20 +50,19 @@ class PhotoDetail extends Component {
   };
 
   render() {
-    if (this.props.image && this.props.author) {
-      const { image } = this.props;
-      const { author } = this.props;
+    if (this.props.image && this.props.imageAuthor) {
+      const { image, imageAuthor, comments, CommentsAuthors } = this.props;
 
       let newProps = Object.assign({}, image, {
-        profileLink: `/profile/${author._id}`,
-        author: author,
+        profileLink: `/profile/${imageAuthor._id}`,
+        author: imageAuthor,
         deletePhoto:
-          author._id == this.props.auth.user.id
+          imageAuthor._id == this.props.auth.user.id
             ? this.addDeletePhotoHandler
             : null,
         src: image.path,
         editPhoto:
-          author._id == this.props.auth.user.id
+          imageAuthor._id == this.props.auth.user.id
             ? data => {
                 this.props.setActiveEditImage(data);
                 this.props.history.push("/addPhotos");
@@ -76,11 +76,7 @@ class PhotoDetail extends Component {
             <Styling>
               <Photo {...newProps} />
               <div style={{ flexBasis: "100%" }}>
-                <Comments
-                  comments={Object.keys(this.props.comments).map(
-                    key => this.props.comments[key]
-                  )}
-                />
+                <Comments comments={comments} authors={CommentsAuthors} />
                 <form onSubmit={this.addCommentHandler} action="">
                   <TextArea
                     name="comment"
@@ -100,11 +96,13 @@ class PhotoDetail extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
+  const comments = getCommentsFromResourceIdsState(state, "photoDetail");
   return {
     image: state.images.items[ownProps.match.params.id],
-    comments: state.comments.items,
     auth: state.auth,
-    author: getUserByImageIdState(state, ownProps)
+    imageAuthor: getUserByImageIdState(state, ownProps),
+    comments,
+    CommentsAuthors: getAuthorsFromComments(state, comments)
   };
 }
 
