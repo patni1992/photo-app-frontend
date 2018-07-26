@@ -136,7 +136,9 @@ class Photo extends Component {
         <FigCaption>
           {this.renderIcons()}
           <TagContainer>
-            {this.props.tags.map(tagText => <Tag tagText={tagText} />)}
+            {this.props.tags.map((tagText, index) => (
+              <Tag key={index} tagText={tagText} />
+            ))}
           </TagContainer>
           <P>{this.props.description}</P>
         </FigCaption>

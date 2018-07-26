@@ -81,6 +81,7 @@ class Gallery extends Component {
     return images.map(image => {
       return (
         <Photo
+          key={image._id}
           id={image._id}
           imgLink={`/photo/${image._id}`}
           profileLink={`/profile/${image.author._id}`}
