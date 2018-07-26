@@ -6,9 +6,9 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  feed: { images: [] },
-  profilePage: { images: [] },
-  photoDetail: {}
+  feed: { images: [], comments: [] },
+  profilePage: { images: [], comments: [] },
+  photoDetail: { images: [], comments: [] }
 };
 
 export default function(state = initialState, action) {
@@ -62,8 +62,7 @@ export function getEntitiesFromResourcsIds(state, dataBelongToPage) {
 
 function appendResources(state, resources, dataBelongToPage) {
   let newResources = {
-    ...state,
-    [dataBelongToPage]: {}
+    ...state
   };
 
   Object.keys(resources).forEach(resource => {
@@ -81,8 +80,7 @@ function appendResources(state, resources, dataBelongToPage) {
 
 function prependResources(state, resources, dataBelongToPage) {
   let newResources = {
-    ...state,
-    [dataBelongToPage]: {}
+    ...state
   };
 
   Object.keys(resources).forEach(resource => {
@@ -101,7 +99,7 @@ function prependResources(state, resources, dataBelongToPage) {
 function setResources(state, resources, dataBelongToPage) {
   let newResources = {
     ...state,
-    [dataBelongToPage]: { ...resources }
+    [dataBelongToPage]: { ...state[dataBelongToPage], ...resources }
   };
 
   newResources;
