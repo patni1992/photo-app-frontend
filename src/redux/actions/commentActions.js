@@ -37,9 +37,10 @@ export const fetchComments = (url = "") => {
             }
           })
         );
-        return dispatch(
-          setComments({ comments: normalizeData.entities.comments })
+        dispatch(
+          appendUsers({ authors: normalizeData.entities.commentAuthors })
         );
+        dispatch(setComments({ comments: normalizeData.entities.comments }));
       })
       .catch(error => {
         return false; // add error method
