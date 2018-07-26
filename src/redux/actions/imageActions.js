@@ -16,18 +16,9 @@ import {
 } from "./pageActions";
 import { appendUsers } from "./userActions";
 import { addAlert } from "./alertActions";
+import { setComments } from "./commentActions";
 import { setPagination } from "./paginationActions";
-
-const commentSchema = new schema.Entity("comments", {}, { idAttribute: "_id" });
-const userSchema = new schema.Entity("authors", {}, { idAttribute: "_id" });
-const imageSchema = new schema.Entity(
-  "images",
-  {
-    comments: [commentSchema],
-    author: userSchema
-  },
-  { idAttribute: "_id" }
-);
+import imageSchema from "../schemas/imageSchema";
 
 export const appendImages = data => {
   return {
@@ -96,8 +87,8 @@ export const fetchImages = (
         ? dataToPass.entities.images
         : [];
 
-      const authors = dataToPass.entities.hasOwnProperty("authors")
-        ? dataToPass.entities.authors
+      const authors = dataToPass.entities.hasOwnProperty("imageAuthors")
+        ? dataToPass.entities.imageAuthors
         : [];
 
       dispatch(appendImages({ images }));
@@ -129,14 +120,33 @@ export const fetchImages = (
   };
 };
 
-export const fetchImage = (id, url = "") => {
+export const fetchImage = (id, url = "", dataBelongToPage) => {
   return (dispatch, getState) => {
     api
       .get("/images/" + id + "/" + url)
       .then(response => {
         const normalizeData = normalize([response.data], [imageSchema]);
-        dispatch(appendUsers({ authors: normalizeData.entities.authors }));
+
+        dispatch(
+          setPageResources({
+            dataBelongToPage,
+            resources: {
+              images: Object.keys(normalizeData.entities.images),
+              comments: Object.keys(normalizeData.entities.comments)
+            }
+          })
+        );
+
+        dispatch(
+          appendUsers({
+            authors: {
+              ...normalizeData.entities.commentAuthors,
+              ...normalizeData.entities.imageAuthors
+            }
+          })
+        );
         dispatch(appendImages({ images: normalizeData.entities.images }));
+        dispatch(setComments({ comments: normalizeData.entities.comments }));
       })
       .catch(err => {
         console.log(err); // add error method
@@ -182,6 +192,7 @@ export const editImage = (id, subitMethod = "post", bodyData) => dispatch => {
       const images = normalizeData.entities.hasOwnProperty("images")
         ? normalizeData.entities.images
         : [];
+
       dispatch(appendImages({ images }));
       dispatch(
         prependPageResources({

@@ -8,6 +8,8 @@ import { getImagesFromResourceIdsState } from "../redux/selectors/imageSelector"
 import { fetchImages, resetImages } from "../redux/actions/imageActions";
 import { emptyPage } from "../redux/actions/pageActions";
 import Comments from "./Comments";
+import { getCommentsFromResourceIdsState } from "../redux/selectors/commentSelector";
+import { getAuthorsFromComments } from "../redux/selectors/userSelector";
 import PaginationBar from "./PaginationBar";
 
 const ImageContainer = styled.div`
@@ -41,12 +43,12 @@ class ProfilePage extends Component {
     window.addEventListener("resize", this.updateLimit);
 
     this.setState({ limit }, prevState => {
-      this.props.fetchComments("?userId=" + this.props.match.params.userId);
       this.props.fetchImages(
         `?limit=${this.state.limit}&userId=${this.props.match.params.userId}`,
         "profilePage",
         true
       );
+      this.props.fetchComments("");
     });
     window.scrollTo(0, 0);
   }
@@ -71,14 +73,11 @@ class ProfilePage extends Component {
   };
 
   renderComments() {
-    const comments = Object.keys(this.props.comments);
-
-    if (!comments.length) {
-      return "No comments posted";
-    }
-
     return (
-      <Comments comments={comments.map(key => this.props.comments[key])} />
+      <Comments
+        comments={this.props.comments}
+        authors={this.props.commentsAuthors}
+      />
     );
   }
 
@@ -201,9 +200,11 @@ class ProfilePage extends Component {
 }
 
 function mapStateToProps(state) {
+  const comments = getCommentsFromResourceIdsState(state, "profilePage");
   return {
     images: getImagesFromResourceIdsState(state),
-    comments: state.comments.items,
+    commentsAuthors: getAuthorsFromComments(state, comments),
+    comments,
     auth: state.auth,
     pagination: state.pagination
   };

@@ -31,18 +31,14 @@ export default function(state = initialState, action) {
 
       return state;
     case SET_COMMENTS:
-      let comments = {};
-      if (action.comments.entities.hasOwnProperty("comments")) {
-        comments = action.comments.entities.comments;
-      }
       return {
         ...state,
-        items: comments
+        items: action.payload.comments
       };
     case PREPEND_COMMENT:
       return {
         ...state,
-        items: { [action.comment._id]: action.comment, ...state.items }
+        items: { ...action.comment, ...state.items }
       };
     default:
       return state;
