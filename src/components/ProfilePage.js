@@ -48,7 +48,7 @@ class ProfilePage extends Component {
         "profilePage",
         true
       );
-      this.props.fetchComments("");
+      this.props.fetchComments("?userId=" + this.props.match.params.userId);
     });
     window.scrollTo(0, 0);
   }
@@ -114,7 +114,7 @@ class ProfilePage extends Component {
     return (
       <Row style={{ margin: "0 25px 0 25px" }}>
         <Col style={{ padding: "0" }} sm={8}>
-          <h2>Latest Images</h2>
+          <h2>Images</h2>
           <Row style={{ marginBottom: "10px" }}>
             {this.props.images.map(image => (
               <Col style={{ padding: 0 }} sm={12} md={6} xl={4}>
