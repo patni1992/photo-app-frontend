@@ -208,7 +208,7 @@ export const editImage = (id, subitMethod = "post", bodyData) => dispatch => {
       dispatch(
         addAlert({
           title: "Error",
-          message: error.message,
+          message: error.response.data.message,
           level: "error"
         })
       )
