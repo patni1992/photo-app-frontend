@@ -59,8 +59,6 @@ export const postComment = (id, comment) => {
           commentSchema
         ]);
 
-        dispatch(appendUsers(normalizeData.entities.commentAuthors));
-        dispatch(addComment(normalizeData.entities.comments));
         dispatch(
           prependPageResources({
             dataBelongToPage: "photoDetail",
@@ -69,6 +67,9 @@ export const postComment = (id, comment) => {
             }
           })
         );
+        dispatch(appendUsers(normalizeData.entities.commentAuthors));
+        dispatch(addComment(normalizeData.entities.comments));
+
         dispatch(
           addAlert({
             title: "Success",
