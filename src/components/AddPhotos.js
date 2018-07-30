@@ -10,7 +10,7 @@ const Form = styled.form`
   position: relative;
   max-width: 800px;
   background: #ffffff;
-  margin: 50px auto;
+  margin: 0 auto;
 
   padding: 45px;
   text-align: center;

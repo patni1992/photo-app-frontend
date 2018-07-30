@@ -44,16 +44,18 @@ const ImgContainer = styled.div`
 `;
 
 const EditContainer = styled.span`
-	position: absolute;
+  position: absolute;
+  font-size: 20px;
 	top: 16px;
 	right 15px;
 	cursor: pointer;
 `;
 
 const TrashContainer = styled.span`
-	position: absolute;
+  position: absolute;
+  font-size: 20px;
 	top: 16px;
-	right 50px;
+	right 55px;
 	cursor: pointer;
 `;
 

@@ -13,7 +13,7 @@ const Menu = styled.nav`
   font-weight: 400;
   text-align: center;
   position: relative;
-  margin: 0 auto;
+  margin: 0 auto 30px auto;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 
   & li {

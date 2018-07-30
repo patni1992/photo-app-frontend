@@ -69,7 +69,7 @@ class ProfileSettings extends Component {
   render() {
     return (
       <Container style={{ textAlign: "center" }}>
-        <h2>Profile</h2>
+        <h2 style={{ margin: " 0" }}>Profile</h2>
         <p>Add information about yourself to share on your profile.</p>
         <Spacing>
           <Dropzone
