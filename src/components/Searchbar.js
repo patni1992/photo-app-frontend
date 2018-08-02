@@ -11,7 +11,7 @@ const Input = styled.input`
 
 const InputContainer = styled.div`
   max-width: 400px;
-  margin: 0 auto;
+  margin: 0 auto 15px auto;
 `;
 
 class Searchbar extends Component {
