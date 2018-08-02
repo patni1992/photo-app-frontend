@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import { CLEAR_STORE } from "../actions/types";
 import imageReducer from "./imageReducer";
 import activeEditImageReducer from "./activeEditImageReducer";
 import authReducer from "./authReducer";
@@ -9,7 +10,7 @@ import alertReducer from "./alertReducer";
 import paginationReducer from "./paginationReducer";
 import userReducer from "./userReducer";
 
-export default combineReducers({
+const appReducer = combineReducers({
   images: imageReducer,
   activeEditImage: activeEditImageReducer,
   errors: errorReducer,
@@ -20,3 +21,12 @@ export default combineReducers({
   users: userReducer,
   pagination: paginationReducer
 });
+
+const rootReducer = (state, action) => {
+  if (action.type === CLEAR_STORE) {
+    state = undefined;
+  }
+  return appReducer(state, action);
+};
+
+export default rootReducer;

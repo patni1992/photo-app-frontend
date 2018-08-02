@@ -21,3 +21,4 @@ export const SET_PAGINATION = "SET_PAGINATION";
 export const ADD_ALERT = "ADD_ALERT";
 export const CLEAR_ALERT = "CLEAR_ALERT";
 export const APPEND_USERS = "APPEND_USERS";
+export const CLEAR_STORE = "CLEAR_STORE";

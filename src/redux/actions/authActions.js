@@ -1,7 +1,7 @@
 import api from "../../api";
 import { push } from "react-router-redux";
 import jwtDecode from "jwt-decode";
-
+import { CLEAR_STORE } from "./types";
 import setAuthToken from "../../utils/sethAuthToken";
 
 import { SET_ERRORS, SET_CURRENT_USER } from "./types";
@@ -45,7 +45,9 @@ export const loginUser = userData => dispatch => {
 export const logoutUser = userData => dispatch => {
   localStorage.removeItem("jwtToken");
   setAuthToken(false);
-  dispatch(setCurrentUser({}));
+  dispatch({
+    type: CLEAR_STORE
+  });
   dispatch(push("/"));
 };
 
