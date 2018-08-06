@@ -42,19 +42,21 @@ class ProfileSettings extends Component {
       lastName: "",
       email: "",
       country: "",
-      biography: ""
+      biography: "",
+      id: ""
     };
   }
   static getDerivedStateFromProps(props, state) {
-    if (props.profile) {
-      return {
+    if (props.profile && props.profile._id != state.id) {
+      return removeFalsy({
         image: { preview: props.profile.profileImage },
         firstName: props.profile.firstName,
         lastName: props.profile.lastName,
+        id: props.profile._id,
         email: props.profile.email,
         country: props.profile.country,
         biography: props.profile.biography
-      };
+      });
     }
     return null;
   }
