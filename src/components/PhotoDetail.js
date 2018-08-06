@@ -57,12 +57,12 @@ class PhotoDetail extends Component {
         profileLink: `/profile/${imageAuthor._id}`,
         author: imageAuthor,
         deletePhoto:
-          imageAuthor._id == this.props.auth.user.id
+          imageAuthor._id === this.props.auth.user.id
             ? this.addDeletePhotoHandler
             : null,
         src: image.path,
         editPhoto:
-          imageAuthor._id == this.props.auth.user.id
+          imageAuthor._id === this.props.auth.user.id
             ? data => {
                 this.props.setActiveEditImage(data);
                 this.props.history.push("/addPhotos");

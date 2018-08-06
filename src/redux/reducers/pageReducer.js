@@ -100,7 +100,5 @@ function setResources(state, resources, dataBelongToPage) {
     [dataBelongToPage]: { ...state[dataBelongToPage], ...resources }
   };
 
-  newResources;
-
   return newResources;
 }

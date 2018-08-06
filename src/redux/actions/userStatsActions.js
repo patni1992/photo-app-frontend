@@ -1,11 +1,5 @@
 import api from "../../api";
-
 import { APPEND_USER_STATS } from "./types";
-import {
-  appendPageResources,
-  setPageResources,
-  prependPageResources
-} from "./pageActions";
 
 export const fetchUserStats = id => {
   return dispatch => {

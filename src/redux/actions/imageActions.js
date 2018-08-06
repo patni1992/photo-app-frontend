@@ -1,5 +1,5 @@
 import api from "../../api";
-import { normalize, schema } from "normalizr";
+import { normalize } from "normalizr";
 import { push } from "react-router-redux";
 
 import {
@@ -170,7 +170,7 @@ export const deleteImage = id => dispatch => {
 export const editImage = (id, subitMethod = "post", bodyData) => dispatch => {
   api[subitMethod]("/images/" + id, bodyData)
     .then(response => {
-      if (subitMethod == "post") {
+      if (subitMethod === "post") {
         dispatch(
           addAlert({
             title: "Success",
@@ -178,7 +178,7 @@ export const editImage = (id, subitMethod = "post", bodyData) => dispatch => {
             level: "success"
           })
         );
-      } else if (subitMethod == "patch") {
+      } else if (subitMethod === "patch") {
         dispatch(
           addAlert({
             title: "Success",

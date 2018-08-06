@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 
 class InfiniteScroll extends Component {
   state = {
@@ -29,7 +29,7 @@ class InfiniteScroll extends Component {
   };
 
   render() {
-    return this.props.children;
+    return <Fragment> {this.props.children}</Fragment>;
   }
 }
 

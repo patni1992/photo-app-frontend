@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 export default function(ComposedComponent) {
   class Authorization extends Component {
     componentWillMount() {
-      if (this.props.auth.user.id != this.props.match.params.userId) {
+      if (this.props.auth.user.id !== this.props.match.params.userId) {
         this.props.history.goBack();
       }
     }

@@ -1,5 +1,5 @@
 import api from "../../api";
-import { normalize, schema } from "normalizr";
+import { normalize } from "normalizr";
 import { SET_COMMENTS, PREPEND_COMMENT } from "./types";
 import { prependPageResources } from "./pageActions";
 import { addAlert } from "./alertActions";
@@ -26,7 +26,7 @@ export const fetchComments = (url = "") => {
     api
       .get("/comments" + url)
       .then(response => {
-        const { docs, total, limit, page, pages } = response.data;
+        const { docs } = response.data;
         const normalizeData = normalize(docs, [commentSchema]);
 
         dispatch(

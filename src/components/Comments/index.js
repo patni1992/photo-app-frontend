@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Comment from "./Comment";
@@ -12,7 +12,13 @@ const Comments = ({ comments, authors }) => {
   return (
     <CommentsBox>
       {comments.map(comment => {
-        return <Comment comment={comment} author={authors[comment.author]} />;
+        return (
+          <Comment
+            key={comment._id}
+            comment={comment}
+            author={authors[comment.author]}
+          />
+        );
       })}
     </CommentsBox>
   );

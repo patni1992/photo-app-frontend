@@ -36,7 +36,7 @@ class Paginationbar extends Component {
   renderElements(numberOElements) {
     const elementsToRender = [];
     for (let i = 1; i <= numberOElements; i++) {
-      elementsToRender.push(<span>{i}</span>);
+      elementsToRender.push(<span key={i}>{i}</span>);
     }
     return elementsToRender;
   }
@@ -48,7 +48,7 @@ class Paginationbar extends Component {
     } else if (e.target.dataset.sub) {
       value = this.state.page - 1;
     } else {
-      value = parseInt(e.target.innerText);
+      value = parseInt(e.target.innerText, 10);
     }
     if (value > 0 && value <= this.props.pages) {
       this.setState({ page: value }, prevState => {

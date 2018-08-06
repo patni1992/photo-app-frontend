@@ -17,14 +17,6 @@ const Atag = styled.a`
   transition: all 0.2s linear;
 `;
 
-const ForgotPassword = styled.a`
-  width: 50%;
-  text-align: left;
-  text-decoration: underline;
-  color: #888;
-  font-size: 0.75rem;
-`;
-
 const VerticalAlign = styled.div`
   display: flex;
   justify-content: center;
@@ -79,7 +71,6 @@ class AuthPage extends Component {
             active={this.state.signUp}
             href="#"
             onClick={this.setSignupActive}
-            href="#"
             id="signup-box-link"
           >
             Sign Up

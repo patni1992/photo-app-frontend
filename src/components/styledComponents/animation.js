@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import { keyframes } from "styled-components";
 
 export const zoom = keyframes`
     from {transform:scale(0)} 

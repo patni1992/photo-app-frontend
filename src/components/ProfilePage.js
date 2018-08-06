@@ -128,7 +128,7 @@ class ProfilePage extends Component {
           <h2>Images</h2>
           <Row style={{ marginBottom: "10px" }}>
             {this.props.images.map(image => (
-              <Col style={{ padding: 0 }} sm={12} md={6} xl={4}>
+              <Col key={image._id} style={{ padding: 0 }} sm={12} md={6} xl={4}>
                 <ImageContainer>
                   <Link to={`/photo/${image._id}`}>
                     <img
@@ -136,6 +136,7 @@ class ProfilePage extends Component {
                         width: "100%",
                         height: "auto"
                       }}
+                      alt={image.description}
                       src={image.path}
                     />
                   </Link>
@@ -144,7 +145,7 @@ class ProfilePage extends Component {
             ))}
           </Row>
           {this.renderPagination()}
-          {this.props.match.params.userId == this.props.auth.user.id ? (
+          {this.props.match.params.userId === this.props.auth.user.id ? (
             <Link to={"/profileSettings/" + this.props.match.params.userId}>
               <button
                 style={{

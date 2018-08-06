@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { Container, Row, Col } from "react-grid-system";
+import { Container } from "react-grid-system";
 import Dropzone from "react-dropzone";
 import removeFalsy from "../utils/cleanObject";
 import { editUser, deleteUser } from "../redux/actions/profileActions";
@@ -15,17 +15,6 @@ const Spacing = styled.div`
   margin: 0 auto;
   & form > * {
     margin-top: 20px;
-  }
-`;
-
-const ProfilePhoto = styled.div`
-  padding: 18px;
-  border-radius: 50%;
-  width: 120px;
-  background-color: gray;
-
-  & p {
-    color: black;
   }
 `;
 
@@ -47,7 +36,7 @@ class ProfileSettings extends Component {
     };
   }
   static getDerivedStateFromProps(props, state) {
-    if (props.profile && props.profile._id != state.id) {
+    if (props.profile && props.profile._id !== state.id) {
       return removeFalsy({
         image: { preview: props.profile.profileImage },
         firstName: props.profile.firstName,
