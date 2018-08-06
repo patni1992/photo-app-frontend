@@ -5,11 +5,17 @@ import { Row, Col } from "react-grid-system";
 import { fetchComments } from "../redux/actions/commentActions";
 import Link from "./common/Link";
 import { getImagesFromResourceIdsState } from "../redux/selectors/imageSelector";
+import { selectUserById } from "../redux/selectors/userSelector";
 import { fetchImages, resetImages } from "../redux/actions/imageActions";
+import { fetchUserStats } from "../redux/actions/userStatsActions";
 import { emptyPage } from "../redux/actions/pageActions";
 import Comments from "./Comments";
+import moment from "moment";
 import { getCommentsFromResourceIdsState } from "../redux/selectors/commentSelector";
-import { getAuthorsFromComments } from "../redux/selectors/userSelector";
+import {
+  getAuthorsFromComments,
+  selectUserStatsById
+} from "../redux/selectors/userSelector";
 import PaginationBar from "./PaginationBar";
 
 const ImageContainer = styled.div`
@@ -36,6 +42,7 @@ class ProfilePage extends Component {
     limit: 8
   };
   componentDidMount() {
+    this.props.fetchUserStats(this.props.match.params.userId);
     let limit = 8;
     if (window.innerWidth > 1199) {
       limit = 9;
@@ -73,12 +80,16 @@ class ProfilePage extends Component {
   };
 
   renderComments() {
-    return (
-      <Comments
-        comments={this.props.comments}
-        authors={this.props.commentsAuthors}
-      />
-    );
+    if (this.props.comments && this.props.commentsAuthors) {
+      return (
+        <Comments
+          comments={this.props.comments}
+          authors={this.props.commentsAuthors}
+        />
+      );
+    }
+
+    return null;
   }
 
   renderPagination() {
@@ -150,67 +161,39 @@ class ProfilePage extends Component {
           ) : null}
         </Col>
         <Col sm={4}>
+          <h2>{this.props.author.username}</h2>
+          <p style={{ display: "block" }}>
+            <strong>{moment(this.props.author.createdAt).format("L")} </strong>
+            Register date
+          </p>
+          <p style={{ display: "block" }}>
+            <strong>{this.props.stats.imageCount}</strong> Images
+          </p>
+          <p style={{ display: "block" }}>
+            <strong>{this.props.stats.commentCount}</strong> Comments
+          </p>
           <h2>Latest comments</h2>
           {this.renderComments()}
-          <h2>Something else </h2>
-          <img
-            style={{ width: "50px" }}
-            src="https://thumbsplus.tutsplus.com/uploads/users/144/profiles/2366/profileImage/profile_thumbnail%20low.jpg?height=76&width=76"
-          />{" "}
-          <img
-            style={{ width: "50px" }}
-            src="https://thumbsplus.tutsplus.com/uploads/users/144/profiles/2366/profileImage/profile_thumbnail%20low.jpg?height=76&width=76"
-          />{" "}
-          <img
-            style={{ width: "50px" }}
-            src="https://thumbsplus.tutsplus.com/uploads/users/144/profiles/2366/profileImage/profile_thumbnail%20low.jpg?height=76&width=76"
-          />{" "}
-          <img
-            style={{ width: "50px" }}
-            src="https://thumbsplus.tutsplus.com/uploads/users/144/profiles/2366/profileImage/profile_thumbnail%20low.jpg?height=76&width=76"
-          />{" "}
-          <img
-            style={{ width: "50px" }}
-            src="https://thumbsplus.tutsplus.com/uploads/users/144/profiles/2366/profileImage/profile_thumbnail%20low.jpg?height=76&width=76"
-          />{" "}
-          <img
-            style={{ width: "50px" }}
-            src="https://thumbsplus.tutsplus.com/uploads/users/144/profiles/2366/profileImage/profile_thumbnail%20low.jpg?height=76&width=76"
-          />{" "}
-          <img
-            style={{ width: "50px" }}
-            src="https://thumbsplus.tutsplus.com/uploads/users/144/profiles/2366/profileImage/profile_thumbnail%20low.jpg?height=76&width=76"
-          />{" "}
-          <img
-            style={{ width: "50px" }}
-            src="https://thumbsplus.tutsplus.com/uploads/users/144/profiles/2366/profileImage/profile_thumbnail%20low.jpg?height=76&width=76"
-          />{" "}
-          <img
-            style={{ width: "50px" }}
-            src="https://thumbsplus.tutsplus.com/uploads/users/144/profiles/2366/profileImage/profile_thumbnail%20low.jpg?height=76&width=76"
-          />{" "}
-          <img
-            style={{ width: "50px" }}
-            src="https://thumbsplus.tutsplus.com/uploads/users/144/profiles/2366/profileImage/profile_thumbnail%20low.jpg?height=76&width=76"
-          />{" "}
         </Col>
       </Row>
     );
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   const comments = getCommentsFromResourceIdsState(state, "profilePage");
   return {
     images: getImagesFromResourceIdsState(state),
     commentsAuthors: getAuthorsFromComments(state, comments),
     comments,
+    stats: selectUserStatsById(state, ownProps),
     auth: state.auth,
+    author: selectUserById(state, ownProps.match.params.userId),
     pagination: state.pagination
   };
 }
 
 export default connect(
   mapStateToProps,
-  { fetchComments, fetchImages, resetImages, emptyPage }
+  { fetchComments, fetchUserStats, fetchImages, resetImages, emptyPage }
 )(ProfilePage);

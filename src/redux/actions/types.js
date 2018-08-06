@@ -22,3 +22,4 @@ export const ADD_ALERT = "ADD_ALERT";
 export const CLEAR_ALERT = "CLEAR_ALERT";
 export const APPEND_USERS = "APPEND_USERS";
 export const CLEAR_STORE = "CLEAR_STORE";
+export const APPEND_USER_STATS = "APPEND_USER_STATS";

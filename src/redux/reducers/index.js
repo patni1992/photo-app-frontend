@@ -9,6 +9,7 @@ import pageReducer from "./pageReducer";
 import alertReducer from "./alertReducer";
 import paginationReducer from "./paginationReducer";
 import userReducer from "./userReducer";
+import userStatsReducer from "./userStatsReducer";
 
 const appReducer = combineReducers({
   images: imageReducer,
@@ -19,7 +20,8 @@ const appReducer = combineReducers({
   page: pageReducer,
   alert: alertReducer,
   users: userReducer,
-  pagination: paginationReducer
+  pagination: paginationReducer,
+  userStats: userStatsReducer
 });
 
 const rootReducer = (state, action) => {

@@ -12,6 +12,11 @@ const selectImageById = (state, props) => {
 
 const selectUsers = state => state.users.items;
 
+export const selectUserById = (state, id) => {
+  const user = state.users.items[id];
+  return user ? user : {};
+};
+
 const selectUserByImage = (image, users) => {
   return users[image.author];
 };
@@ -24,6 +29,16 @@ export const getAuthorsFromComments = (state, comments) => {
   });
 
   return authors;
+};
+
+export const selectUserStatsById = (state, props) => {
+  const userStats = state.userStats.items[props.match.params.id];
+
+  if (!userStats) {
+    return {};
+  }
+
+  return userStats;
 };
 
 export const getUserByImageIdState = createSelector(
