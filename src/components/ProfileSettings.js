@@ -3,7 +3,10 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import { Container, Row, Col } from "react-grid-system";
 import Dropzone from "react-dropzone";
+import removeFalsy from "../utils/cleanObject";
 import { editUser, deleteUser } from "../redux/actions/profileActions";
+import { fetchUser } from "../redux/actions/userActions";
+import { selectUserById } from "../redux/selectors/userSelector";
 import InputGroup from "./common/InputGroup";
 
 const Spacing = styled.div`
@@ -31,33 +34,60 @@ const BtnContainer = styled.div`
 `;
 
 class ProfileSettings extends Component {
-  state = {
-    img: { preview: null },
-    firstName: "",
-    lastName: "",
-    email: "",
-    country: "",
-    biography: ""
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      image: { preview: "" },
+      firstName: "",
+      lastName: "",
+      email: "",
+      country: "",
+      biography: ""
+    };
+  }
+  static getDerivedStateFromProps(props, state) {
+    if (props.profile) {
+      return {
+        image: { preview: props.profile.profileImage },
+        firstName: props.profile.firstName,
+        lastName: props.profile.lastName,
+        email: props.profile.email,
+        country: props.profile.country,
+        biography: props.profile.biography
+      };
+    }
+    return null;
+  }
+
+  componentDidMount() {
+    this.props.fetchUser(this.props.match.params.userId);
+  }
+
   onDrop = acceptedFiles => {
-    console.log(acceptedFiles);
     this.setState({
-      img: acceptedFiles[0]
+      image: acceptedFiles[0]
     });
+  };
+
+  onChangeDisableNumbers = e => {
+    const regex = /^[a-zA-Z]*$/;
+    if (regex.test(e.target.value)) {
+      this.setState({ [e.target.name]: e.target.value });
+    }
   };
 
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
+
   onSubmit = e => {
     e.preventDefault();
     const bodyFormData = new FormData();
-    bodyFormData.set("firstName", this.state.firstName);
-    bodyFormData.set("lastName", this.state.lastName);
-    bodyFormData.set("email", this.state.email);
-    bodyFormData.set("img", this.state.img);
-    bodyFormData.set("country", this.state.country);
-    bodyFormData.set("biography", this.state.biography);
+    const dataToSend = removeFalsy(this.state);
+    for (let key in dataToSend) {
+      bodyFormData.set(key, dataToSend[key]);
+    }
+
     this.props.editUser(this.props.match.params.userId, bodyFormData);
   };
 
@@ -107,7 +137,7 @@ class ProfileSettings extends Component {
 
                 display: "inline-block"
               }}
-              src={this.state.img.preview || this.props.auth.user.profileImage}
+              src={this.state.image.preview}
               alt=""
             />
           </Dropzone>
@@ -127,12 +157,12 @@ class ProfileSettings extends Component {
               value={this.state.firstName}
               placeholder="First Name"
               name="firstName"
-              onChange={this.onChange}
+              onChange={this.onChangeDisableNumbers}
             />
             <InputGroup
               name="lastName"
               value={this.state.lastName}
-              onChange={this.onChange}
+              onChange={this.onChangeDisableNumbers}
               placeholder="Last Name"
             />
             <InputGroup
@@ -143,7 +173,7 @@ class ProfileSettings extends Component {
             />
             <InputGroup
               name="country"
-              onChange={this.onChange}
+              onChange={this.onChangeDisableNumbers}
               value={this.state.country}
               placeholder="Country"
             />
@@ -189,13 +219,13 @@ class ProfileSettings extends Component {
     );
   }
 }
-function mapStateToProps(state) {
+function mapStateToProps(state, ownprops) {
   return {
-    auth: state.auth
+    profile: selectUserById(state, ownprops.match.params.userId)
   };
 }
 
 export default connect(
   mapStateToProps,
-  { editUser, deleteUser }
+  { editUser, deleteUser, fetchUser }
 )(ProfileSettings);

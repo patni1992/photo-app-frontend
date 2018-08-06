@@ -26,13 +26,11 @@ export default function(state = initialState, action) {
         action.payload.dataBelongToPage
       );
     case SET_PAGE_RESOURCERS:
-      var bob = setResources(
+      return setResources(
         state,
         action.payload.resources,
         action.payload.dataBelongToPage
       );
-
-      return bob;
 
     case EMPTY_PAGE:
       let newPageState = {

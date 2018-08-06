@@ -156,7 +156,7 @@ export const fetchImage = (id, url = "", dataBelongToPage) => {
 
 export const deleteImage = id => dispatch => {
   api
-    .delete(`/images/` + id)
+    .delete(`/images/${id}`)
     .then(res => {
       dispatch({
         type: DELETE_IMAGE,
