@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { FormGroup, Form, InputError } from "../styledComponents/form";
+import Button from "../common/Button";
 
 const ForgotPassword = styled.a`
   width: 50%;
@@ -87,7 +88,9 @@ class Login extends Component {
           )}
         </FormGroup>
         <FormGroup>
-          <button>Log in</button>
+          <Button block kind="success">
+            Log in
+          </Button>
         </FormGroup>
         <FormGroup>
           <ForgotPassword href="#">Forgot password?</ForgotPassword>

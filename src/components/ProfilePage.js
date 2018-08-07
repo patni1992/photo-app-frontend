@@ -11,6 +11,7 @@ import { fetchUserStats } from "../redux/actions/userStatsActions";
 import { emptyPage } from "../redux/actions/pageActions";
 import Comments from "./Comments";
 import moment from "moment";
+import Button from "./common/Button";
 import { getCommentsFromResourceIdsState } from "../redux/selectors/commentSelector";
 import {
   getAuthorsFromComments,
@@ -35,6 +36,11 @@ const ImageContainer = styled.div`
   @media (min-width: 1900px) {
     height: 280px;
   }
+`;
+
+const ButtonContainer = styled.div`
+  margin-top: 18px;
+  max-width: 130px;
 `;
 
 class ProfilePage extends Component {
@@ -147,17 +153,9 @@ class ProfilePage extends Component {
           {this.renderPagination()}
           {this.props.match.params.userId === this.props.auth.user.id ? (
             <Link to={"/profileSettings/" + this.props.match.params.userId}>
-              <button
-                style={{
-                  display: "block ",
-                  padding: "10px",
-                  color: "white",
-                  cursor: "pointer",
-                  backgroundColor: "#4caf50"
-                }}
-              >
-                Profile Settings
-              </button>
+              <ButtonContainer>
+                <Button kind="success">Profile Settings</Button>
+              </ButtonContainer>
             </Link>
           ) : null}
         </Col>

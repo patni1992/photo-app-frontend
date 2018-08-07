@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { FormGroup, Form, InputError } from "../styledComponents/form";
+import Button from "../common/Button";
 
 const SpanError = styled.a`
   margin: 0;
@@ -98,7 +99,9 @@ class Signup extends Component {
           )}
         </FormGroup>
         <FormGroup>
-          <button>Sign Up</button>
+          <Button block kind="success">
+            Sign Up
+          </Button>
         </FormGroup>
       </Form>
     );

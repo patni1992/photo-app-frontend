@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { Container } from "react-grid-system";
 import { setActiveEditImage } from "../redux/actions/activeEditImageActions";
 import { editImage } from "../redux/actions/imageActions";
+import Button from "./common/Button";
 
 const Form = styled.form`
   position: relative;
@@ -29,21 +30,6 @@ const Form = styled.form`
 
   @media (max-width: 599px) {
     padding: 20px;
-  }
-
-  & button {
-    font-family: "Roboto", sans-serif;
-    text-transform: uppercase;
-    outline: 0;
-    background: #4caf50;
-    width: 100%;
-    border: 0;
-    padding: 15px;
-    color: #ffffff;
-    font-size: 14px;
-    -webkit-transition: all 0.3 ease;
-    transition: all 0.3 ease;
-    cursor: pointer;
   }
 `;
 
@@ -154,7 +140,9 @@ class AddPhotos extends Component {
             <p>Only *.jpeg and *.png images will be accepted</p>
           </Dropzone>
           <Img src={this.state.img.preview} alt="" />
-          <button> Post </button>
+          <Button block kind="success">
+            Post
+          </Button>
         </Form>
       </Container>
     );

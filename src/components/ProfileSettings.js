@@ -8,7 +8,7 @@ import { editUser, deleteUser } from "../redux/actions/profileActions";
 import { fetchUser } from "../redux/actions/userActions";
 import { selectUserById } from "../redux/selectors/userSelector";
 import InputGroup from "./common/InputGroup";
-
+import Button from "./common/Button";
 const Spacing = styled.div`
   width: 70%;
   text-align: left;
@@ -16,10 +16,6 @@ const Spacing = styled.div`
   & form > * {
     margin-top: 20px;
   }
-`;
-
-const BtnContainer = styled.div`
-  text-align: left;
 `;
 
 class ProfileSettings extends Component {
@@ -176,34 +172,12 @@ class ProfileSettings extends Component {
               info="write something about yourself"
             />
 
-            <BtnContainer>
-              <button
-                type="submit"
-                style={{
-                  display: "inlineBlock",
-                  padding: "10px",
-                  width: "70px",
-                  color: "white",
-                  cursor: "pointer",
-                  backgroundColor: "#4caf50"
-                }}
-              >
-                Save
-              </button>
-              <button
-                onClick={this.onDelete}
-                style={{
-                  padding: "10px",
-                  width: "110px",
-                  color: "white",
-                  cursor: "pointer",
-                  display: "inlineBlock",
-                  backgroundColor: "#f44242"
-                }}
-              >
-                Delete Account
-              </button>
-            </BtnContainer>
+            <Button type="submit" kind="success">
+              Save
+            </Button>
+            <Button onClick={this.onDelete} kind="danger">
+              Delete Account
+            </Button>
           </form>
         </Spacing>
       </Container>
