@@ -1,13 +1,23 @@
-import React, { Component } from "react";
+import React, {
+  Component
+} from "react";
 import styled from "styled-components";
 import Dropzone from "react-dropzone";
-import { connect } from "react-redux";
-import { Container } from "react-grid-system";
-import { setActiveEditImage } from "../redux/actions/activeEditImageActions";
-import { editImage } from "../redux/actions/imageActions";
+import {
+  connect
+} from "react-redux";
+import {
+  Container
+} from "react-grid-system";
+import {
+  setActiveEditImage
+} from "../redux/actions/activeEditImageActions";
+import {
+  editImage
+} from "../redux/actions/imageActions";
 import Button from "./common/Button";
 
-const Form = styled.form`
+const Form = styled.form `
   position: relative;
   max-width: 800px;
   background: #ffffff;
@@ -33,8 +43,9 @@ const Form = styled.form`
   }
 `;
 
-const Img = styled.img`
+const Img = styled.img `
   width: 100%;
+  max-height: 500px;
 `;
 
 class AddPhotos extends Component {
@@ -106,45 +117,66 @@ class AddPhotos extends Component {
   };
 
   render() {
-    return (
-      <Container>
-        <Form onSubmit={this.handleSubmit}>
-          <input
-            onChange={this.handleDescChange}
-            name="description"
-            value={this.state.description}
-            placeholder="Description"
-            type="text"
-          />
-          <input
-            name="tags"
-            onChange={this.handleTagsChange}
-            value={this.state.tags}
-            placeholder="Tags (seperate with comma)"
-            type="text"
-          />
-          <Dropzone
-            style={{
-              background: "white",
-              border: "3px black dotted",
-              padding: "15px",
-              margin: "0 0 15px"
-            }}
-            onDrop={this.onDrop}
-            accept="image/jpeg, image/png"
-            multiple={false}
-          >
-            <p>
-              Try dropping a file here, or click to select a file to upload.
-            </p>
-            <p>Only *.jpeg and *.png images will be accepted</p>
-          </Dropzone>
-          <Img src={this.state.img.preview} alt="" />
-          <Button block kind="success">
-            Post
-          </Button>
-        </Form>
-      </Container>
+    return ( <
+      Container >
+      <
+      Form onSubmit = {
+        this.handleSubmit
+      } >
+      <
+      input onChange = {
+        this.handleDescChange
+      }
+      name = "description"
+      value = {
+        this.state.description
+      }
+      placeholder = "Description"
+      type = "text" /
+      >
+      <
+      input name = "tags"
+      onChange = {
+        this.handleTagsChange
+      }
+      value = {
+        this.state.tags
+      }
+      placeholder = "Tags (seperate with comma)"
+      type = "text" /
+      >
+      <
+      Dropzone style = {
+        {
+          background: "white",
+          border: "3px black dotted",
+          padding: "15px",
+          margin: "0 0 15px"
+        }
+      }
+      onDrop = {
+        this.onDrop
+      }
+      accept = "image/jpeg, image/png"
+      multiple = {
+        false
+      } >
+      <
+      p >
+      Try dropping a file here, or click to select a file to upload. <
+      /p> <
+      p > Only * .jpeg and * .png images will be accepted < /p> < /
+      Dropzone > <
+      Img src = {
+        this.state.img.preview
+      }
+      alt = "" / >
+      <
+      Button block kind = "success" >
+      Post <
+      /Button> < /
+      Form > <
+      /Container>
     );
   }
 }
@@ -156,6 +188,8 @@ function mapStateToProps(state) {
 }
 
 export default connect(
-  mapStateToProps,
-  { setActiveEditImage, editImage }
+  mapStateToProps, {
+    setActiveEditImage,
+    editImage
+  }
 )(AddPhotos);

@@ -11,14 +11,11 @@ const selectImageById = (state, props) => {
 };
 
 const selectUsers = state => state.users.items;
+const selectUserByImage = (image, users) => users[image.author];
 
 export const selectUserById = (state, id) => {
   const user = state.users.items[id];
   return user ? user : {};
-};
-
-const selectUserByImage = (image, users) => {
-  return users[image.author];
 };
 
 export const getAuthorsFromComments = (state, comments) => {

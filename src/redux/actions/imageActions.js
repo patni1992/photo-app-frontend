@@ -111,7 +111,7 @@ export const fetchImages = (
           appendPageResources({
             dataBelongToPage,
             resources: {
-              images: Object.keys(dataToPass.entities.images)
+              images: Object.keys(images)
             }
           })
         );

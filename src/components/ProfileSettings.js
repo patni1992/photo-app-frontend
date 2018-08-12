@@ -70,7 +70,7 @@ class ProfileSettings extends Component {
   onSubmit = e => {
     e.preventDefault();
     const bodyFormData = new FormData();
-    const dataToSend = removeFalsy(this.state);
+    const dataToSend = this.state;
     for (let key in dataToSend) {
       bodyFormData.set(key, dataToSend[key]);
     }

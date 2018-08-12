@@ -35,7 +35,11 @@ class Gallery extends Component {
     this.setState({
       filterOn: value
     });
-    this.props.searchFetchImages("?page=1&search=" + value, "feed");
+    let query = "?page=1";
+    if (value) {
+      query += "&search=" + value;
+    }
+    this.props.searchFetchImages(query, "feed");
   };
 
   setModal = value => {

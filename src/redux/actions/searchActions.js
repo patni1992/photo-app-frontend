@@ -7,7 +7,12 @@ export const searchFetchImages = (url = "", dataBelongToPage) => {
     dispatch(setImageLoading());
 
     fetchNormalizeData(url).then(dataToPass => {
+      console.log(dataToPass);
       dispatch(setImages(dataToPass));
+
+      const images = dataToPass.entities.hasOwnProperty("images")
+        ? dataToPass.entities.images
+        : [];
 
       dispatch(
         setPagination({ [dataBelongToPage + "images"]: dataToPass.pagination })
@@ -17,7 +22,7 @@ export const searchFetchImages = (url = "", dataBelongToPage) => {
         setPageResources({
           dataBelongToPage,
           resources: {
-            images: Object.keys(dataToPass.entities.images)
+            images: Object.keys(images)
           }
         })
       );
