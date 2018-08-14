@@ -93,7 +93,7 @@ class Gallery extends Component {
           description={image.description}
           tags={image.tags}
           author={this.props.users[image.author]}
-          src={image.path}
+          src={image.fullPath}
         />
       );
     });
