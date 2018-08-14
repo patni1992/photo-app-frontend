@@ -92,9 +92,9 @@ class Login extends Component {
             Log in
           </Button>
         </FormGroup>
-        <FormGroup>
+        {/* <FormGroup>
           <ForgotPassword href="#">Forgot password?</ForgotPassword>
-        </FormGroup>
+        </FormGroup> */}
       </Form>
     );
   }

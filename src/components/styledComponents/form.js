@@ -42,8 +42,7 @@ export const FormContainer = styled.div`
   max-width: 700px;
   padding: 15px 10px 15px 10px;
   border-radius: 3px;
-  min-height: 406px;
-  max-height: 500px;
+  min-height: 500px;
   overflow: scroll;
 `;
 
