@@ -45,17 +45,12 @@ export default function(state = initialState, action) {
 }
 
 export function getEntitiesFromResourcsIds(state, dataBelongToPage) {
-  let mapedResources = state.page[dataBelongToPage].images
-    .filter(id => {
-      if (state.images.items.hasOwnProperty(id)) {
-        return id;
-      }
-    })
-    .map(id => {
-      return state.images.items[id];
-    });
+  const filteredImgs = [];
+  state.page[dataBelongToPage].images.forEach(id => {
+    if (state.images.items[id]) filteredImgs.push(state.images.items[id]);
+  });
 
-  return mapedResources;
+  return filteredImgs;
 }
 
 function appendResources(state, resources, dataBelongToPage) {

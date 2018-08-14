@@ -36,14 +36,13 @@ export default function(state = initialState, action) {
       return state;
 
     case SET_ENTITIES:
-      if (action.payload.entities && action.payload.entities.images) {
-        return {
-          ...state,
-          isLoading: false,
-          items: action.payload.entities.images,
-          pagination: action.payload.pagination
-        };
-      }
+      return {
+        ...state,
+        isLoading: false,
+        items: action.payload.images,
+        pagination: action.payload.pagination
+      };
+
       return state;
 
     case DELETE_IMAGE:
