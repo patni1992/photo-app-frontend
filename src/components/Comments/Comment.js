@@ -37,20 +37,24 @@ const TextContainer = styled.div`
 `;
 
 const Comment = ({ comment, author }) => {
-  return (
-    <CommentWrapper>
-      <ThumbnailContainer>
-        <Thumbnail src={author.profileImage} />
-        <strong>
-          <h3>{author.username}</h3>
-        </strong>
-      </ThumbnailContainer>
-      <TextContainer>
-        <DateText>{moment(comment.createdAt).fromNow()}</DateText>
-        <CommentText>{comment.text}</CommentText>
-      </TextContainer>
-    </CommentWrapper>
-  );
+  if (comment && author) {
+    return (
+      <CommentWrapper>
+        <ThumbnailContainer>
+          <Thumbnail src={author.fullPathProfileImage} />
+          <strong>
+            <h3>{author.username}</h3>
+          </strong>
+        </ThumbnailContainer>
+        <TextContainer>
+          <DateText>{moment(comment.createdAt).fromNow()}</DateText>
+          <CommentText>{comment.text}</CommentText>
+        </TextContainer>
+      </CommentWrapper>
+    );
+  } else {
+    return null;
+  }
 };
 
 Comment.propTypes = {
