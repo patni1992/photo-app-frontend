@@ -113,7 +113,6 @@ class Photo extends Component {
     return actionIcons;
   }
   render() {
-    console.log(this.props);
     return (
       <Figure>
         <Header>
