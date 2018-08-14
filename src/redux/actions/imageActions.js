@@ -42,15 +42,6 @@ export const resetImages = () => {
 
 export const setImageLoading = () => ({ type: IMAGE_LOADING, payload: "" });
 
-export function setCurrentImagetId(id) {
-  return {
-    type: "SET_CURRENT_IMAGE_ID",
-    payload: {
-      id
-    }
-  };
-}
-
 export const fetchNormalizeData = url => {
   return api
     .get("/images" + url)

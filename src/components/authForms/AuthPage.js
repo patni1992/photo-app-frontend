@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { registerUser, loginUser } from "../../redux/actions/authActions";
+import { clearErrors } from "../../redux/actions/errorActions";
 import Login from "./Login";
 import Signup from "./Signup";
 import styled from "styled-components";
@@ -37,12 +38,14 @@ class AuthPage extends Component {
   login = data => this.props.loginUser(data);
 
   setLoginActive = () => {
+    this.props.clearErrors();
     this.setState({
       login: true,
       signUp: false
     });
   };
   setSignupActive = () => {
+    this.props.clearErrors();
     this.setState({
       login: false,
       signUp: true
@@ -99,6 +102,7 @@ export default connect(
   mapStateToProps,
   {
     registerUser,
-    loginUser
+    loginUser,
+    clearErrors
   }
 )(AuthPage);
