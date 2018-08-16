@@ -27,14 +27,12 @@ class Signup extends Component {
   l;
 
   onChangeHandler = e => {
-    console.log(e.target.name);
     this.setState({
       [e.target.name]: e.target.value
     });
   };
 
   onSubmitHandler = e => {
-    console.log(this.props);
     e.preventDefault();
     this.props.signup(this.state);
   };

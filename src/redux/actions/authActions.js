@@ -2,6 +2,7 @@ import api from "../../api";
 import { push } from "react-router-redux";
 import jwtDecode from "jwt-decode";
 import { CLEAR_STORE } from "./types";
+import { clearErrors } from "../actions/errorActions";
 import setAuthToken from "../../utils/sethAuthToken";
 
 import { SET_ERRORS, SET_CURRENT_USER } from "./types";
@@ -11,6 +12,7 @@ export function registerUser(userData) {
     return api
       .post("/users", userData)
       .then(res => {
+        dispatch(clearErrors());
         dispatch(push("/"));
       })
       .catch(err => {
@@ -31,6 +33,7 @@ export const loginUser = userData => dispatch => {
       localStorage.setItem("jwtToken", token);
       setAuthToken(token);
       const decoded = jwtDecode(token);
+      dispatch(clearErrors);
       dispatch(setCurrentUser(decoded));
       dispatch(push("/"));
     })
