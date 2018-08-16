@@ -180,11 +180,15 @@ export const editImage = (id, subitMethod = "post", bodyData) => dispatch => {
       }
 
       const normalizeData = normalize([response.data], [imageSchema]);
+      const authors = normalizeData.entities.hasOwnProperty("imageAuthors")
+        ? normalizeData.entities.imageAuthors
+        : [];
       const images = normalizeData.entities.hasOwnProperty("images")
         ? normalizeData.entities.images
         : [];
 
       dispatch(appendImages({ images }));
+      dispatch(appendUsers({ authors }));
       dispatch(
         prependPageResources({
           dataBelongToPage: "feed",
