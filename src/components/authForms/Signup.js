@@ -41,7 +41,7 @@ class Signup extends Component {
     const { errors } = this.props;
     return (
       <Form noValidate onSubmit={this.onSubmitHandler}>
-        <Header>Signup</Header>
+        <Header>Sign up</Header>
         <FormGroup>
           <input
             type="email"
