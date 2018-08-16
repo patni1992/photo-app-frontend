@@ -117,13 +117,19 @@ export const fetchImage = (id, url = "", dataBelongToPage) => {
       .get("/images/" + id + "/" + url)
       .then(response => {
         const normalizeData = normalize([response.data], [imageSchema]);
+        const images = normalizeData.entities.hasOwnProperty("images")
+          ? normalizeData.entities.images
+          : [];
+        const comments = normalizeData.entities.hasOwnProperty("comments")
+          ? normalizeData.entities.comments
+          : [];
 
         dispatch(
           setPageResources({
             dataBelongToPage,
             resources: {
-              images: Object.keys(normalizeData.entities.images),
-              comments: Object.keys(normalizeData.entities.comments)
+              images: Object.keys(images),
+              comments: Object.keys(comments)
             }
           })
         );
