@@ -1,1 +1,0 @@
-# photo-app-frontend
