@@ -143,7 +143,7 @@ class ProfilePage extends Component {
                         height: "auto"
                       }}
                       alt={image.description}
-                      src={image.path}
+                      src={image.fullPath}
                     />
                   </Link>
                 </ImageContainer>

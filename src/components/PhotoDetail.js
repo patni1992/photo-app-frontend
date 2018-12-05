@@ -60,7 +60,7 @@ class PhotoDetail extends Component {
           imageAuthor._id === this.props.auth.user.id
             ? this.addDeletePhotoHandler
             : null,
-        src: image.path,
+        src: image.fullPath,
         editPhoto:
           imageAuthor._id === this.props.auth.user.id
             ? data => {
