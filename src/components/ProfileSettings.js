@@ -34,7 +34,7 @@ class ProfileSettings extends Component {
   static getDerivedStateFromProps(props, state) {
     if (props.profile && props.profile._id !== state.id) {
       return removeFalsy({
-        image: { preview: props.profile.profileImage },
+        image: { preview: props.profile.fullPathProfileImage },
         firstName: props.profile.firstName,
         lastName: props.profile.lastName,
         id: props.profile._id,
