@@ -5,7 +5,7 @@ const commentsSelector = state => state.comments;
 const getCommentsFromResourceId = (page, comments) => {
   let mapedResources = page.comments
     .filter(id => {
-      if (comments.items.hasOwnProperty(id)) {
+      if (comments.items && comments.items.hasOwnProperty(id)) {
         return id;
       }
     })
