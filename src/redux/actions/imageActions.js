@@ -1,6 +1,7 @@
 import api from "../../api";
 import { normalize } from "normalizr";
 import { push } from "react-router-redux";
+import { showLoading, hideLoading } from 'react-redux-loading-bar'
 
 import {
   RESET_IMAGES,
@@ -71,8 +72,7 @@ export const fetchImages = (
   setPageresources = false
 ) => {
   return dispatch => {
-    dispatch(setImageLoading());
-
+    dispatch(showLoading())
     fetchNormalizeData(url).then(dataToPass => {
       const images = dataToPass.entities.hasOwnProperty("images")
         ? dataToPass.entities.images
@@ -107,6 +107,7 @@ export const fetchImages = (
           })
         );
       }
+      dispatch(hideLoading())
     });
   };
 };
@@ -165,8 +166,10 @@ export const deleteImage = id => dispatch => {
 };
 
 export const editImage = (id, subitMethod = "post", bodyData) => dispatch => {
+  dispatch(showLoading())
   api[subitMethod]("/images/" + id, bodyData)
     .then(response => {
+      dispatch(hideLoading())
       if (subitMethod === "post") {
         dispatch(
           addAlert({

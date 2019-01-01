@@ -1,3 +1,4 @@
+import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import {
   setImageLoading,
   fetchNormalizeData,
@@ -10,7 +11,7 @@ import { appendUsers } from "./userActions";
 
 export const searchFetchImages = (url = "", dataBelongToPage) => {
   return dispatch => {
-    dispatch(setImageLoading());
+    dispatch(showLoading())
 
     fetchNormalizeData(url).then(dataToPass => {
       const images = dataToPass.entities.hasOwnProperty("images")
@@ -35,6 +36,7 @@ export const searchFetchImages = (url = "", dataBelongToPage) => {
       dispatch(
         setPagination({ [dataBelongToPage + "images"]: dataToPass.pagination })
       );
+      dispatch(hideLoading())
     });
   };
 };

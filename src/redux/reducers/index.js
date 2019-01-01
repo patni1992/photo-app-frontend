@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import { loadingBarReducer } from 'react-redux-loading-bar'
 import { CLEAR_STORE } from "../actions/types";
 import imageReducer from "./imageReducer";
 import activeEditImageReducer from "./activeEditImageReducer";
@@ -11,6 +12,7 @@ import paginationReducer from "./paginationReducer";
 import userReducer from "./userReducer";
 import userStatsReducer from "./userStatsReducer";
 
+
 const appReducer = combineReducers({
   images: imageReducer,
   activeEditImage: activeEditImageReducer,
@@ -20,6 +22,7 @@ const appReducer = combineReducers({
   page: pageReducer,
   alert: alertReducer,
   users: userReducer,
+  loadingBar: loadingBarReducer,
   pagination: paginationReducer,
   userStats: userStatsReducer
 });

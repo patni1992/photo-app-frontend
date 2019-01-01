@@ -1,9 +1,10 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import FontAwesome from "react-fontawesome";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { logoutUser } from "../redux/actions/authActions";
+import LoadingBar from 'react-redux-loading-bar'
 
 const Menu = styled.nav`
   display: block;
@@ -97,12 +98,14 @@ class Navbar extends Component {
   renderNavbar() {
     if (this.props.auth.isAuthenticated) {
       return (
-        <Menu show={this.state.showMenu}>
+           <Menu show={this.state.showMenu}>
+           <LoadingBar style={{ backgroundColor: 'white', height: '7px' }} />
           <Hamburger onClick={this.toggleMenu}>
             <FontAwesome name="bars" style={{}} />
           </Hamburger>
-
+          
           <ul id="menu">
+        
             <li>
               <Link to="/">Home</Link>
             </li>
@@ -121,6 +124,7 @@ class Navbar extends Component {
             </li>
           </ul>
         </Menu>
+       
       );
     } else {
       return null;
