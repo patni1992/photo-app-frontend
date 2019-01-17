@@ -99,7 +99,7 @@ class Navbar extends Component {
     if (this.props.auth.isAuthenticated) {
       return (
            <Menu show={this.state.showMenu}>
-           <LoadingBar style={{ backgroundColor: 'white', height: '7px' }} />
+           <LoadingBar style={{ backgroundColor: 'white', height: '5px', top: 0, left: 0 }} />
           <Hamburger onClick={this.toggleMenu}>
             <FontAwesome name="bars" style={{}} />
           </Hamburger>
