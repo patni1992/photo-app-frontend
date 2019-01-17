@@ -6,7 +6,7 @@ import moment from "moment";
 const CommentWrapper = styled.div`
   margin-bottom: 15px;
   border-radius: 5px;
-  border-bottom: 1.5px solid #d3d3d3;
+  border: 1.1px solid #d3d3d3;
   background-color: #ffffff;
 `;
 
